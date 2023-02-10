@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: white;
 }
 
 .App-logo {
@@ -31,4 +32,37 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.Signin-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 75vh;
+}
+
+.Signin-form {
+  width: 440px;
+  box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 8px;
+  background-color: white;
+}
+
+.Signin-form-content {
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.Signin-form-logo {
+  margin-bottom: 1em;
+  color: black;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 600;
+  color: black;
 }
