@@ -1,7 +1,5 @@
 import React from 'react';
 
-const Feed = () => {
-    
+export default function Feed(props) {
+    props.funcNav(true);
 };
-
-export default Feed;

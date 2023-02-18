@@ -6,12 +6,13 @@ NavMenu,
 NavBtn,
 NavBtnLink,
 } from './NavbarElements';
+import logo from '../assets/logo_text_w.png';
 
 const Navbar = () => {
 return (
 	<>
 	<Nav>
-
+		<img className='App-logo' src={logo} alt="Logo" />
 		<NavMenu>
 		<NavLink to='/feed' activeStyle>
 			Feed
@@ -29,7 +30,7 @@ return (
 		{/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
 		</NavMenu>
 		<NavBtn>
-		<NavBtnLink to='/Signin'>Sign In </NavBtnLink>
+		<NavBtnLink to='/signin'>Sign in </NavBtnLink>
 
 		</NavBtn>
 	</Nav>

@@ -1,13 +1,14 @@
-import React from "react"
-import logo from '../assets/logo_text.png'
+import React from "react";
+import { Link } from 'react-router-dom';
+import logo from '../assets/logo_text.png';
 
 export default function (props) {
+  props.funcNav(false);
   return (
-      
     <div className="Signin-form-container">
       <form className="Signin-form">
         <div className="Signin-form-content">
-          <img style={{ width: 350, height: 60 }} className="Signin-form-logo" src={logo} alt="Logo" />
+          <img style={{ width: 350, height: 60, display: 'block' }} className="Signin-form-logo" src={logo} alt="Logo" />
           <div className="form3">
             <input
               type="email"
@@ -23,13 +24,15 @@ export default function (props) {
             />
           </div>
           <div className="d-grid gap-2 mt-3">
-            <button type="signin" className="btn btn-primary">
+            <button type="signin" className="default-btn">
               Sign In
             </button>
           </div>
-          <p className="forgot-password">
-             <a href="#">Forgot password?</a>
+          <Link to="/forgot-password" style = {{ color: 'grey' }}>
+          <p className="link-text">
+             Forgot password?
           </p>
+          </Link>
         </div>
       </form>
     </div>

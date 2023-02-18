@@ -1,11 +1,13 @@
 .App {
   text-align: center;
   background-color: white;
+  font-family: 'Source Sans Pro';
 }
 
 .App-logo {
-  height: 25%;
-  pointer-events: none;
+  height: 50%;
+  margin-top: 3vmin;
+  margin-right: 0;
 }
 
 
@@ -25,17 +27,10 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 
 .Signin-form-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100vw;
@@ -43,6 +38,7 @@
 }
 
 .Signin-form {
+  display: block;
   width: 440px;
   box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
   padding-top: 20px;
@@ -65,4 +61,63 @@ label {
   font-size: 14px;
   font-weight: 600;
   color: black;
+  display: block;
+  margin-bottom: 4px;
 }
+
+input {
+  display: block;
+  width: 50vmin;
+  margin-top: 5px;
+  border: 1px solid gray;
+  font-size: smaller;
+  padding: 4px;
+}
+
+input:focus {
+  outline: none
+}
+
+.default-btn {
+  display: block;
+  margin-top: 2vmin;
+  background-color: #88BBF6;
+  border: none;
+  box-sizing: border-box;
+  width: 100%;
+  padding-top: 3px ;
+  padding-bottom: 4px;
+  color: white;
+  font-weight: bold;
+  padding: px;
+  text-transform: uppercase;
+}
+
+.forgotPW-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.logo-container {
+  width: 40vmin;
+  margin: 9vmin;
+  margin-bottom: 1vmin;
+}
+
+.form-content  {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: left;
+  text-align: left;
+}
+
+.link-text {
+  color: grey;
+  margin: 8px;
+}
+
+
