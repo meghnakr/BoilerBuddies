@@ -1,5 +1,6 @@
 import { NavLink as Link } from 'react-router-dom';
 import styled from 'styled-components';
+import '../index.css';
 
 export const Nav = styled.nav`
 background: #88BBF6;
@@ -21,7 +22,9 @@ padding: 0 1rem;
 height: 100%;
 cursor: pointer;
 &.active {
-	color: #000000;
+	color: black;
+	fontWeight: 'bold';
+	textDecorationLine: 'underline';
 }
 `;
 
