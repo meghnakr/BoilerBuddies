@@ -34,6 +34,7 @@ return (
 		<Dropdown title="My Account">
 			<div label="Profile"/>
 			<div label="Account Setting" />
+			<div label="Sign Out" />
 		</Dropdown>
 	</Nav>
 	</>
