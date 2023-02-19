@@ -7,6 +7,8 @@ NavBtn,
 NavBtnLink,
 } from './NavbarElements';
 import logo from '../assets/logo_text_w.png';
+import Dropdown from './Dropdown';
+import DropdownItem from './DropdownItem';
 
 const Navbar = () => {
 return (
@@ -29,10 +31,10 @@ return (
 		{/* Second Nav */}
 		{/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
 		</NavMenu>
-		<NavBtn>
-		<NavBtnLink to='/signin'>Sign in </NavBtnLink>
-
-		</NavBtn>
+		<Dropdown title="My Account">
+			<div label="Profile"/>
+			<div label="Account Setting" />
+		</Dropdown>
 	</Nav>
 	</>
 );
