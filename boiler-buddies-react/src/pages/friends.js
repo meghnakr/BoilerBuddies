@@ -1,8 +1,11 @@
 import React from 'react';
 
 const Friends = () => {
+    return (
+        <p></p>
+
+    )
     
-    {/* USE ARRAY TO PRINT OUT EACH FRIEND'S NAME AND LINK TO THEIR PROFILE*/}
 };
 
 export default Friends;
