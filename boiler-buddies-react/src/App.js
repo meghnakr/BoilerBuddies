@@ -4,7 +4,7 @@ import Navbar from './components/Navbar';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Feed from './pages/feed.js';
 import Forum from './pages/forums.js';
-import Friends from './pages/friends.js';
+import Friends from './pages/friends';
 import Messages from './pages/messages.js';
 import Signin from './pages/Signin.js';
 import ForgotPW from './pages/forgotPW';
@@ -30,9 +30,9 @@ function App(location) {
         <Routes>
         <Route exact path='/' element={<Feed funcNav={setShowNav}/>} />
         <Route path='/feed' element={<Feed funcNav={setShowNav}/>} />
-        <Route path='/forums' component={<Forum funcNav={setShowNav}/> } />
-        <Route path='/friends' component={<Friends funcNav={setShowNav}/>} />
-        <Route path='/messages' component={<Messages funcNav={setShowNav}/>} />
+        <Route path='/forums' element={<Forum funcNav={setShowNav}/> } />
+        <Route path="/friends" element={<Friends funcNav={setShowNav}/>} />
+        <Route path='/messages' element={<Messages funcNav={setShowNav}/>} />
         <Route path='/account' element={<Account funcNav={setShowNav} />} />
         <Route path="/signin" element={<Signin funcNav={setShowNav}/>} />
         <Route path='/forgot-password' element={<ForgotPW funcNav={setShowNav} />} />

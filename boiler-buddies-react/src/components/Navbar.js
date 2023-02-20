@@ -6,12 +6,12 @@ NavMenu,
 } from './NavbarElements';
 import logo from '../assets/logo_text_w.png';
 import Dropdown from './Dropdown';
-import DropdownItem from './DropdownItem';
 import {Link } from "react-router-dom";
 
 const Navbar = () => {
 return (
 	<>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 	<Nav>
 		<img className='App-logo' src={logo} alt="Logo" />
 		<NavMenu>
@@ -35,7 +35,7 @@ return (
 		<NavLink to='/notifications' activeStyle>
 			Notifications
 		</NavLink>
-
+		
 		{/* Second Nav */}
 		{/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
 		</NavMenu>

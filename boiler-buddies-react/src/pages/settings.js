@@ -6,7 +6,7 @@ import Tabs from '../components/Tabs'
 export default function Settings(props) {
   return (
     <>
-      <div className="Signin-form-container">
+      <div className="page-container">
         <form className="Settings-form">
           <div className="Signin-form-content">
             <span style={{ fontWeight: 'bold', fontSize: 45 }}>Settings</span>

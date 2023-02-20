@@ -3,7 +3,7 @@ import React from 'react';
 const Notifications = () => {
     return (
 
-        <div className="Signin-form-container">
+        <div className="page-container">
         <form className="notifs-content">
           <div className="Signin-form-content">
 
