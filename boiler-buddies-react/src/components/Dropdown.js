@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import DropdownItem from './DropdownItem';
+import { Link } from 'react-router-dom';
 
 export default class Dropdown extends React.Component {
     static propTypes = {
@@ -13,13 +13,8 @@ export default class Dropdown extends React.Component {
         super(props);
     
         this.state = {
-          activeItem: this.props.children[0].props.label,
           open: false,
         };
-      }
-    
-      onClickItem = (item) => {
-        this.setState({ activeItem: item });
       }
 
       handleOpen = () => {
@@ -28,14 +23,12 @@ export default class Dropdown extends React.Component {
     
       render() {
         const {
-          onClickItem,
           handleOpen,
           props: {
             children,
             title
           },
           state: {
-            activeItem,
             open
           }
         } = this;
@@ -49,9 +42,15 @@ export default class Dropdown extends React.Component {
                 <div className='dropdown-content'>
                     <ul>
                     {children.map((child) => {
-                        const {label} = child.props;
+                        const label = child.props.label;
+                        const route = child.props.route;
                         return  (
-                            <li><button onClick={onClickItem}>{label}</button></li>
+                            <li>
+                                <Link className='dropdown-link' 
+                                to={route}
+                                onClick={() => this.setState( {open: false})}
+                                >{label}</Link>
+                            </li>
                         );
                     })
                     }

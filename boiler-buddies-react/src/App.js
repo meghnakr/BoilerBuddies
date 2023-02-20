@@ -1,5 +1,4 @@
 import { React, useState } from 'react';
-import logo from './assets/logo_text.png';
 import './App.css';
 import Navbar from './components/Navbar';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
@@ -22,8 +21,8 @@ function App(location) {
 
       <Router>
         <div className="App">
-        { showNav && <Navbar />
-        }
+            { showNav && <Navbar />
+            }
         <Routes>
         <Route exact path='/' element={<Feed funcNav={setShowNav}/>} />
         <Route path='/feed' element={<Feed funcNav={setShowNav}/>} />
@@ -34,9 +33,8 @@ function App(location) {
         <Route path="/signin" element={<Signin funcNav={setShowNav}/>} />
         <Route path='/forgot-password' element={<ForgotPW funcNav={setShowNav} />} />
         <Route path='/check-email' element={<CheckYourEmail funcNav={setShowNav} />} />
-        <Route path='/profile' element={<Profile funcNav={setShowNav} />} />
+        <Route path="/profile" element={<Profile funcNav={setShowNav} />} />
         <Route path="/settings" element={<Settings funcNav={setShowNav}/>} />
-
       </Routes>
       </div>
     </Router>

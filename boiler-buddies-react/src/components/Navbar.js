@@ -3,12 +3,9 @@ import {
 Nav,
 NavLink,
 NavMenu,
-NavBtn,
-NavBtnLink,
 } from './NavbarElements';
 import logo from '../assets/logo_text_w.png';
 import Dropdown from './Dropdown';
-import DropdownItem from './DropdownItem';
 
 const Navbar = () => {
 return (
@@ -32,9 +29,9 @@ return (
 		{/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
 		</NavMenu>
 		<Dropdown title="My Account">
-			<div label="Profile"/>
-			<div label="Account Setting" />
-			<div label="Sign Out" />
+			<div label="Profile" route="/profile"/>
+			<div label="Account Settings" route="/settings"/>
+			<div label="Sign Out" route="/signout"/>
 		</Dropdown>
 	</Nav>
 	</>

@@ -7,10 +7,8 @@
 .App-logo {
   height: 50%;
   margin-top: 3vmin;
-  margin-right: 0;
+  margin-right: -8vmin;
 }
-
-
 
 .App-header {
   background-color: white;
@@ -25,6 +23,14 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.page-container {
+  margin-top: 3vmin;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Tab component CSS */
@@ -67,6 +73,23 @@
 .dropdown-content {
   position: absolute;
 
+}
+
+.dropdown-link {
+  display: block;
+  height: 100%;
+  width: 100%;
+  color: black;
+  text-decoration: none;
+  text-align: left;
+  padding: 1vmin;
+  border: 1px
+}
+
+.dropdown-link:hover {
+  background-color: rgb(207, 207, 207);
+  text-decoration: none;
+  color: black
 }
 
 .dropdown-content ul {
@@ -232,6 +255,45 @@ input:focus {
 .link-text {
   color: grey;
   margin: 8px;
+}
+
+/** profile page css **/
+
+.profile-header {
+  border: 1px solid black;
+  margin-top: 1vmin;
+  padding: 4vmin;
+  padding-top: 2vmin;
+  padding-bottom: 2vmin;
+  display: flex;
+}
+
+.profile-header h2 {
+  font-weight: bold;
+}
+
+.profile-picture {
+  margin: auto;
+  float: left;
+  align-items: center;
+  width: 10%;
+  position: relative;
+  
+}
+
+
+
+.profile-picture img {
+  width: 100%;
+  vertical-align: middle;
+}
+
+.profile-info {
+  float: left;
+  width: 90%;
+  text-align: left;
+  padding-left: 2vmin;
+  line-height: 0;
 }
 
 

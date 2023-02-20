@@ -7,13 +7,14 @@ background: #88BBF6;
 height: 85px;
 display: flex;
 justify-content: space-between;
-padding: 0.2rem calc((100vw - 1000px) / 2);
+padding: 0.1rem calc((100vw - 1000px) / 2);
 z-index: 12;
 /* Third Nav */
 /* justify-content: flex-start; */
 `;
 
 export const NavLink = styled(Link)`
+margin-top: 2vmin;
 color: white;
 display: flex;
 align-items: center;
@@ -24,7 +25,6 @@ cursor: pointer;
 &.active {
 	color: black;
 	fontWeight: 'bold';
-	textDecorationLine: 'underline';
 }
 `;
 

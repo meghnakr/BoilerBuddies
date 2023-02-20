@@ -1,11 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../assets/logo_text.png'
+import Tabs from '../components/Tabs'
 
 export default function Settings(props) {
     return (
-        <>
-<div className="Signin-form-container">
+      <div className="page-container">
       <form className="Settings-form">
         <div className="Signin-form-content">
           <span style={{ fontWeight: 'bold', fontSize: 45 }}>Settings</span>
@@ -31,8 +31,7 @@ export default function Settings(props) {
           </div>
 
         </div>
-      </form>
+    </form>
     </div>
-        </>
     )
 }
