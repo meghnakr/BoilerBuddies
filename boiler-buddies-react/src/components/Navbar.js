@@ -13,7 +13,7 @@ return (
 	<>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 	<Nav>
-		<img className='App-logo' src={logo} alt="Logo" />
+		<img className='App-logo' style={{marginTop: '4vmin'}} src={logo} alt="Logo" />
 		<NavMenu>
 			
 		<NavLink to='/feed' activeStyle>
