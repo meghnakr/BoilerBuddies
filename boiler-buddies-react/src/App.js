@@ -12,6 +12,10 @@ import CheckYourEmail from './pages/checkEmail';
 import Account from './pages/account';
 import Profile from './pages/profile';
 import Settings from './pages/settings';
+import Signup from './pages/signup';
+import Notifications from './pages/notifications';
+
+
 import "bootstrap/dist/css/bootstrap.min.css"
 
 
@@ -35,6 +39,10 @@ function App(location) {
         <Route path='/check-email' element={<CheckYourEmail funcNav={setShowNav} />} />
         <Route path="/profile" element={<Profile funcNav={setShowNav} />} />
         <Route path="/settings" element={<Settings funcNav={setShowNav}/>} />
+        <Route path="/signup" element={<Signup funcNav={setShowNav}/>} />
+        <Route path="/notifications" element={<Notifications funcNav={setShowNav}/>} />
+
+
       </Routes>
       </div>
     </Router>

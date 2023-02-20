@@ -153,6 +153,18 @@
   background-color: white;
 }
 
+.Signup-form {
+  display: block;
+  width: 900px;
+  height: 3000px;
+  box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+  padding-top: 100px;
+  margin-top: 100px;
+  padding-bottom: 50px;
+  border-radius: 8px;
+  background-color: white;
+}
+
 .Signin-form-content {
   padding-left: 10%;
   padding-right: 10%;
@@ -296,4 +308,16 @@ input:focus {
   line-height: 0;
 }
 
+
+.notifs-content  {
+  display: block;
+  width: 900px;
+  height: 3000px;
+  box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+  padding-top: 100px;
+  margin-top: 100px;
+  padding-bottom: 200px;
+  border-radius: 8px;
+  background-color: white;
+}
 
