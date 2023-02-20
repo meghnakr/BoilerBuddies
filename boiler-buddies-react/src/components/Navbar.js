@@ -9,6 +9,7 @@ NavBtnLink,
 import logo from '../assets/logo_text_w.png';
 import Dropdown from './Dropdown';
 import DropdownItem from './DropdownItem';
+import {Link } from "react-router-dom";
 
 const Navbar = () => {
 return (
@@ -31,11 +32,13 @@ return (
 		{/* Second Nav */}
 		{/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
 		</NavMenu>
+
 		<Dropdown title="My Account">
 			<div label="Profile"/>
-			<div label="Account Setting" />
+			<div label="Account Setting" /> 
 			<div label="Sign Out" />
 		</Dropdown>
+
 	</Nav>
 	</>
 );
