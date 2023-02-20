@@ -12,6 +12,7 @@ import ForgotPW from './pages/forgotPW';
 import CheckYourEmail from './pages/checkEmail';
 import Account from './pages/account';
 import Profile from './pages/profile';
+import Settings from './pages/settings';
 import "bootstrap/dist/css/bootstrap.min.css"
 
 
@@ -34,6 +35,8 @@ function App(location) {
         <Route path='/forgot-password' element={<ForgotPW funcNav={setShowNav} />} />
         <Route path='/check-email' element={<CheckYourEmail funcNav={setShowNav} />} />
         <Route path='/profile' element={<Profile funcNav={setShowNav} />} />
+        <Route path="/settings" element={<Settings funcNav={setShowNav}/>} />
+
       </Routes>
       </div>
     </Router>
