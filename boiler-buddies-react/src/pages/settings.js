@@ -15,7 +15,7 @@ export default function Settings(props) {
 
 
             <div className="form 3">
-              <button type="editProfile" className="settings-btn">
+              <button type="editProfile" className="settings-btn" value='/edit-profile' onClick={handleClick}>
                 Edit Profile
               </button>
 
