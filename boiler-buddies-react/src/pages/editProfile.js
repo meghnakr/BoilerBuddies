@@ -1,4 +1,4 @@
-import { Modal } from 'bootstrap';
+import  Modal  from 'react-modal';
 import React, {useState} from 'react';
 import logo from '../assets/logo_vector.png';
 
@@ -12,9 +12,9 @@ export default function EditProfile() {
     return (
         <div className='page-container'>
             <div className='profile-photo-container'>
-                <div className='profile-photo-circle'>
+                <div className='profile-photo-circle' onClick={toggleModal}>
                     <img src={logo} alt='img'/>
-                    <div className='upload-icon' onClick={toggleModal}>
+                    <div className='upload-icon' >
                         <i className='fa fa-upload' style={{fontSize: '4vmin'}}></i>
                     </div>
                 </div>
@@ -22,7 +22,8 @@ export default function EditProfile() {
             <Modal 
                 isOpen={uploadModal}
                 onRequestClose={toggleModal}
-                contentLabel="Upload photo">
+                contentLabel="Upload photo"
+                portalClassName='upload-modal'>
                     <div className='profile-photo'>
                         {selectedImage && (
                             <div className='photo-preview'>
@@ -33,7 +34,8 @@ export default function EditProfile() {
                         )}
                     <input
                         type="file"
-                        name="myImage"
+                        className='profile-upload'
+                        name="profileImage"
                         onChange={(event) => {
                             setSelectedImage(event.target.files[0]);
                     }}

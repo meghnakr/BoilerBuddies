@@ -369,16 +369,26 @@ input:focus {
   height: 100%;
   object-fit: cover;
 }
+
+
 .photo-preview img {
+  margin: auto;
+  margin-top: 7vmin;
   width: 50%;
   display: block;
 }
 .photo-preview button {
+  margin: 2vmin auto;
   display: block;
   width: fit-content;
   text-transform: capitalize;
   font-weight: normal;
 }
+
+.profile-upload {
+  margin: 0 auto;
+}
+
 
 
 .notifs-content  {
