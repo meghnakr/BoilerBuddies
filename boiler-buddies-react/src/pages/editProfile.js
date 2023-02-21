@@ -1,4 +1,4 @@
-import  Modal  from 'react-modal';
+import  Modal  from 'react-modal'; //run 'npm install react-modal' if error
 import React, {useState} from 'react';
 import logo from '../assets/logo_vector.png';
 
