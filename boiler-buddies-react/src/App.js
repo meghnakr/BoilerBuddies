@@ -18,6 +18,7 @@ import Notifications from './pages/notifications';
 
 import "bootstrap/dist/css/bootstrap.min.css"
 import SetNewPassword from './pages/forgotPassword/setNewPassword';
+import EditProfile from './pages/editProfile';
 
 
 function App(location) {
@@ -40,6 +41,7 @@ function App(location) {
         <Route path='/check-email' element={<CheckYourEmail funcNav={setShowNav} />} />
         <Route path='/set-new-password' element={<SetNewPassword funcNav={setShowNav} />} />
         <Route path="/profile" element={<Profile funcNav={setShowNav} />} />
+        <Route path="/edit-profile" element={<EditProfile funcNav={setShowNav} />} />
         <Route path="/settings" element={<Settings funcNav={setShowNav}/>} />
         <Route path="/signup" element={<Signup funcNav={setShowNav}/>} />
         <Route path="/notifications" element={<Notifications funcNav={setShowNav}/>} />

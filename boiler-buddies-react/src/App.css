@@ -326,6 +326,70 @@ input:focus {
   no-repeat 13px center;
 }
 
+/** end of friend page css **/
+
+/** edit profile css **/
+.profile-photo-container {
+  width: 20vmin;
+}
+.profile-photo-circle {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding: 100% 0 0;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid black;
+}
+
+.upload-icon {
+  transition: .5s ease;
+  visibility: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.profile-photo-circle:hover img{
+  opacity: 0.3;
+}
+
+.profile-photo-circle:hover .upload-icon{
+  visibility: visible;
+}
+
+.profile-photo-circle img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+.photo-preview img {
+  margin: auto;
+  margin-top: 7vmin;
+  width: 50%;
+  display: block;
+}
+.photo-preview button {
+  margin: 2vmin auto;
+  display: block;
+  width: fit-content;
+  text-transform: capitalize;
+  font-weight: normal;
+}
+
+.profile-upload {
+  margin: 0 auto;
+}
+
+
 
 .notifs-content  {
   display: block;
