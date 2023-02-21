@@ -1,9 +1,11 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import logo from '../assets/logo_text.png'
-import Tabs from '../components/Tabs'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function Settings(props) {
+  const navigate = useNavigate();
+  const handleClick = (event) => {
+    navigate(event.target.value);
+  }
   return (
     <>
       <div className="page-container">
@@ -17,7 +19,7 @@ export default function Settings(props) {
                 Edit Profile
               </button>
 
-              <button type="changePassword" className="settings-btn">
+              <button type="changePassword" className="settings-btn" value='/set-new-password' onClick={handleClick}>
                 Change Password
               </button>
 

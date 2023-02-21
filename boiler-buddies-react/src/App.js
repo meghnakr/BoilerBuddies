@@ -7,8 +7,8 @@ import Forum from './pages/forums.js';
 import Friends from './pages/friends';
 import Messages from './pages/messages.js';
 import Signin from './pages/Signin.js';
-import ForgotPW from './pages/forgotPW';
-import CheckYourEmail from './pages/checkEmail';
+import ForgotPW from './pages/forgotPassword/forgotPW';
+import CheckYourEmail from './pages/forgotPassword/checkEmail';
 import Account from './pages/account';
 import Profile from './pages/profile';
 import Settings from './pages/settings';
@@ -17,6 +17,7 @@ import Notifications from './pages/notifications';
 
 
 import "bootstrap/dist/css/bootstrap.min.css"
+import SetNewPassword from './pages/forgotPassword/setNewPassword';
 
 
 function App(location) {
@@ -37,6 +38,7 @@ function App(location) {
         <Route path="/signin" element={<Signin funcNav={setShowNav}/>} />
         <Route path='/forgot-password' element={<ForgotPW funcNav={setShowNav} />} />
         <Route path='/check-email' element={<CheckYourEmail funcNav={setShowNav} />} />
+        <Route path='/set-new-password' element={<SetNewPassword funcNav={setShowNav} />} />
         <Route path="/profile" element={<Profile funcNav={setShowNav} />} />
         <Route path="/settings" element={<Settings funcNav={setShowNav}/>} />
         <Route path="/signup" element={<Signup funcNav={setShowNav}/>} />
