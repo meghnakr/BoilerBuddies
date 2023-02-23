@@ -37,7 +37,7 @@ export default class Dropdown extends React.Component {
         return (
           <div className="dropdown">
             <button className='default-btn-white' 
-            style={{marginTop: '3vmin'}} onClick={handleOpen}>{title} <i>&#9660;</i>
+            style={{marginTop: '3.5vmin'}} onClick={handleOpen}>{title} <i>&#9660;</i>
             </button>
             {open ? (
                 <div className='dropdown-content'>

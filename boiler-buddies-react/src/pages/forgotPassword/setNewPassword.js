@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import logo from '../../assets/logo_text.png';
+import axios from 'axios';
+import endpoint from '../../global';
 
 export default function SetNewPassword(props) {
     props.funcNav(false);
@@ -10,7 +12,6 @@ export default function SetNewPassword(props) {
     const handleSubmit = () => {
         if (match & valid) {
             console.log('Reset password');
-            //call backend here
         } else {
             setPassword('');
             setConfirm('');

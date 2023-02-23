@@ -1,7 +1,7 @@
 import { React, useState } from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
 import Feed from './pages/feed.js';
 import Forum from './pages/forums.js';
 import Friends from './pages/friends';
@@ -30,7 +30,7 @@ function App(location) {
             { showNav && <Navbar />
             }
         <Routes>
-        <Route exact path='/' element={<Feed funcNav={setShowNav}/>} />
+        <Route exact path='/' element={<Navigate to='/feed'/>} />
         <Route path='/feed' element={<Feed funcNav={setShowNav}/>} />
         <Route path='/forums' element={<Forum funcNav={setShowNav}/> } />
         <Route path="/friends" element={<Friends funcNav={setShowNav}/>} />

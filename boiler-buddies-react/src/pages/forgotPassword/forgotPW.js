@@ -9,7 +9,6 @@ export default function ForgotPW(props) {
     const [email, setEmail] = useState('');
 
     const handleSubmit = () => {
-        // connect to database
         navigate('/check-email', {state: {email: `${email}`}});
 
     }

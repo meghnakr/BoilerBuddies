@@ -1,6 +1,5 @@
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { app } from "./firebase";
-
 /* ALL authentication handled here */
 // Initialize Firebase Authentication and get a reference to the service
 const auth = getAuth(app);
@@ -24,4 +23,6 @@ export function addNewUser(email, password) {
             const errorMessage = error.message;
             // ..
     });
+
+    
 }

@@ -1,47 +1,75 @@
-import  Modal  from 'react-modal'; //run 'npm install react-modal' if error
-import React, {useState} from 'react';
-import logo from '../assets/logo_vector.png';
+import Modal from 'react-modal'; //run 'npm install react-modal' if error
+import React, {useRef, useState} from 'react';
 
 export default function EditProfile() {
-    const [uploadModal, setUpload] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
+    const inputFile = useRef(null);
 
-    const toggleModal = () => {
-        setUpload(!uploadModal);
+    const uploadPhoto = () => {
+        inputFile
+            .current
+            .click();
     }
+
     return (
         <div className='page-container'>
-            <div className='profile-photo-container'>
-                <div className='profile-photo-circle' onClick={toggleModal}>
-                    <img src={logo} alt='img'/>
-                    <div className='upload-icon' >
-                        <i className='fa fa-upload' style={{fontSize: '4vmin'}}></i>
+            <form className='edit-profile-form' type="submit">
+                <h3
+                    style={{
+                        fontWeight: 'bolder'
+                    }}>Edit Profile</h3>
+                <div className='profile-photo'>
+                    <div className='profile-photo-container'>
+                        <div className='profile-photo-circle'>
+                            <div className='upload-icon' >
+                            <i className='fa fa-user' style={{fontSize: '9vmin'}}></i>
+                            </div>
+                            {selectedImage &&
+                                <img src={URL.createObjectURL(selectedImage)} alt='img'/>
+                            }
+                            
+                        </div>
+
+                    </div>
+                    <div className='button-container'>
+                        
+                        <label for="upload-file" ><i className="fa fa-upload" style={{marginRight:"4px"}}/>
+                             Upload photo</label>
+                            <input
+                            type="file" id="upload-file" accept='image/*'
+                            ref={inputFile} style={{display:'none'}}
+                            onChange={(event) => {
+                                setSelectedImage(event.target.files[0]);
+                            }}/>
+                        <button className='default-btn-white' onClick={() => {setSelectedImage(null)}}><i className="fa fa-trash" style={{marginRight:"4px"}}/>
+                            Remove photo</button>
                     </div>
                 </div>
-            </div>
-            <Modal 
-                isOpen={uploadModal}
-                onRequestClose={toggleModal}
-                contentLabel="Upload photo"
-                portalClassName='upload-modal'>
-                    <div className='profile-photo'>
-                        {selectedImage && (
-                            <div className='photo-preview'>
-                                <img alt="not found"
-                                    src={URL.createObjectURL(selectedImage)} />
-                                <button className='default-btn' onClick={() => setSelectedImage(null)}>Remove</button>
-                            </div>
-                        )}
-                    <input
-                        type="file"
-                        className='profile-upload'
-                        name="profileImage"
-                        onChange={(event) => {
-                            setSelectedImage(event.target.files[0]);
-                    }}
-                />
+
+                <div className="profile-info">
+                    <div>
+                        <label>Display Name</label>
+                        <input type="text" value=''/>
+                    </div>
+                    <div>
+                        <label>Interests</label>
+                        <select name="interest">
+                            <option></option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Bio</label>
+                        <textarea type="text" placeholder="Bio" cols="40" rows="5"/>
+                    </div>
+
                 </div>
-            </Modal>
+                <button
+                    type="submit"
+                    className='default-btn'
+                    style={{
+                        width: '80%'
+                    }}>Save profile</button>
+            </form>
         </div>
     )
 }
