@@ -14,11 +14,10 @@ import Profile from './pages/profile';
 import Settings from './pages/settings';
 import Signup from './pages/signup';
 import Notifications from './pages/notifications';
-
-
 import "bootstrap/dist/css/bootstrap.min.css"
 import SetNewPassword from './pages/forgotPassword/setNewPassword';
 import EditProfile from './pages/editProfile';
+import CreateProfile from './pages/createProfile';
 
 
 function App(location) {
@@ -44,6 +43,7 @@ function App(location) {
         <Route path="/edit-profile" element={<EditProfile funcNav={setShowNav} />} />
         <Route path="/settings" element={<Settings funcNav={setShowNav}/>} />
         <Route path="/signup" element={<Signup funcNav={setShowNav}/>} />
+        <Route path="/create-profile" element={<CreateProfile funcNav={setShowNav}/>} />
         <Route path="/notifications" element={<Notifications funcNav={setShowNav}/>} />
 
 
