@@ -13,7 +13,9 @@
     "multiselect-react-dropdown": "^2.0.25",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-firebase-hooks": "^5.1.1",
     "react-modal": "^3.16.1",
+    "react-multi-select-component": "^4.3.4",
     "react-router-dom": "^6.8.1",
     "react-scripts": "5.0.1",
     "reactstrap": "git+https://github.com/reactstrap/reactstrap.git",
@@ -21,7 +23,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "env-cmd -f .env react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -46,6 +48,7 @@
   },
   "devDependencies": {
     "css-loader": "^6.7.3",
+    "env-cmd": "^10.1.0",
     "style-loader": "^3.3.1"
   }
 }

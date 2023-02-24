@@ -1,3 +1,3 @@
-const endpoint = "http://localhost:3000/";
+const endpoint = "http://54.200.193.22:3000/";
 
 export { endpoint }

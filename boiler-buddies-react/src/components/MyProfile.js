@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Multiselect from 'multiselect-react-dropdown';
+import axios from 'axios';
+import { endpoint } from '../global';
+import { Multiselect } from "multiselect-react-dropdown";
 
 export default class MyProfile extends React.Component {
     static propTypes = {
@@ -11,19 +13,70 @@ export default class MyProfile extends React.Component {
 
     constructor(props) {
         super(props);
-    
+
         this.state = {
-          selectedImage: null,
-          name: this.props.displayName,
-          tags: this.props.interestTags,
-          biography: this.props.bio,
+            selectedImage: null,
+            name: this.props.displayName,
+            tags: this.props.interestTags,
+            biography: this.props.bio,
+            base64Image: ""
         };
 
-      }
+    }
 
-      handleSubmit = () => {
+    handleSubmit = () => {
+        let profile = {
+            token: 0,
+            displayName: this.state.name,
+            interests: this.state.tags,
+            intro: this.state.biography,
+            bigImage: this.state.base64Image,
+            smallImage: this.state.base64Image
+        }
+        axios.post(endpoint + "updateUser/", {
+            header: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            profile})
+            .then(response => console.log(response));
+        
+    }
 
-      }
+    handleFileInputChange = (event) => {
+        this.setState({
+            selectedImage: event
+                .target
+                .files[0]
+        });
+
+        let file = event.target.files[0]
+
+        this.convertToBase64(file).then(result => {
+            this.setState({base64Image: result});
+        }).catch(err => {
+            console.log(err);
+          });
+    }
+
+    convertToBase64 = (file) => {
+        return new Promise(resolve => {
+            let fileInfo;
+            let baseURL = "";
+            // Make new FileReader
+            let reader = new FileReader();
+
+            // Convert the file to base64 text
+            reader.readAsDataURL(file);
+
+            // on reader load somthing...
+            reader.onload = () => {
+                // Make a fileInfo Object
+                baseURL = reader.result;
+                resolve(baseURL);
+            };
+        });
+    }
+
 
     render() {
         const {
@@ -54,11 +107,11 @@ export default class MyProfile extends React.Component {
                     </div>
                     <div className='button-container'>
 
-                        <label for="upload-file"><i
+                        <label htmlFor="upload-file"><i
                             className="fa fa-upload"
                             style={{
-                marginRight: "4px"
-            }}/>
+                    marginRight: "4px"
+                }}/>
                             Upload photo</label>
                         <input
                             type="file"
@@ -67,9 +120,7 @@ export default class MyProfile extends React.Component {
                             style={{
                                 display: 'none'
                             }}
-                            onChange={(event) => {
-                                this.setState({selectedImage: event.target.files[0]});
-                            }}/>
+                            onChange={this.handleFileInputChange}/>
                         <button
                             className='default-btn-white'
                             onClick={() => {
@@ -77,8 +128,8 @@ export default class MyProfile extends React.Component {
                             }}><i
                             className="fa fa-trash"
                             style={{
-                marginRight: "4px"
-            }}/>
+                    marginRight: "4px"
+                }}/>
                             Remove photo</button>
                     </div>
                 </div>
@@ -91,8 +142,9 @@ export default class MyProfile extends React.Component {
                     <div>
                         <label>Interests</label>
                         <Multiselect
-                        placeholder='' selectedValues={tags}
-                        style={{
+                            
+                            selectedValues={tags}
+                            style={{
                                 searchBox: {
                                     borderRadius: '0%',
                                     border: '0.5px solid grey',
