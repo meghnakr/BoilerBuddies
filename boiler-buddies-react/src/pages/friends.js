@@ -1,6 +1,8 @@
-import { React, useState } from 'react';
+import React from "react";
+import { useState } from "react";
 
-/*handleSubmit = () => {
+/*
+handleSubmit = () => {
     let profile = {
         token: 0,
         displayName: this.state.name,

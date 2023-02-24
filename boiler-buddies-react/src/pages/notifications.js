@@ -1,4 +1,5 @@
 import React from 'react';
+import FriendProfile from '../components/FriendProfile';
 
 const Notifications = () => {
     return (
@@ -11,6 +12,9 @@ const Notifications = () => {
             <p></p>
 
             {/* INSERT IMPLEMENTATION FOR ADDING FRIEND REQUESTS ARRAY HERE */}
+            {Array(10).fill(0).map(() => <FriendProfile/>)}
+            {/* Replace Array.fill with actual array from database holding friends to user */}
+
 
             <p></p>
             <p></p>

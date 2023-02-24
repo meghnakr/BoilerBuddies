@@ -41,6 +41,9 @@ export function UserProvider(props) {
       user.getIdToken().then(function(token) {
         setToken(token);
       })
+      console.log("USER: ", user);
+      console.log("UID: ", user.uid);
+
       // ...
     } else {
       // User is signed out
