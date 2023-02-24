@@ -1,6 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { getFirestore } from "firebase/firestore";
+
 
 /* Initialize the firebase */
 
@@ -22,8 +24,10 @@ const firebaseConfig = {
 console.log("This is the project id: ", process.env.REACT_APP_PROJECTID)
 
 // Initialize Firebase
-export const app = initializeApp(firebaseConfig);       // to access app from other files
+const app = initializeApp(firebaseConfig);       // to access app from other files
 const analytics = getAnalytics(app);
 
+// Initialize Cloud Firestore and get a reference to the service
+//const db = getFirestore(app);
 
-
+export {app}

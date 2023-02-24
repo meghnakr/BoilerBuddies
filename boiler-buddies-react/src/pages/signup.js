@@ -7,7 +7,7 @@ import { addNewUser } from "../utils/auth";
 export default function (props) {
   props.funcNav(false);
   // UseState to keep track of email and password pairs      
-  const [formState, setFormState] = useState({ email: "", password: "" });
+  const [formState, setFormState] = useState({ email: "", password: "" });    // keep track of all states here
   console.log(formState)
 
   function handleSignUpButton () {
