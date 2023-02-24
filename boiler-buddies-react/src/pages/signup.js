@@ -1,17 +1,19 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import logo from '../assets/logo_text.png';
 import { useState } from "react";
 import { addNewUser } from "../utils/auth";
 
-export default function (props) {
+export default function Signup (props) {
   props.funcNav(false);
-  // UseState to keep track of email and password pairs      
-  const [formState, setFormState] = useState({ email: "", password: "" });    // keep track of all states here
+  // UseState to keep track of email and password pairs
+  const navigate = useNavigate();
+  const [formState, setFormState] = useState({ email: "", password: "" });
   console.log(formState)
 
   function handleSignUpButton () {
     addNewUser(formState.email, formState.password);
+    navigate('/create-profile', {replace: true})
   }
 
   return (
