@@ -37,6 +37,9 @@ export function UserProvider(props) {
       const uid = user.uid;
       setLoggedIn(true);
       setUser(user);
+      console.log("USER: ", user);
+      console.log("UID: ", user.uid);
+
       // ...
     } else {
       // User is signed out
