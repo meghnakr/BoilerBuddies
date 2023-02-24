@@ -4,11 +4,11 @@ import {query, getDocs, collection, where, addDoc,} from "firebase/firestore";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 
+
 /* ALL authentication handled here */
 // Initialize Firebase Authentication and get a reference to the service
 export const auth = getAuth(app);
 //signOut(auth);            // Use this to clear cookies
-
 
 export  function addNewUser(email, password) {
     // check if no email or password
@@ -69,6 +69,8 @@ export  function signInUser(email, password) {
 }
 
 
-export  function signOutUser() {
-    signOut(auth);
+export  async function signOutUser(navigate) {
+    await(signOut(auth));
+    navigate("/signin")
+    
 }
