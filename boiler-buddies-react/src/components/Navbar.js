@@ -53,7 +53,7 @@ return (
 		<Dropdown title="My Account">
 			<div label="Profile" route="/profile"/>
 			<div label="Account Settings" route="/settings"/>
-			<div label="Sign Out" onClick={()=>{signOutUser()}} route="/signin"/>
+			<div label="Sign Out" onClick={()=>{signOutUser(navigate)}}/>
 			{/* Look up how to make it redirect after signout goes through */}
 			
 		</Dropdown>
