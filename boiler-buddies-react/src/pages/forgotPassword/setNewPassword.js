@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import logo from '../../assets/logo_text.png';
-import axios from 'axios';
 import endpoint from '../../global';
 
 export default function SetNewPassword(props) {
