@@ -6,6 +6,11 @@ NavMenu,
 } from './NavbarElements';
 import logo from '../assets/logo_text_w.png';
 import Dropdown from './Dropdown';
+import { UserContext } from '../context/userContext';
+import { signOut } from '@firebase/auth';
+import { signOutUser } from '../utils/auth';
+
+//export const auth = getAuth(app);
 import {Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
@@ -48,7 +53,9 @@ return (
 		<Dropdown title="My Account">
 			<div label="Profile" route="/profile"/>
 			<div label="Account Settings" route="/settings"/>
-			<div label="Sign Out" route="/signout"/>
+			<div label="Sign Out" onClick={()=>{signOutUser(navigate)}}/>
+			{/* Look up how to make it redirect after signout goes through */}
+			
 		</Dropdown>
 
 	</Nav>

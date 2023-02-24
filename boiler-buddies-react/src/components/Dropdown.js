@@ -1,64 +1,67 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import React from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 export default class Dropdown extends React.Component {
-    static propTypes = {
-        children: PropTypes.instanceOf(Array).isRequired,
-        title: PropTypes.string.isRequired,
-      }
+  static propTypes = {
+    children: PropTypes.instanceOf(Array).isRequired,
+    title: PropTypes.string.isRequired,
+  };
 
-    
-      constructor(props) {
-        super(props);
-    
-        this.state = {
-          open: false,
-        };
-      }
+  constructor(props) {
+    super(props);
 
-      handleOpen = () => {
-        this.setState( {open: !this.state.open});
-      }
-    
-      render() {
-        const {
-          handleOpen,
-          props: {
-            children,
-            title
-          },
-          state: {
-            open
-          }
-        } = this;
+    this.state = {
+      open: false,
+    };
+  }
 
-    
-        return (
-          <div className="dropdown">
-            <button className='default-btn-white' 
-            style={{marginTop: '3.5vmin'}} onClick={handleOpen}>{title} <i>&#9660;</i>
-            </button>
-            {open ? (
-                <div className='dropdown-content'>
-                    <ul>
-                    {children.map((child) => {
-                        const label = child.props.label;
-                        const route = child.props.route;
-                        return  (
-                            <li>
-                                <Link className='dropdown-link' 
-                                to={route}
-                                onClick={() => this.setState( {open: false})}
-                                >{label}</Link>
-                            </li>
-                        );
-                    })
-                    }
-                    </ul>
-                </div>
-            ) : null}
-            {/*
+  handleOpen = () => {
+    this.setState({ open: !this.state.open });
+  };
+
+  render() {
+    const {
+      handleOpen,
+      props: { children, title },
+      state: { open },
+    } = this;
+
+    return (
+      <div className="dropdown">
+        <button
+          className="default-btn-white"
+          style={{ marginTop: "3vmin" }}
+          onClick={handleOpen}
+        >
+          {title} <i>&#9660;</i>
+        </button>
+        {open ? (
+          <div className="dropdown-content">
+            <ul>
+              {children.map((child, idx) => {
+                const label = child.props.label;
+                const route = child.props.route;
+                const onClick = child.props.onClick;
+                return (
+                  <li key={idx}>
+                    <Link
+                      className="dropdown-link"
+                      to={route}
+                      onClick={() => {
+                        onClick();
+                        this.setState({ open: false });
+                      }}
+                    >
+                      {label}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ) : null}
+        {/*
             {open ? (
                 <ol className="dropdown-list">
                 {children.map((child) => {
@@ -83,7 +86,7 @@ export default class Dropdown extends React.Component {
               })}
             </div> 
             */}
-          </div>
-        );
-      }
+      </div>
+    );
+  }
 }

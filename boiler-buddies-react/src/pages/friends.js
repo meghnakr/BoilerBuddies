@@ -1,5 +1,24 @@
-import { React, useState } from 'react';
+import React from "react";
+import { useState } from "react";
 
+/*
+handleSubmit = () => {
+    let profile = {
+        token: 0,
+        displayName: this.state.name,
+        interests: this.state.tags,
+        intro: this.state.biography,
+        bigImage: this.state.base64Image,
+        smallImage: this.state.base64Image
+    }
+    axios.post(endpoint + "updateUser/", {
+        header: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        profile})
+        .then(response => console.log(response));
+    
+}*/
 
 const Friends = () => {
     const [search, setSearch] = useState('');
