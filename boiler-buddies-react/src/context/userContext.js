@@ -27,7 +27,8 @@ export const UserContext = createContext({ user: initialUser, isLoggedIn: false 
 export function UserProvider(props) {
   const [user, setUser] = useState(initialUser);
   const [loggedIn, setLoggedIn] = useState(false);
-  const value = { user, loggedIn };
+  const [token, setToken] = useState(null);
+  const value = { user, loggedIn , token };
 
     
   onAuthStateChanged(auth, (user) => {
@@ -37,12 +38,16 @@ export function UserProvider(props) {
       const uid = user.uid;
       setLoggedIn(true);
       setUser(user);
+      user.getIdToken().then(function(token) {
+        setToken(token);
+      })
       // ...
     } else {
       // User is signed out
       // ...
       setLoggedIn(false);
       setUser(initialUser);
+      setToken(null);
       console.log("IN USERCONTEXT FILE:", user);
     }
   });

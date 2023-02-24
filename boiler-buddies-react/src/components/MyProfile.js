@@ -6,6 +6,7 @@ import { Multiselect } from "multiselect-react-dropdown";
 
 export default class MyProfile extends React.Component {
     static propTypes = {
+        tokenId: PropTypes.string.isRequired,
         displayName: PropTypes.string,
         interestTags: PropTypes.instanceOf(Array),
         bio: PropTypes.string
@@ -14,6 +15,8 @@ export default class MyProfile extends React.Component {
     constructor(props) {
         super(props);
 
+       this.token = this.props.tokenId;
+
         this.state = {
             selectedImage: null,
             name: this.props.displayName,
@@ -21,18 +24,20 @@ export default class MyProfile extends React.Component {
             biography: this.props.bio,
             base64Image: ""
         };
-
     }
+
+    
 
     handleSubmit = () => {
         let profile = {
-            token: 0,
+            token: this.token,
             displayName: this.state.name,
             interests: this.state.tags,
             intro: this.state.biography,
             bigImage: this.state.base64Image,
             smallImage: this.state.base64Image
         }
+        console.log(profile);
         axios.post(endpoint + "updateUser/", {
             header: {
                 'Content-Type': 'application/x-www-form-urlencoded'
