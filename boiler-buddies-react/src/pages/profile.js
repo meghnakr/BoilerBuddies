@@ -7,7 +7,7 @@ import {endpoint} from '../global';
 
 export default function Profile() {
     const currentUser = useUser();
-    const username = currentUser.username;
+    const username = "ntra";
     //const [username, setUsername] = useState('ntra')
     const [userData, setUserData] = useState({displayName: '', interests: '', bio: '', image: null})
     const [hasData, setHasData] = useState(false)
@@ -30,6 +30,9 @@ export default function Profile() {
             xmlHttp.send(null);
             var response = JSON.parse(xmlHttp.responseText);
             console.log(response)
+            if(response.interests === '&&') {
+                response.interests = '';
+            }
             setUserData(
                 {displayName: response.display_name, interests: response.interests.replaceAll('&&', ', '), bio: response.intro, image: response.big_image}
             )
@@ -45,7 +48,7 @@ export default function Profile() {
 
     return (
         <div className="page-container">
-            {(userData.displayName==='' & userData.interests==='' & userData.bio==='' & userData.image==='')
+            {(userData.displayName==='' & userData.interests===', ' & userData.bio==='' & userData.image==='')
             ? <div>
                 <h4>You haven't created a profile yet. Create a profile <Link to='/edit-profile'>here</Link>.</h4>
                 </div>

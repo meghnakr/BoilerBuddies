@@ -6,7 +6,7 @@ import {  useNavigate } from "react-router-dom";
 
 export default function EditProfile() {
     const currentUser = useUser();
-    const username = currentUser.username;
+    const username = "ntra";
     //const [username, setUsername] = useState('ntra')
     const [userData, setUserData] = useState({displayName: '', interests: '', bio: '', image: null})
     const [hasData, setHasData] = useState(false)
