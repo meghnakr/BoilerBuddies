@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import { endpoint } from '../global';
 import { Multiselect } from "multiselect-react-dropdown";
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 export default class MyProfile extends React.Component {
     static propTypes = {
@@ -46,7 +45,7 @@ export default class MyProfile extends React.Component {
         //params.append('token', this.token)
         params.append('username', this.username)
         params.append('displayName', this.state.name)
-        params.append('interests', this.state.tags)
+        params.append('interests', this.state.tags.replace("/,\s*/", "&&"))
         params.append('intro', this.state.biography)
         params.append('bigImage', this.state.base64Image)
         params.append('smallImage', this.state.base64Image)
@@ -62,7 +61,6 @@ export default class MyProfile extends React.Component {
         xmlHttp.open( "GET", updateRequestURL, false ); // false for synchronous request
         xmlHttp.send(null);
         console.log(xmlHttp.responseText);
-        this.setState({submit: true})
         /*
         let profile = {
             token: this.token,
@@ -122,12 +120,10 @@ export default class MyProfile extends React.Component {
     render() {
         const {
             state: {
-                selectedImage,
                 name,
                 tags,
                 biography,
                 base64Image,
-                submit
             },
             handleSubmit, route
         } = this;
@@ -185,7 +181,10 @@ export default class MyProfile extends React.Component {
                         onChange={(event) => {this.setState({name:event.target.value})}}/>
                     </div>
                     <div>
-                        <label>Interests</label>
+                        <label>Interests <i>(Seperate each tag with a comma)</i></label>
+                        <input type="text" value={tags} 
+                        onChange={(event) => {this.setState({tags:event.target.value})}}/>
+                        {/*
                         <Multiselect
                             
                             selectedValues={tags}
@@ -199,7 +198,7 @@ export default class MyProfile extends React.Component {
                                     borderRadius: '0%',
                                     border: '0.5px solid grey'
                                 }
-                            }}/>
+                            }}/>*/}
                     </div>
                     <div>
                         <label>Bio</label>
@@ -214,7 +213,6 @@ export default class MyProfile extends React.Component {
                         width: '80%'
                     }}>Save profile</button>
             </form>
-            {submit ? <Navigate to='/feed' replace={true}/> : <></>}
             </>
         )
     }

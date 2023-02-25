@@ -3,7 +3,7 @@ import MyProfile from '../components/MyProfile';
 import {auth} from '../utils/auth';
 import useUser from "../hooks/useUser";
 import axios from 'axios';
-import {endpoint,username } from '../global';
+import {endpoint, username} from '../global';
 
 export default function EditProfile() {
     const currentUser = useUser();
@@ -20,25 +20,16 @@ export default function EditProfile() {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
         }
-        /*
-        axios
-            .get(endpoint + "getUser/", params, config)
-            .then(response => {
-                console.log(response)
-                setUserData(
-                    {displayName: response.data.display_name, interests: response.data.interests, bio: response.data.intro, image: response.data.big_image}
-                )
-            })*/
+
         var getUserRequestURL = endpoint + "getUser/?" + params
         var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET", getUserRequestURL, false ); // false for synchronous request
+        xmlHttp.open("GET", getUserRequestURL, false); // false for synchronous request
         xmlHttp.send(null);
-        var response = xmlHttp.responseText;
-        console.log(response);
+        var response = JSON.parse(xmlHttp.responseText);
         setUserData(
             {displayName: response.display_name, interests: response.interests, bio: response.intro, image: response.big_image}
         )
-    },[]);
+    }, []);
 
     return (
         <div className='page-container'>
@@ -54,6 +45,7 @@ export default function EditProfile() {
                 bio={userData.bio}
                 image={userData.image}
                 route="/"/>
+
         </div>
     )
 }

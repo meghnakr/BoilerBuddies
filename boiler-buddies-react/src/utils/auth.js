@@ -4,6 +4,7 @@ import {query, getDocs, collection, where, addDoc,} from "firebase/firestore";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import axios from 'axios';
 import { endpoint } from "../global";
+import { useNavigate } from "react-router-dom";
 
 // currentUser is referring to built-in firebase currentUser
 
@@ -41,9 +42,8 @@ export  function addNewUser(email, password) {
             });*/
             // ...
             /* backend/database connection - add new user to database */
-         const params = new URLSearchParams()
+         var params = new URLSearchParams()
          user.getIdToken().then((token) => {
-             console.log("in adduser")
              params.append('token', token)
              params.append('username', email.split("@")[0])
             // params.append('display_name', '')
@@ -57,12 +57,12 @@ export  function addNewUser(email, password) {
                      "Content-Type": "application/x-www-form-urlencoded"
                  }
              }
-             axios.get(endpoint + "addUser/?", params, config)
-             .then(response => {
-                 console.log("add user: " + response);
-             });
-
-             //navigate('/create-profile', {state: {token: token}})
+            var addUserRequestURL = endpoint + "addUser/?" + params
+            console.log(addUserRequestURL)
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", addUserRequestURL, false ); // false for synchronous request
+            xmlHttp.send(null);
+            console.log(xmlHttp.responseText);
          })
          
          

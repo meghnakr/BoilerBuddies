@@ -17,12 +17,16 @@ export default function Signup (props) {
   function handleSignUpButton () {
     if (formState.email.endsWith("@purdue.edu")) {
     addNewUser(formState.email, formState.password);
-    navigate('/', {replace: true})
+    navigate('/create-profile', {state: {username: formState.email.split("@")[0]}})
     } else {
       // Alert that the user needs a valid email
     //alert.show("Error: not a valid Purdue email");
     alert("Error: not a valid Purdue email");
     }
+  }
+
+  function handleSignInButton () {
+    navigate('/signin', {replace: true});
   }
 
   return (
@@ -78,13 +82,13 @@ export default function Signup (props) {
 
 
           <div className="d-grid gap-2 mt-3">
-            <button type="button" className="default-btn-white" onClick={handleSignUpButton}> 
+            <button type="button" className="default-btn" onClick={handleSignUpButton}> 
               Sign Up
             </button>
-            <button type="button" className="default-btn" 
-            style={{marginTop:'1vmin'}}
-            onClick={handleSignUpButton}>
-              Sign In
+            <button type="button" className="default-btn-white" 
+            style={{marginTop:'1vmin', fontWeight: 'normal', textTransform: 'none', border: 'none'}}
+            onClick={handleSignInButton}>
+              Already have an account? Back to Sign In.
             </button>
           </div>
           

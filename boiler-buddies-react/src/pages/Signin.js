@@ -32,7 +32,7 @@ export default function Signin (props) {
 
   const navigate = useNavigate();
 
-  console.log(formState);
+  //console.log(formState);
 
   function handleSignInButton() {
     signInUser(formState.email, formState.password);
@@ -100,11 +100,11 @@ export default function Signin (props) {
             >
               Sign In
             </button>
-            <button type="button" className="default-btn-white"
-            style={{marginTop:'1vmin'}}
-            onClick={handleSignUpButton}>Sign Up</button>
+            <button type="button" className="default-btn-white" 
+            style={{marginTop:'1vmin', fontWeight: 'normal', textTransform: 'none', border: 'none'}}
+            onClick={handleSignUpButton}>Don't have an account? <b>Sign Up</b> </button>
           </div>
-          <Link to="/forgot-password" style={{ color: "grey" }}>
+          <Link to="/forgot-password" style={{ color: "grey", textDecoration: 'none'}}>
             <p className="link-text">Forgot password?</p>
           </Link>
         </div>
