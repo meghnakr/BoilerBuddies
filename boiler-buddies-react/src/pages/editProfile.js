@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, Navigate} from 'react';
 import MyProfile from '../components/MyProfile';
 import {auth} from '../utils/auth';
 import useUser from "../hooks/useUser";
@@ -7,9 +7,8 @@ import {endpoint, username} from '../global';
 
 export default function EditProfile() {
     const currentUser = useUser();
-    const [userData, setUserData] = useState(
-        {displayName: "", interests: '', bio: "", image: ""}
-    )
+    const [userData, setUserData] = useState({})
+    const [submit, setSubmit] = useState(false);
 
     useEffect(() => {
         var params = new URLSearchParams()
@@ -26,6 +25,7 @@ export default function EditProfile() {
         xmlHttp.open("GET", getUserRequestURL, false); // false for synchronous request
         xmlHttp.send(null);
         var response = JSON.parse(xmlHttp.responseText);
+        console.log(response)
         setUserData(
             {displayName: response.display_name, interests: response.interests, bio: response.intro, image: response.big_image}
         )
@@ -38,14 +38,16 @@ export default function EditProfile() {
                     fontWeight: 'bolder',
                     textAlign: "left"
                 }}>Edit Profile</h3>
-            <MyProfile
+            {userData && <MyProfile
                 username={currentUser.username}
                 displayName={userData.displayName}
                 interests={userData.interests}
                 bio={userData.bio}
                 image={userData.image}
-                route="/"/>
-
+                submit={setSubmit}
+                />
+            }
+            {submit && <Navigate to='/feed'/>}
         </div>
     )
 }

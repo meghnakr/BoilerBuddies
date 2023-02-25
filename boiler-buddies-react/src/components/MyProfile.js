@@ -12,19 +12,17 @@ export default class MyProfile extends React.Component {
         interestTags: PropTypes.string,
         bio: PropTypes.string,
         image: PropTypes.string,
-        route: PropTypes.string
+        submit: PropTypes.func
     }
 
     constructor(props) {
         super(props);
 
        this.token = this.props.tokenId;
-       this.route = this.props.route;
        this.username = this.props.username;
-       
+       this.submitFunc = this.props.submit
 
         this.state = {
-            submit: false,
             selectedImage: null,
             name: this.props.displayName,
             tags: this.props.interestTags,
@@ -48,7 +46,7 @@ export default class MyProfile extends React.Component {
         params.append('interests', this.state.tags.replace("/,\s*/", "&&"))
         params.append('intro', this.state.biography)
         params.append('bigImage', this.state.base64Image)
-        params.append('smallImage', this.state.base64Image)
+        //params.append('smallImage', this.state.base64Image)
         /*
         axios
             .post(endpoint + "updateUser/", this.params, this.config)
@@ -61,6 +59,7 @@ export default class MyProfile extends React.Component {
         xmlHttp.open( "GET", updateRequestURL, false ); // false for synchronous request
         xmlHttp.send(null);
         console.log(xmlHttp.responseText);
+        this.submitFunc(true);
         /*
         let profile = {
             token: this.token,
@@ -125,7 +124,7 @@ export default class MyProfile extends React.Component {
                 biography,
                 base64Image,
             },
-            handleSubmit, route
+            handleSubmit
         } = this;
         return (
             <>
