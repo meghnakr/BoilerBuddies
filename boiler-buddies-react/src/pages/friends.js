@@ -5,7 +5,7 @@ import ProfileHeader from "../components/ProfileHeader";
 
 const Friends = () => {
     const [search, setSearch] = useState('');
-    const [searchResult, setSearchResult] = useState(null);
+    const [searchResult, setSearchResult] = useState('');
     console.log(searchResult)
 
     const handleChange = (event) => {
@@ -65,9 +65,7 @@ const Friends = () => {
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open( "GET", searchRequestURL, false ); // false for synchronous request
         xmlHttp.send(null);
-        console.log(xmlHttp.responseText);
-        var result = JSON.parse(xmlHttp.responseText)
-        console.log(result[0])
+        var result = xmlHttp.responseText
         setSearchResult(result)
     }
     return (
@@ -75,10 +73,7 @@ const Friends = () => {
             <input className='search-bar'
             placeholder='Search'
             value={search} onChange={handleChange}/>
-            {searchResult && <p>result</p>}
-        
-                
-            
+            <p>{searchResult}</p>
         </div>
     )
 };
