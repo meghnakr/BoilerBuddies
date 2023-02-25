@@ -9,11 +9,15 @@ export default function Signup (props) {
   // UseState to keep track of email and password pairs
   const navigate = useNavigate();
   const [formState, setFormState] = useState({ email: "", password: "" });
-  console.log(formState)
+  //console.log(formState)
 
   function handleSignUpButton () {
     addNewUser(formState.email, formState.password);
-    navigate('/create-profile', {replace: true})
+    navigate('/create-profile', {state: {username: formState.email.split("@")[0]}, replace: true})
+  }
+
+  function handleSignInButton() {
+    navigate('/signin');
   }
 
   return (
@@ -34,6 +38,7 @@ export default function Signup (props) {
               }}  // anonymous function, takes in event object e
             />
           </div>
+          
 
 
           { /* 
@@ -68,11 +73,16 @@ export default function Signup (props) {
 
 
           <div className="d-grid gap-2 mt-3">
-            <button type="button" className="default-btn" onClick={handleSignUpButton}> 
+            <button type="button" className="default-btn-white" onClick={handleSignUpButton}> 
               Sign Up
             </button>
+            <button type="button" className="default-btn" 
+            style={{marginTop:'1vmin'}}
+            onClick={handleSignInButton}>
+              Sign In
+            </button>
           </div>
-
+          
 
 
         </div>

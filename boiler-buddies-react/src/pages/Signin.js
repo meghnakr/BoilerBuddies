@@ -11,11 +11,10 @@ import useUser from "../hooks/useUser";
 
 
 export default function Signin (props) {
-  //props.funcNav(false);
+  props.funcNav(false);
   // Usestate for signin
   //const auth = getAuth(app);
   const [formState, setFormState] = useState({ email: "", password: "" }); // keep track of all states here
-
   const currentUser = useUser();
   /* Use useUser anywhere in the UserProvider to complete tasks */
 
@@ -38,9 +37,12 @@ export default function Signin (props) {
   function handleSignInButton() {
     signInUser(formState.email, formState.password);
     console.log("CURRENTUSER:", currentUser.loggedIn); 
+    
   }
 
-
+  function handleSignUpButton() {
+    navigate('/signup');
+  }
   useEffect(() => {
     console.log("USER IS SIGNED IN");
     if (currentUser.loggedIn) {
@@ -59,7 +61,7 @@ export default function Signin (props) {
             className="Signin-form-logo"
             src={logo}
             alt="Logo"
-          />
+  />
           <div className="form3">
             <input
               type="email"
@@ -98,6 +100,9 @@ export default function Signin (props) {
             >
               Sign In
             </button>
+            <button type="button" className="default-btn-white"
+            style={{marginTop:'1vmin'}}
+            onClick={handleSignUpButton}>Sign Up</button>
           </div>
           <Link to="/forgot-password" style={{ color: "grey" }}>
             <p className="link-text">Forgot password?</p>

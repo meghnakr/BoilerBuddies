@@ -11,6 +11,7 @@
     "firebase": "^9.17.1",
     "font-awesome": "^4.7.0",
     "multiselect-react-dropdown": "^2.0.25",
+    "querystring-es3": "^0.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-firebase-hooks": "^5.1.1",
@@ -51,4 +52,5 @@
     "env-cmd": "^10.1.0",
     "style-loader": "^3.3.1"
   }
+  
 }

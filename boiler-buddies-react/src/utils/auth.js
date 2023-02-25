@@ -2,6 +2,8 @@ import { getAuth, createUserWithEmailAndPassword, signOut } from "firebase/auth"
 import { app } from "./firebase";
 import {query, getDocs, collection, where, addDoc,} from "firebase/firestore";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import axios from 'axios';
+import { endpoint } from "../global";
 
 
 
@@ -20,13 +22,40 @@ export  function addNewUser(email, password) {
         .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
-            console.log(user);
             /*await addDoc(collection(db, "users"), {
                 uid: user.uid,
                 authProvider: "local",
                 email,
             });*/
             // ...
+            /* backend/database connection - add new user to database */
+         const params = new URLSearchParams()
+         user.getIdToken().then((token) => {
+             console.log("in adduser")
+             params.append('token', token)
+             params.append('username', email.split("@")[0])
+            // params.append('display_name', '')
+             //params.append('interests', '')
+             //params.append('intro', '')
+             //params.append('big_image', '')
+             //params.append('small_image', '')
+             console.log(params)
+             const config = {
+                 header: {
+                     "Content-Type": "application/x-www-form-urlencoded"
+                 }
+             }
+             axios.get(endpoint + "addUser/?", params, config)
+             .then(response => {
+                 console.log("add user: " + response);
+             });
+
+             //navigate('/create-profile', {state: {token: token}})
+         })
+         
+         
+         /* end of backend connection */
+
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -38,6 +67,8 @@ export  function addNewUser(email, password) {
         .then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
+
+         
         // ...
     })
         .catch((error) => {

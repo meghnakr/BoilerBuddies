@@ -3,32 +3,67 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { endpoint } from '../global';
 import { Multiselect } from "multiselect-react-dropdown";
+import { Navigate } from 'react-router-dom';
 
 export default class MyProfile extends React.Component {
     static propTypes = {
-        tokenId: PropTypes.string.isRequired,
+        tokenId: PropTypes.string,
+        username: PropTypes.string,
         displayName: PropTypes.string,
-        interestTags: PropTypes.instanceOf(Array),
-        bio: PropTypes.string
+        interestTags: PropTypes.string,
+        bio: PropTypes.string,
+        image: PropTypes.string,
+        route: PropTypes.string
     }
 
     constructor(props) {
         super(props);
 
        this.token = this.props.tokenId;
+       this.route = this.props.route;
+       this.username = this.props.username;
+       
 
         this.state = {
+            submit: false,
             selectedImage: null,
             name: this.props.displayName,
             tags: this.props.interestTags,
             biography: this.props.bio,
-            base64Image: ""
+            base64Image: this.props.image
         };
     }
 
     
 
     handleSubmit = () => {
+        var params = new URLSearchParams();
+        var config = {
+        header: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        }
+    }
+        //params.append('token', this.token)
+        params.append('username', this.username)
+        params.append('displayName', this.state.name)
+        params.append('interests', this.state.tags)
+        params.append('intro', this.state.biography)
+        params.append('bigImage', this.state.base64Image)
+        params.append('smallImage', this.state.base64Image)
+        /*
+        axios
+            .post(endpoint + "updateUser/", this.params, this.config)
+            .then(response => console.log("updateUser" + response))
+        
+        */
+        var updateRequestURL = endpoint + "updateUser/?" + params
+        console.log(updateRequestURL)
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", updateRequestURL, false ); // false for synchronous request
+        xmlHttp.send(null);
+        console.log(xmlHttp.responseText);
+        this.setState({submit: true})
+        /*
         let profile = {
             token: this.token,
             displayName: this.state.name,
@@ -43,7 +78,8 @@ export default class MyProfile extends React.Component {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             profile})
-            .then(response => console.log(response));
+            .then(response => console.log(response))
+            .finally(this.setState({submit: true}));*/
         
     }
 
@@ -89,11 +125,14 @@ export default class MyProfile extends React.Component {
                 selectedImage,
                 name,
                 tags,
-                biography
+                biography,
+                base64Image,
+                submit
             },
-            handleSubmit
+            handleSubmit, route
         } = this;
         return (
+            <>
             <form className='edit-profile-form' type="submit" onSubmit={handleSubmit}>
                 <div className='profile-photo'>
                     <div className='profile-photo-container'>
@@ -105,7 +144,7 @@ export default class MyProfile extends React.Component {
                                         fontSize: '9vmin'
                                     }}></i>
                             </div>
-                            {selectedImage && <img src={URL.createObjectURL(selectedImage)} alt='img'/>}
+                            {(base64Image !== '') ? <img src={base64Image} alt='img'/>: <></>}
 
                         </div>
 
@@ -142,7 +181,8 @@ export default class MyProfile extends React.Component {
                 <div className="profile-info">
                     <div>
                         <label>Display Name</label>
-                        <input type="text" value={name}/>
+                        <input type="text" value={name}
+                        onChange={(event) => {this.setState({name:event.target.value})}}/>
                     </div>
                     <div>
                         <label>Interests</label>
@@ -163,7 +203,7 @@ export default class MyProfile extends React.Component {
                     </div>
                     <div>
                         <label>Bio</label>
-                        <textarea type="text" cols="40" rows="5" value={biography}/>
+                        <textarea type="text" cols="40" rows="5" value={biography} onChange={(event) => {this.setState({biography:event.target.value})}}/>
                     </div>
 
                 </div>
@@ -174,6 +214,8 @@ export default class MyProfile extends React.Component {
                         width: '80%'
                     }}>Save profile</button>
             </form>
+            {submit ? <Navigate to='/feed' replace={true}/> : <></>}
+            </>
         )
     }
 }

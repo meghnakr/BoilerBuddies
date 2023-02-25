@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MyProfile from '../components/MyProfile';
 import useUser from "../hooks/useUser";
+import { useLocation } from 'react-router-dom';
 
 export default function CreateProfile(props) {
     props.funcNav(false);
     
-    const currentUser = useUser();
+    //const currentUser = useUser();
+    const location = useLocation();
+
 
     return (
         <div className='page-container' >
@@ -15,7 +18,12 @@ export default function CreateProfile(props) {
                         textAlign: 'left'
                     }}>Create a new profile</h3>
             <p style={{ fontWeight: 'lighter'}}>Fill out your information below to get started!</p>
-            <MyProfile tokenId={currentUser.token}/>
+            <MyProfile username={location.state.username} 
+            displayName=''
+            interests=''
+            bio=''
+            image=''
+            route="/"/>
         </div>
     )
 }

@@ -28,7 +28,8 @@ export function UserProvider(props) {
   const [user, setUser] = useState(initialUser);
   const [loggedIn, setLoggedIn] = useState(false);
   const [token, setToken] = useState(null);
-  const value = { user, loggedIn , token };
+  const [username, setUsername] = useState('')
+  const value = { user, loggedIn , token, username };
 
     
   onAuthStateChanged(auth, (user) => {
@@ -38,12 +39,14 @@ export function UserProvider(props) {
       const uid = user.uid;
       setLoggedIn(true);
       setUser(user);
+      setUsername(user.email.split('@')[0])
       user.getIdToken().then(function(token) {
         setToken(token);
       })
+      /*
       console.log("USER: ", user);
       console.log("UID: ", user.uid);
-
+*/
       // ...
     } else {
       // User is signed out
@@ -51,7 +54,7 @@ export function UserProvider(props) {
       setLoggedIn(false);
       setUser(initialUser);
       setToken(null);
-      console.log("IN USERCONTEXT FILE:", user);
+      //console.log("IN USERCONTEXT FILE:", user);
     }
   });
   

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
 Nav,
 NavLink,
 NavMenu,
+NavBtn,
+NavBtnLink
 } from './NavbarElements';
 import logo from '../assets/logo_text_w.png';
 import Dropdown from './Dropdown';
@@ -12,12 +14,15 @@ import { signOutUser } from '../utils/auth';
 
 //export const auth = getAuth(app);
 import {Link, useNavigate } from "react-router-dom";
+import useUser from '../hooks/useUser';
 
 const Navbar = () => {
 	const navigate = useNavigate();
 	const handleClick = () =>{
 		navigate('/');
 	}
+
+
 return (
 	<>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
@@ -49,7 +54,6 @@ return (
 		{/* Second Nav */}
 		{/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
 		</NavMenu>
-
 		<Dropdown title="My Account">
 			<div label="Profile" route="/profile"/>
 			<div label="Account Settings" route="/settings"/>
@@ -57,6 +61,7 @@ return (
 			{/* Look up how to make it redirect after signout goes through */}
 			
 		</Dropdown>
+		
 
 	</Nav>
 	</>
