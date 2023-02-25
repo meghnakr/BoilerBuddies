@@ -3,17 +3,26 @@ import { useNavigate } from 'react-router-dom';
 import logo from '../assets/logo_text.png';
 import { useState } from "react";
 import { addNewUser } from "../utils/auth";
+//import { useAlert } from 'react-alert'
+
 
 export default function Signup (props) {
   props.funcNav(false);
   // UseState to keep track of email and password pairs
   const navigate = useNavigate();
+  //const alert = useAlert();
   const [formState, setFormState] = useState({ email: "", password: "" });
   console.log(formState)
 
   function handleSignUpButton () {
+    if (formState.email.endsWith("@purdue.edu")) {
     addNewUser(formState.email, formState.password);
-    navigate('/create-profile', {replace: true})
+    navigate('/', {replace: true})
+    } else {
+      // Alert that the user needs a valid email
+    //alert.show("Error: not a valid Purdue email");
+    alert("Error: not a valid Purdue email");
+    }
   }
 
   return (

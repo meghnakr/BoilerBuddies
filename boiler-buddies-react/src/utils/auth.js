@@ -1,8 +1,20 @@
-import { getAuth, createUserWithEmailAndPassword, signOut } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signOut, sendEmailVerification } from "firebase/auth";
 import { app } from "./firebase";
 import {query, getDocs, collection, where, addDoc,} from "firebase/firestore";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
+// currentUser is referring to built-in firebase currentUser
+
+
+
+export function sendEmail() {
+    alert("Please click the link sent to your email to verify your account");
+    sendEmailVerification(auth.currentUser)
+    .then(() => {
+      // Email verification sent!
+      // ...
+    });
+}
 
 
 /* ALL authentication handled here */
@@ -15,9 +27,9 @@ export  function addNewUser(email, password) {
     if (!email || !password) {
         return;     // pop up error message/alert here
     }      
-    
     createUserWithEmailAndPassword(auth, email, password)       // calling a function that already exists in firebase
         .then((userCredential) => {
+            sendEmail();
             // Signed in 
             const user = userCredential.user;
             console.log(user);
@@ -34,16 +46,7 @@ export  function addNewUser(email, password) {
             // ..
     });
 
-    signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-        // Signed in 
-        const user = userCredential.user;
-        // ...
-    })
-        .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-    });
+
  
 }
 
@@ -63,6 +66,7 @@ export  function signInUser(email, password) {
         // ...
     })
         .catch((error) => {
+        alert("Not a valid email and password combination")
         const errorCode = error.code;
         const errorMessage = error.message;
     });

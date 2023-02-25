@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { signOutUser } from '../utils/auth';
 
 export default function Settings(props) {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ export default function Settings(props) {
                 Delete Account
               </button>
 
-              <button type="signOut" className="settings-btn">
+              <button type="button" className="settings-btn" onClick={()=>{signOutUser(navigate)}} >
                 Sign Out
               </button>
 
