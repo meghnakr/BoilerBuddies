@@ -1,27 +1,12 @@
 import React from "react";
 import { useState } from "react";
-
-/*
-handleSubmit = () => {
-    let profile = {
-        token: 0,
-        displayName: this.state.name,
-        interests: this.state.tags,
-        intro: this.state.biography,
-        bigImage: this.state.base64Image,
-        smallImage: this.state.base64Image
-    }
-    axios.post(endpoint + "updateUser/", {
-        header: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        profile})
-        .then(response => console.log(response));
-    
-}*/
+import FriendProfile from "../components/FriendProfile";
+import ProfileHeader from "../components/ProfileHeader";
 
 const Friends = () => {
     const [search, setSearch] = useState('');
+    const [searchResult, setSearchResult] = useState(null);
+    console.log(searchResult)
 
     const handleChange = (event) => {
         setSearch(event.target.value)
@@ -81,13 +66,19 @@ const Friends = () => {
         xmlHttp.open( "GET", searchRequestURL, false ); // false for synchronous request
         xmlHttp.send(null);
         console.log(xmlHttp.responseText);
+        var result = JSON.parse(xmlHttp.responseText)
+        console.log(result[0])
+        setSearchResult(result)
     }
     return (
         <div className='page-container'>
             <input className='search-bar'
             placeholder='Search'
             value={search} onChange={handleChange}/>
-            <p>{search}</p> {/* for debug only */}
+            {searchResult && <p>result</p>}
+        
+                
+            
         </div>
     )
 };

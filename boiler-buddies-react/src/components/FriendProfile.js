@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import logo from '../assets/logo_vector.png';
 
 
-export default function FriendProfile(sendRequest, handleClick) {
+export default function FriendProfile(sendRequest, handleClick, displayName) {
 
 return (
 <div className="profile-header">
