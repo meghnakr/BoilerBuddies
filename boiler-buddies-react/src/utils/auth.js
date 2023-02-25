@@ -1,4 +1,4 @@
-import { getAuth, createUserWithEmailAndPassword, signOut, sendEmailVerification } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signOut, sendEmailVerification, sendPasswordResetEmail } from "firebase/auth";
 import { app } from "./firebase";
 import {query, getDocs, collection, where, addDoc,} from "firebase/firestore";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -19,6 +19,11 @@ export function sendEmail() {
     });
 }
 
+export function sendPwEmail(email) {
+    sendPasswordResetEmail(auth, email).then(() => {
+        // ...
+      });
+}
 
 /* ALL authentication handled here */
 // Initialize Firebase Authentication and get a reference to the service

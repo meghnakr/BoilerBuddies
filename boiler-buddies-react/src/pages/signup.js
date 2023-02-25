@@ -17,7 +17,8 @@ export default function Signup (props) {
   function handleSignUpButton () {
     if (formState.email.endsWith("@purdue.edu")) {
     addNewUser(formState.email, formState.password);
-    navigate('/create-profile', {state: {username: formState.email.split("@")[0]}})
+    //navigate('/create-profile', {state: {username: formState.email.split("@")[0]}})
+    navigate('/');
     } else {
       // Alert that the user needs a valid email
     //alert.show("Error: not a valid Purdue email");

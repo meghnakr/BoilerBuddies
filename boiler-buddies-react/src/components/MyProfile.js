@@ -12,7 +12,6 @@ export default class MyProfile extends React.Component {
         interestTags: PropTypes.string,
         bio: PropTypes.string,
         image: PropTypes.string,
-        submit: PropTypes.func
     }
 
     constructor(props) {
@@ -20,7 +19,6 @@ export default class MyProfile extends React.Component {
 
        this.token = this.props.tokenId;
        this.username = this.props.username;
-       this.submitFunc = this.props.submit
 
         this.state = {
             selectedImage: null,
@@ -34,6 +32,7 @@ export default class MyProfile extends React.Component {
     
 
     handleSubmit = () => {
+        console.log("In handlesubmit")
         var params = new URLSearchParams();
         var config = {
         header: {
@@ -43,7 +42,7 @@ export default class MyProfile extends React.Component {
         //params.append('token', this.token)
         params.append('username', this.username)
         params.append('displayName', this.state.name)
-        params.append('interests', this.state.tags.replace("/,\s*/", "&&"))
+        params.append('interests', this.state.tags)
         params.append('intro', this.state.biography)
         params.append('bigImage', this.state.base64Image)
         //params.append('smallImage', this.state.base64Image)
@@ -139,7 +138,7 @@ export default class MyProfile extends React.Component {
                                         fontSize: '9vmin'
                                     }}></i>
                             </div>
-                            {(base64Image !== '') ? <img src={base64Image} alt='img'/>: <></>}
+                            {(base64Image !== '') ? <img src={base64Image} alt=''/>: <></>}
 
                         </div>
 

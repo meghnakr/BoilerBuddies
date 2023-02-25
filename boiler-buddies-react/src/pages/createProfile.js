@@ -22,8 +22,7 @@ export default function CreateProfile(props) {
             displayName=''
             interests=''
             bio=''
-            image=''
-            route="/"/>
+            image=''/>
         </div>
     )
 }

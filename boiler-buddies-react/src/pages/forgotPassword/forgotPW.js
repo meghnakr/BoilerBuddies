@@ -1,7 +1,7 @@
 import { React, useState } from 'react';
 import logo from '../../assets/logo_text.png';
 import { Link, useNavigate } from 'react-router-dom';
-
+import { sendPwEmail } from "../../utils/auth";
 
 export default function ForgotPW(props) {
     props.funcNav(false);
@@ -9,8 +9,8 @@ export default function ForgotPW(props) {
     const [email, setEmail] = useState('');
 
     const handleSubmit = () => {
-        navigate('/check-email', {state: {email: `${email}`}});
-
+        navigate('/check-email', {state: {email: `${email}`}, replace:true});
+        sendPwEmail(email);
     }
     return (
         <div className='forgotPW-container'>

@@ -7,7 +7,6 @@ export default function CheckYourEmail(props) {
     props.funcNav(false);
     const location = useLocation();
     const email = location.state.email;
-    console.log(email);
 
     return (
         <div className='forgotPW-container'>
@@ -15,7 +14,6 @@ export default function CheckYourEmail(props) {
             <h1 style={{ fontWeight : 'bold'}}> Check your email</h1>
             <p style={{ fontWeight: 'lighter'}}> We sent you a password reset link to <b>{email}</b></p>
             <div style= {{ height: '3vmin'}}> </div>
-            <p style={{ fontWeight: 'lighter'}}> Didn't receive the email? Click to resend</p>
             <Link to="/signin"  style={{ textDecoration: 'none' }}>
             <p className="link-text">
                 Back to login
