@@ -5,7 +5,7 @@ import { signOutUser } from '../utils/auth';
 export default function Settings(props) {
   const navigate = useNavigate();
   const handleClick = (event) => {
-    navigate(event.target.value);
+    navigate(event.target.value, {replace:true});
   }
   return (
     <>

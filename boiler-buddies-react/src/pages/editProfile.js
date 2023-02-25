@@ -1,83 +1,67 @@
-import React, {useEffect, useState, useNavigate} from 'react';
+import React, {useEffect, useState} from 'react';
 import MyProfile from '../components/MyProfile';
 import useUser from "../hooks/useUser";
 import {endpoint} from '../global';
+import {  useNavigate } from "react-router-dom";
 
 export default function EditProfile() {
     const currentUser = useUser();
-    const [username, setUsername] = useState('ntra')
-    const [userData, setUserData] = useState({displayName: '', interests: '', bio: '', image: ''})
-    const [selectedImage, setSelectedImage] = useState(null)
-    const [base64Image, setBase64Image] = useState('')
+    const username = currentUser.username;
+    //const [username, setUsername] = useState('ntra')
+    const [userData, setUserData] = useState({displayName: '', interests: '', bio: '', image: null})
+    const [hasData, setHasData] = useState(false)
+    const navigate = useNavigate();
 
     useEffect(() => {
-        var params = new URLSearchParams()
-        //params.append('token', currentUser.token)
-        params.append('username', currentUser.username)
-        var config = {
-            header: {
-                "Content-Type": "application/x-www-form-urlencoded"
+        if(!hasData) {
+            var params = new URLSearchParams()
+            //params.append('token', currentUser.token)
+            params.append('username', username)
+            var config = {
+                header: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                }
             }
+    
+            var getUserRequestURL = endpoint + "getUser/?" + params
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("GET", getUserRequestURL, false); // false for synchronous request
+            xmlHttp.send(null);
+            var response = JSON.parse(xmlHttp.responseText);
+            console.log(response)
+            setUserData(
+                {displayName: response.display_name, interests: response.interests.replaceAll('&&', ', '), bio: response.intro, image: response.big_image}
+            )
+            setHasData(true)
         }
-
-        var getUserRequestURL = endpoint + "getUser/?" + params
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open("GET", getUserRequestURL, false); // false for synchronous request
-        xmlHttp.send(null);
-        var response = JSON.parse(xmlHttp.responseText);
-        console.log(response)
-        setUserData(
-            {displayName: response.display_name, interests: response.interests, bio: response.intro, image: response.big_image}
-        )
-        setUsername(currentUser.username)
-    }, []);
+        
+    }, [userData]);
 
     function handleSubmit ()  {
+        console.log(userData)
         var params = new URLSearchParams();
     
         //params.append('token', this.token)
-        params.append('username', username)
+        params.append('username', currentUser.username)
         params.append('displayName', userData.displayName)
-        params.append('interests', userData.interests)
+        params.append('interests', userData.interests.replaceAll(/[ ]*,[ ]*|[ ]+/g, '&&'))
         params.append('intro', userData.bio)
         params.append('bigImage', userData.image)
         console.log(params)
         var updateRequestURL = endpoint + "updateUser/?" + params
         console.log(updateRequestURL)
         var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET", updateRequestURL, false ); // false for synchronous request
+        xmlHttp.open( "GET", updateRequestURL, true ); // false for synchronous request
         xmlHttp.send(null);
         console.log(xmlHttp.responseText);
-        /*
-        let profile = {
-            token: this.token,
-            displayName: this.state.name,
-            interests: this.state.tags,
-            intro: this.state.biography,
-            bigImage: this.state.base64Image,
-            smallImage: this.state.base64Image
-        }
-        console.log(profile);
-        axios.post(endpoint + "updateUser/", {
-            header: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            profile})
-            .then(response => console.log(response))
-            .finally(this.setState({submit: true}));*/
-        
+        navigate('/feed', {replace:true})
     }
 
     function handleFileInputChange (event) {
-        setSelectedImage(event
-                .target
-                .files[0]);
-
         let file = event.target.files[0]
 
         convertToBase64(file).then(result => {
-            setUserData({image:result});
-            console.log("setuserData img")
+            setUserData({...userData, image:result});
         }).catch(err => {
             console.log(err);
           });
@@ -128,7 +112,7 @@ export default function EditProfile() {
                                         fontSize: '9vmin'
                                     }}></i>
                             </div>
-                            {(userData.image !== '') ? <img src={userData.image} alt='img'/>: <></>}
+                            {(userData.image !== "null") ? <img src={userData.image} alt='img'/>: <></>}
 
                         </div>
 
@@ -166,12 +150,12 @@ export default function EditProfile() {
                     <div>
                         <label>Display Name</label>
                         <input type="text" value={userData.displayName}
-                        onChange={(event) => {setUserData({displayName:event.target.value})}}/>
+                        onChange={(event) => {setUserData({...userData, displayName:event.target.value})}}/>
                     </div>
                     <div>
                         <label>Interests <i>(Seperate each tag with a comma)</i></label>
                         <input type="text" value={userData.interests} 
-                        onChange={(event) => {setUserData({interests:event.target.value})}}/>
+                        onChange={(event) => {setUserData({...userData, interests:event.target.value})}}/>
                         {/*
                         <Multiselect
                             
@@ -190,7 +174,7 @@ export default function EditProfile() {
                     </div>
                     <div>
                         <label>Bio</label>
-                        <textarea type="text" cols="40" rows="5" value={userData.bio} onChange={(event) => {setUserData({bio:event.target.value})}}/>
+                        <textarea type="text" cols="40" rows="5" value={userData.bio} onChange={(event) => {setUserData({...userData, bio:event.target.value})}}/>
                     </div>
 
                 </div>

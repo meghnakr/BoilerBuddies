@@ -19,7 +19,7 @@ import useUser from '../hooks/useUser';
 const Navbar = () => {
 	const navigate = useNavigate();
 	const handleClick = () =>{
-		navigate('/');
+		navigate('/', {replace:true});
 	}
 
 
