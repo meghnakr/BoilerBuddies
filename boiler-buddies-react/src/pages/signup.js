@@ -12,7 +12,7 @@ export default function Signup (props) {
   const navigate = useNavigate();
   //const alert = useAlert();
   const [formState, setFormState] = useState({ email: "", password: "" });
-  console.log(formState)
+  //console.log(formState)
 
   function handleSignUpButton () {
     if (formState.email.endsWith("@purdue.edu")) {
@@ -43,6 +43,7 @@ export default function Signup (props) {
               }}  // anonymous function, takes in event object e
             />
           </div>
+          
 
 
           { /* 
@@ -77,11 +78,16 @@ export default function Signup (props) {
 
 
           <div className="d-grid gap-2 mt-3">
-            <button type="button" className="default-btn" onClick={handleSignUpButton}> 
+            <button type="button" className="default-btn-white" onClick={handleSignUpButton}> 
               Sign Up
             </button>
+            <button type="button" className="default-btn" 
+            style={{marginTop:'1vmin'}}
+            onClick={handleSignUpButton}>
+              Sign In
+            </button>
           </div>
-
+          
 
 
         </div>

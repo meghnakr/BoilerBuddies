@@ -56,15 +56,14 @@ width: 100vw; */
 `;
 
 export const NavBtnLink = styled(Link)`
-border-radius: 4px;
 text-transform: uppercase;
 background: white;
 padding: 10px 22px;
-color: #000000;
+color: #88BBF6;
+font-weight: bold;
 outline: none;
 border: none;
 cursor: pointer;
-transition: all 0.2s ease-in-out;
 text-decoration: none;
 /* Second Nav */
 margin-left: 24px;
