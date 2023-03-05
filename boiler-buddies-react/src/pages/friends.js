@@ -3,6 +3,25 @@ import { useState } from "react";
 import FriendProfile from "../components/FriendProfile";
 import ProfileHeader from "../components/ProfileHeader";
 
+function formatResults(result) {
+    var jsonResults = JSON.parse(result);
+    var formattedResults = Array(20).fill("");
+    var i = 0;
+    Object.keys(jsonResults).forEach(function(key) {
+        //console.log('Key : ' + key + ', Value : ' + jsonResults[key])
+        //formattedResults += jsonResults[key]["display_name"] + " " + jsonResults[key]["username"] + "| \n"
+        var interests = jsonResults[key]["interests"]
+        interests = interests.trim().substring(1, interests.length - 1).trim()
+        interests = "#" + interests.replaceAll("&&", " #")
+        formattedResults[i] = <FriendProfile displayName = {jsonResults[key]["display_name"]} 
+            username = {jsonResults[key]["username"]} 
+            interestTags = {interests} />;
+        console.log(String(i) + " " + jsonResults[key]["display_name"] + " " + jsonResults[key]["username"]);
+        i++;
+    });
+    return formattedResults;
+}
+
 const Friends = () => {
     const [search, setSearch] = useState('');
     const [searchResult, setSearchResult] = useState('');
@@ -66,7 +85,9 @@ const Friends = () => {
         xmlHttp.open( "GET", searchRequestURL, false ); // false for synchronous request
         xmlHttp.send(null);
         var result = xmlHttp.responseText
+        result = formatResults(result)
         setSearchResult(result)
+        console.log(searchResult)
     }
     return (
         <div className='page-container'>

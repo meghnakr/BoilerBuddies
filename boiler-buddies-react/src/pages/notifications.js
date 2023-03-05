@@ -10,11 +10,12 @@ const Notifications = () => {
 
             <span style={{fontWeight: 'bold', fontSize: 20 }}>Friend Requests: </span>
             <p></p>
+            <p>
 
             {/* INSERT IMPLEMENTATION FOR ADDING FRIEND REQUESTS ARRAY HERE */}
             {Array(10).fill(0).map(() => <FriendProfile/>)}
             {/* Replace Array.fill with actual array from database holding friends to user */}
-
+            </p> 
 
             <p></p>
             <p></p>
