@@ -452,3 +452,19 @@ input:focus {
   background-color: white;
 }
 
+
+.forum-header {
+  border: 1px solid black;
+  margin-top: 1vmin;
+  margin: 3vmin;
+  padding: 4vmin;
+  padding-top: 2vmin;
+  padding-bottom: 2vmin;
+  display: flex;
+  border-radius: 8px;
+  width: 80%
+}
+
+.forum-header h2 {
+  font-weight: bold;
+}

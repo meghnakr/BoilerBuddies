@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FriendProfile from "../components/FriendProfile";
 import ProfileHeader from "../components/ProfileHeader";
 
@@ -31,7 +31,8 @@ const Friends = () => {
         setSearch(event.target.value)
         //call search algorithm here and return an array of results
         var searchRequestURL = "http://54.200.193.22:3000/searchUser/?"
-        console.log(search);
+
+        var searchVal = event.target.value
 
         var searchName = ""
         var searchTags = ""
@@ -41,19 +42,19 @@ const Friends = () => {
 
         // %26 in the url will translate to & in the http request
 
-        if (search.indexOf("#") === -1) {
+        if (searchVal.indexOf("#") === -1) {
             console.log("Here 1")
-            searchName = search.trim()
+            searchName = searchVal.trim()
             searchTags = "%26%26"
         }
         else {
             console.log("Here 2")
-            var index = search.indexOf("#")
-            searchName = search.substring(0, index).trim()
+            var index = searchVal.indexOf("#")
+            searchName = searchVal.substring(0, index).trim()
 
             searchTags = "%26"
 
-            var remainingSearch = search
+            var remainingSearch = searchVal
             
             while (index !== -1) {
                 remainingSearch = remainingSearch.substring(index + 1, remainingSearch.length)
@@ -87,8 +88,10 @@ const Friends = () => {
         var result = xmlHttp.responseText
         result = formatResults(result)
         setSearchResult(result)
+        console.log(result)
         console.log(searchResult)
     }
+
     return (
         <div className='page-container'>
             <input className='search-bar'
