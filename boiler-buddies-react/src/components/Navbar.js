@@ -55,8 +55,8 @@ return (
 		{/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
 		</NavMenu>
 		<Dropdown title="My Account">
-			<div label="Profile" route="/profile"/>
-			<div label="Account Settings" route="/settings"/>
+			<div label="Profile" route="/profile" navigation={navigate}/>
+			<div label="Account Settings" route="/settings" navigation={navigate}/>
 			<div label="Sign Out" onClick={()=>{signOutUser(navigate)}}/>
 			{/* Look up how to make it redirect after signout goes through */}
 			

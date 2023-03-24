@@ -7,24 +7,21 @@ import {endpoint} from '../global';
 
 export default function Profile() {
     const currentUser = useUser();
-    const username = "ntra";
-    //const [username, setUsername] = useState('ntra')
+    const [username, setUsername] = useState(currentUser.username)
     const [userData, setUserData] = useState({displayName: '', interests: '', bio: '', image: null})
     const [hasData, setHasData] = useState(false)
     const [sendRequest, setSendRequest] = useState(false);
 
     useEffect(() => {
+        console.log(currentUser.username)
+        setUsername(currentUser.username)
         if(!hasData) {
             var params = new URLSearchParams()
             //params.append('token', currentUser.token)
-            params.append('username', username)
-            var config = {
-                header: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                }
-            }
-    
+            params.append('username', currentUser.username)
+            console.log(params)
             var getUserRequestURL = endpoint + "getUser/?" + params
+            console.log(getUserRequestURL)
             var xmlHttp = new XMLHttpRequest();
             xmlHttp.open("GET", getUserRequestURL, false); // false for synchronous request
             xmlHttp.send(null);
@@ -48,11 +45,6 @@ export default function Profile() {
 
     return (
         <div className="page-container">
-            {(userData.displayName==='' & userData.interests===', ' & userData.bio==='' & userData.image==='')
-            ? <div>
-                <h4>You haven't created a profile yet. Create a profile <Link to='/edit-profile'>here</Link>.</h4>
-                </div>
-            :
             <div className="profile-header">
                 <div className='profile-picture'>
                 <div className='profile-photo-circle' >
@@ -77,7 +69,6 @@ export default function Profile() {
                 </div>
 
             </div>
-            }   
         </div>
     )
 }
