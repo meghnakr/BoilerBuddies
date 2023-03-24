@@ -43,6 +43,7 @@ export function UserProvider(props) {
       user.getIdToken().then(function(token) {
         setToken(token);
       })
+      console.log("1")
       /*
       console.log("USER: ", user);
       console.log("UID: ", user.uid);
@@ -54,6 +55,7 @@ export function UserProvider(props) {
       setLoggedIn(false);
       setUser(initialUser);
       setToken(null);
+      console.log("2")
       //console.log("IN USERCONTEXT FILE:", user);
     }
   });

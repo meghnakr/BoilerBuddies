@@ -25,10 +25,17 @@ export function sendPwEmail(email) {
       });
 }
 
+
+
 /* ALL authentication handled here */
 // Initialize Firebase Authentication and get a reference to the service
 export const auth = getAuth(app);
 //signOut(auth);            // Use this to clear cookies
+
+export async function getusertoken() {
+    const token = await auth.currentUser.getIdToken();
+    return token;
+}
 
 export  function addNewUser(email, password) {
     // check if no email or password

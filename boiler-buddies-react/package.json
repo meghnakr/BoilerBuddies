@@ -18,10 +18,11 @@
     "react-modal": "^3.16.1",
     "react-multi-select-component": "^4.3.4",
     "react-router-dom": "^6.8.1",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "reactstrap": "git+https://github.com/reactstrap/reactstrap.git",
     "styled-components": "^5.3.6",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yarn": "^1.22.19"
   },
   "scripts": {
     "start": "env-cmd -f .env react-scripts start",
@@ -52,5 +53,4 @@
     "env-cmd": "^10.1.0",
     "style-loader": "^3.3.1"
   }
-  
 }
