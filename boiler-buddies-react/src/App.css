@@ -441,6 +441,7 @@ input:focus {
 
 
 .notifs-content  {
+  position:relative;
   display: block;
   width: 900px;
   height: 3000px;
@@ -451,4 +452,12 @@ input:focus {
   border-radius: 8px;
   background-color: white;
 }
+
+
+.refresh {
+  position: absolute;
+  top:0;
+  right:0;
+}
+
 
