@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Feed from "./pages/feed.js";
 import Forum from "./pages/forums.js";
-import Searches from "./pages/search";
+import Searches from "./pages/search.js";
 import Messages from "./pages/messages.js";
 import Signin from "./pages/Signin.js";
 import ForgotPW from "./pages/forgotPassword/forgotPW";
@@ -21,6 +21,8 @@ import Friends from "./pages/friends.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SetNewPassword from "./pages/forgotPassword/setNewPassword";
 import EditProfile from "./pages/editProfile";
+//import CreateProfile from "./pages/createProfile";
+import CreateForum from "./pages/createForum";
 
 function App(location) {
   const [showNav, setShowNav] = useState(true);
