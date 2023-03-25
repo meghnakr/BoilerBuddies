@@ -1,41 +1,68 @@
 import React, {useEffect, useState} from 'react';
-import MyProfile from '../components/MyProfile';
 import useUser from "../hooks/useUser";
 import {endpoint} from '../global';
 import {  useNavigate } from "react-router-dom";
+import CreatableSelect from 'react-select/creatable';
 
 export default function EditProfile() {
     const currentUser = useUser();
-    const username = "ntra";
-    //const [username, setUsername] = useState('ntra')
-    const [userData, setUserData] = useState({displayName: '', interests: '', bio: '', image: null})
+    const [username, setUsername] = useState(currentUser.username)
+    const [userData, setUserData] = useState({displayName: '', interests: null, bio: '', image: null})
+    const [allTags, setAllTags] = useState([])
     const [hasData, setHasData] = useState(false)
     const navigate = useNavigate();
 
     useEffect(() => {
+        setUsername(currentUser.username)
         if(!hasData) {
             var params = new URLSearchParams()
-            //params.append('token', currentUser.token)
             params.append('username', username)
-            var config = {
-                header: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                }
-            }
     
             var getUserRequestURL = endpoint + "getUser/?" + params
+            var getTagsRequestURL = endpoint + "getTags/?"
             var xmlHttp = new XMLHttpRequest();
             xmlHttp.open("GET", getUserRequestURL, false); // false for synchronous request
             xmlHttp.send(null);
             var response = JSON.parse(xmlHttp.responseText);
-            console.log(response)
+            var interest_tag = []
+            if(response.interests === '&&') {
+                interest_tag = null
+            } else {
+                interest_tag = formatTags(response.interests.split('&&'))
+            }
+            console.log(interest_tag)
             setUserData(
-                {displayName: response.display_name, interests: response.interests.replaceAll('&&', ', '), bio: response.intro, image: response.big_image}
+                {displayName: response.display_name, interests: interest_tag, bio: response.intro, image: response.big_image}
             )
-            setHasData(true)
+
+            var xmlHttp_2 = new XMLHttpRequest();
+            xmlHttp_2.open("GET", getTagsRequestURL, false); // false for synchronous request
+            xmlHttp_2.send(null);
+            var response_2 = JSON.parse(xmlHttp_2.responseText);
+            var tags = formatTags(response_2.interests);
+            console.log(tags)
+            setAllTags(tags)
+            setHasData(true);
         }
         
     }, [userData]);
+
+    
+    function formatTags (tags) {
+        var formattedTags = [];
+        tags.forEach(element => {
+            if(element !== '&&') {
+                var arr = element.split('&&')
+                arr.forEach(val => {
+                    val = val.charAt(0).toUpperCase() + val.slice(1)
+                    if(!formattedTags.includes(val)) {
+                        formattedTags.push({value: val, label: val})
+                    }
+                })
+            } 
+        });
+        return formattedTags
+    }
 
     function handleSubmit ()  {
         console.log(userData)
@@ -44,7 +71,16 @@ export default function EditProfile() {
         //params.append('token', this.token)
         params.append('username', currentUser.username)
         params.append('displayName', userData.displayName)
-        params.append('interests', userData.interests.replaceAll(/[ ]*,[ ]*|[ ]+/g, '&&'))
+        if (userData.interests === null) {
+            params.append('interests', '&&')
+        } else {
+            var arr = []
+            userData.interests.forEach(element => {
+                arr.push(element.value.trim())
+            })
+            params.append('interests', arr.toString().replaceAll(',', '&&'))
+        }
+        
         params.append('intro', userData.bio)
         params.append('bigImage', userData.image)
         console.log(params)
@@ -69,7 +105,6 @@ export default function EditProfile() {
 
     function convertToBase64 (file) {
         return new Promise(resolve => {
-            let fileInfo;
             let baseURL = "";
             // Make new FileReader
             let reader = new FileReader();
@@ -92,14 +127,6 @@ export default function EditProfile() {
                     fontWeight: 'bolder',
                     textAlign: "left"
                 }}>Edit Profile</h3>
-                {/*
-            {userData && <MyProfile
-                username={username}
-                displayName={userData.displayName}
-                interestTags={userData.interests}
-                bio={userData.bio}
-                image={userData.image}
-            />*/}
 
             <form className='edit-profile-form' type="submit" onSubmit={handleSubmit}>
                 <div className='profile-photo'>
@@ -112,7 +139,7 @@ export default function EditProfile() {
                                         fontSize: '9vmin'
                                     }}></i>
                             </div>
-                            {(userData.image !== "null") ? <img src={userData.image} alt='img'/>: <></>}
+                            {(userData.image !== "") ? <img src={userData.image} alt='img'/>: <></>}
 
                         </div>
 
@@ -153,24 +180,13 @@ export default function EditProfile() {
                         onChange={(event) => {setUserData({...userData, displayName:event.target.value})}}/>
                     </div>
                     <div>
-                        <label>Interests <i>(Seperate each tag with a comma)</i></label>
-                        <input type="text" value={userData.interests} 
-                        onChange={(event) => {setUserData({...userData, interests:event.target.value})}}/>
-                        {/*
-                        <Multiselect
-                            
-                            selectedValues={tags}
-                            style={{
-                                searchBox: {
-                                    borderRadius: '0%',
-                                    border: '0.5px solid grey',
-                                    padding: '0.5px 2px'
-                                },
-                                optionContainer: {
-                                    borderRadius: '0%',
-                                    border: '0.5px solid grey'
-                                }
-                            }}/>*/}
+                        <label>Interests</label>
+                        {/*<input type="text" value={userData.interests} 
+                        onChange={(event) => {setUserData({...userData, interests:event.target.value})}}/>*/}
+                        <CreatableSelect isMulti options={allTags} value={userData.interests}
+                        onChange={(selected) => {
+                            setUserData({...userData, interests: selected})}}
+                        />
                     </div>
                     <div>
                         <label>Bio</label>

@@ -20,7 +20,6 @@ import CreateForum from "./pages/createForum";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SetNewPassword from "./pages/forgotPassword/setNewPassword";
 import EditProfile from "./pages/editProfile";
-import CreateProfile from "./pages/createProfile";
 
 function App(location) {
   const [showNav, setShowNav] = useState(true);

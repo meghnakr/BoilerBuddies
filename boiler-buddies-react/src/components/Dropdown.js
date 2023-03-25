@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default class Dropdown extends React.Component {
   static propTypes = {
@@ -19,6 +19,7 @@ export default class Dropdown extends React.Component {
   handleOpen = () => {
     this.setState({ open: !this.state.open });
   };
+  
 
   render() {
     const {
@@ -42,50 +43,24 @@ export default class Dropdown extends React.Component {
               {children.map((child, idx) => {
                 const label = child.props.label;
                 const route = child.props.route;
-                const onClick = child.props.onClick;
+                const navigate = child.props.navigation
                 return (
                   <li key={idx}>
-                    <Link
+                    <button
                       className="dropdown-link"
-                      to={route}
                       onClick={() => {
-                        onClick();
+                        navigate(route)
                         this.setState({ open: false });
                       }}
                     >
                       {label}
-                    </Link>
+                    </button>
                   </li>
                 );
               })}
             </ul>
           </div>
         ) : null}
-        {/*
-            {open ? (
-                <ol className="dropdown-list">
-                {children.map((child) => {
-                  const { label } = child.props;
-      
-                  return (
-                    <DropdownItem
-                      activeItem={activeItem}
-                      key={label}
-                      label={label}
-                      onClick={onClickItem}
-                    />
-                  );
-                })}
-              </ol>
-            ) : null }
-            
-            <div className="dropdown-content">
-              {children.map((child) => {
-                if (child.props.label !== activeItem) return undefined;
-                return child.props.children;
-              })}
-            </div> 
-            */}
       </div>
     );
   }
