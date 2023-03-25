@@ -10,8 +10,8 @@ function refreshPage() {
   }
 function formatResults(result) {
     console.log(result);
-    var jsonResults = JSON.parse(result);
-    //var jsonResults = result;
+    //  var jsonResults = JSON.parse(result);
+    var jsonResults = result;
     var formattedResults = Array(20).fill("");
     var i = 0;
     Object.keys(jsonResults).forEach(function(key) {
@@ -32,7 +32,7 @@ function formatResults(result) {
     return formattedResults;
 }
 
-const Friends = () => {
+const Searches = () => {
 
     const [search, setSearch] = useState('');
     const [searchResult, setSearchResult] = useState('');
@@ -98,14 +98,6 @@ const Friends = () => {
 
         //var searchRequestURL = "http://54.200.193.22:3000/searchUser/?searchName=abc&searchTags=%26one%26"
         
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET", searchRequestURL, false ); // false for synchronous request
-        xmlHttp.send(null);
-        var result = xmlHttp.responseText
-        result = formatResults(result)
-        setSearchResult(result)
-        console.log(result)
-        console.log(searchResult)
         // var xmlHttp = new XMLHttpRequest();
         // xmlHttp.open( "GET", searchRequestURL, false ); // false for synchronous request
         // xmlHttp.send(null);
@@ -137,4 +129,4 @@ const Friends = () => {
 
 };
 
-export default Friends;
+export default Searches;

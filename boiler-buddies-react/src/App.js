@@ -15,10 +15,11 @@ import Settings from "./pages/settings";
 import Signup from "./pages/signup";
 import { UserProvider } from "./context/userContext";
 import Notifications from "./pages/notifications";
-import CreateForum from "./pages/createForum";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import SetNewPassword from "./pages/forgotPassword/setNewPassword";
 import EditProfile from "./pages/editProfile";
+import CreateProfile from "./pages/createProfile";
 
 function App(location) {
   const [showNav, setShowNav] = useState(true);
@@ -64,6 +65,7 @@ function App(location) {
               path="/notifications"
               element={<Notifications funcNav={setShowNav} />}
             />
+            {/*<Route path="/create-profile" element={<CreateProfile funcNav={setShowNav} />} />*/}
             <Route path="/create-forum" element={<CreateForum funcNav={setShowNav} />} />
           </Routes>
         </div>
