@@ -65,6 +65,7 @@ function App(location) {
               path="/notifications"
               element={<Notifications funcNav={setShowNav} />}
             />
+            {/*<Route path="/create-profile" element={<CreateProfile funcNav={setShowNav} />} />*/}
             <Route path="/create-forum" element={<CreateForum funcNav={setShowNav} />} />
           </Routes>
         </div>
