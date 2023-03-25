@@ -35,8 +35,8 @@ return (
 			Feed
 		</NavLink>
 
-        <NavLink to='/friends' activeStyle>
-			Friends
+        <NavLink to='/search' activeStyle>
+			Search
 		</NavLink>
 
 		<NavLink to='/forums' activeStyle>

@@ -32,7 +32,7 @@ function formatResults(result) {
     return formattedResults;
 }
 
-const Friends = () => {
+const Searches = () => {
 
     const [search, setSearch] = useState('');
     const [searchResult, setSearchResult] = useState('');
@@ -127,4 +127,4 @@ const Friends = () => {
 
 };
 
-export default Friends;
+export default Searches;

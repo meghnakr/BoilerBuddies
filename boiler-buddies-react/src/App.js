@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Feed from "./pages/feed.js";
 import Forum from "./pages/forums.js";
-import Friends from "./pages/friends";
+import Searches from "./pages/search";
 import Messages from "./pages/messages.js";
 import Signin from "./pages/Signin.js";
 import ForgotPW from "./pages/forgotPassword/forgotPW";
@@ -31,7 +31,7 @@ function App(location) {
             <Route exact path="/" element={<Feed funcNav={setShowNav} />} />
             <Route path="/feed" element={<Feed funcNav={setShowNav} />} />
             <Route path="/forums" element={<Forum funcNav={setShowNav} />} />
-            <Route path="/friends" element={<Friends funcNav={setShowNav} />} />
+            <Route path="/search" element={<Searches funcNav={setShowNav} />} />
             <Route
               path="/messages"
               element={<Messages funcNav={setShowNav} />}
