@@ -98,16 +98,6 @@ const Searches = () => {
 
         //var searchRequestURL = "http://54.200.193.22:3000/searchUser/?searchName=abc&searchTags=%26one%26"
         
-<<<<<<< HEAD
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET", searchRequestURL, false ); // false for synchronous request
-        xmlHttp.send(null);
-        var result = xmlHttp.responseText
-        result = formatResults(result)
-        setSearchResult(result)
-        console.log(result)
-        console.log(searchResult)
-=======
         // var xmlHttp = new XMLHttpRequest();
         // xmlHttp.open( "GET", searchRequestURL, false ); // false for synchronous request
         // xmlHttp.send(null);
@@ -123,7 +113,6 @@ const Searches = () => {
         { /* sendFriendRequest */ }
 
         
->>>>>>> 0f18cbd765a33f41052df5713fd1249f4f80eddd
     }
 
     return (
