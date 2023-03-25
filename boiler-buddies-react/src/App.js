@@ -15,7 +15,6 @@ import Settings from "./pages/settings";
 import Signup from "./pages/signup";
 import { UserProvider } from "./context/userContext";
 import Notifications from "./pages/notifications";
-import CreateForum from "./pages/createForum";
 import Friends from "./pages/friends.js";
 
 import "bootstrap/dist/css/bootstrap.min.css";
