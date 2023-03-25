@@ -54,6 +54,7 @@ const Forums = () => {
             onChange={handleChange}
             value={search}/>
             <p>{searchResult}</p>
+            <button>Create a new forum</button>
         </div>
     )  
 };
