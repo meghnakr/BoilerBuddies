@@ -41,21 +41,35 @@ export default class FriendProfile extends React.Component {
     }
 
     async handleClick() {
+
         if (this.state.sendRequest) {
             return;
         }
+
+        var myFormData = new FormData();
+        myFormData.append("token", await getusertoken());
+        myFormData.append("otherId", this.state.userId);
+
+        const data = {token: await getusertoken(), otherId: this.state.userId}
+        
+
         // make axios request to send request
         console.log("CURRENT USER TOKEN: ", await getusertoken())
         console.log("OTHER USER ID: ", this.state.userId)
     
-        axios.post("/sendFriendRequest/", {token: await getusertoken(), otherId: this.state.userId }, {"Content-Type":"text/plain"})
+        axios.post("/sendFriendRequest/", myFormData, {"Content-Type":"multipart/form-data"})
             .then( (data) => {
                 if (data.data !== "Invalid\n") {        
-                    //update state
+                    //update sendRequest state
+                    this.setState({
+                        ...this.state,
+                        sendRequest: true
+                    })
                     
                 }
             })
-        /* Update sendRequest state */
+       
+
         
 
     }
