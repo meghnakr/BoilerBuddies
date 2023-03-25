@@ -16,6 +16,7 @@ import Signup from "./pages/signup";
 import { UserProvider } from "./context/userContext";
 import Notifications from "./pages/notifications";
 import CreateForum from "./pages/createForum";
+import Friends from "./pages/friends.js";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import SetNewPassword from "./pages/forgotPassword/setNewPassword";
@@ -32,6 +33,7 @@ function App(location) {
             <Route exact path="/" element={<Feed funcNav={setShowNav} />} />
             <Route path="/feed" element={<Feed funcNav={setShowNav} />} />
             <Route path="/forums" element={<Forum funcNav={setShowNav} />} />
+            <Route path="/friends" element={<Friends funcNav={setShowNav} />} />
             <Route path="/search" element={<Searches funcNav={setShowNav} />} />
             <Route
               path="/messages"

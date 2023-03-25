@@ -119,6 +119,7 @@ const Notifications = () => {
             .map(() => (
               <NotifBox />
             ))}
+            
         </div>
       </form>
     </div>
