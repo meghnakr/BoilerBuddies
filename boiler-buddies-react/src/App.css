@@ -240,6 +240,22 @@ input:focus {
   border: 1px solid #88BBF6;
 }
 
+.no-outline-btn {
+  border: none;
+  background-color: transparent;
+  color: grey;
+  font-weight: bold;
+  font-size: small;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.no-outline-btn:hover{
+  background-color: rgb(221, 221, 221);
+}
+
+
+
 .settings-btn {
   display: block;
   margin-top: 2vmin;
@@ -497,7 +513,10 @@ input:focus {
   border: 1px solid black;
   padding: 0.75em;
   padding-left: 2.5em;
-  padding-right: 2.5em
+  padding-right: 2.5em;
+  margin: auto;
+  text-align: left;
+  display: block;
 }
 .create-post {
   width: 100%;
@@ -541,12 +560,31 @@ input:focus {
   padding-bottom: 0.5em;
 }
 
-.photo-uploaded-container .remove-img {
+.photo-uploaded-container .no-outline-btn {
   position: absolute;
-  border: none;
-  background-color: transparent;
+  color: black;
 }
 
 .photo-uploaded-container img {
   width: 20%;
+}
+
+.all-post {
+  margin: auto;
+  margin-top: 2em;
+  width: 100%;
+  display: block;
+}
+
+.all-post .post-container{
+  padding-bottom: 4px;
+  margin-bottom: 1em
+}
+
+.post-utils-container{
+  margin: 0;
+}
+
+.post-stats-container .no-outline-btn, i{
+  margin-right: 4px;
 }
