@@ -41,9 +41,9 @@ const Notifications = () => {
   return (
     <div className="page-container">
       <form className="notifs-content">
-        <div className="refresh">
+      <div className="refresh">
           <img
-            style={{ width: 300, height: 300 }}
+            style={{ width: 90, height: 90 }}
             src={refresh}
             alt="img"
             onClick={refreshPage}
@@ -119,6 +119,7 @@ const Notifications = () => {
             .map(() => (
               <NotifBox />
             ))}
+            
         </div>
       </form>
     </div>

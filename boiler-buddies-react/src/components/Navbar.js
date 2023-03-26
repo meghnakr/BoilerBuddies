@@ -44,6 +44,10 @@ return (
 			Forums
 		</NavLink>
 
+		<NavLink to='/friends' activeStyle>
+			Friends
+		</NavLink>
+
         <NavLink to='/messages' activeStyle>
 			Messages
 		</NavLink>
