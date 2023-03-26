@@ -44,7 +44,6 @@ export default  class Post extends React.Component {
         var postId = JSON.parse(xmlHttp.responseText).postId
         console.log(postId);
         this.returnPostID(postId)
-        
     }
 
     convertToBase64 = (file) => {

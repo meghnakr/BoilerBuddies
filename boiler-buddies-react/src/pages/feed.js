@@ -9,14 +9,15 @@ const Feed = (props) => {
     const currentuser = useUser()
     const [postId , setPostId] = useState([]);
 
-    function getPostId (newPost) {
-        setPostId(postId => [...postId, newPost])
+    function getPostId (newPost) { //this function is called every time the "Post" button is clicked
+        setPostId(postId => [...postId, newPost]) //add new post to array
     }
 
 
     const dummyPostId = [
         {content: "Content of test post 1", username:"JaneDoe",  postAt:"March 26, 2023", likes:"20", comments:"2", liked:true, img:null},
         {content: "Content of test post 2", username:"Blahblah",  postAt:"March 22, 2023", likes:"10", comments:"5", liked:false, img:null},
+        {content: "Content of test post 3", username:"Blahblah",  postAt:"March 22, 2023", likes:"8", comments:"15", liked:false, img:null},
     ]
     return ( 
         <div className='page-container'>

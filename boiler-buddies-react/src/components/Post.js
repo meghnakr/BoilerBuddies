@@ -34,7 +34,7 @@ export default  class Post extends React.Component {
         } = this
         return (
             <div className='post-container'>
-                <p style={{color:"grey", fontSize:"smaller"}}>Post by <u> {username}</u> - {postAt} </p>
+                <p style={{color:"grey", fontSize:"smaller"}}>Posted by <u> {username}</u> - {postAt} </p>
                 <p>{content}</p>
                 <div className='post-stats-container'>
                     <button className='no-outline-btn'><i className='fa fa-comment-o'></i> {comments} Comments</button>

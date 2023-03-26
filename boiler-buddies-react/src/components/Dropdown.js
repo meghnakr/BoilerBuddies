@@ -43,13 +43,14 @@ export default class Dropdown extends React.Component {
               {children.map((child, idx) => {
                 const label = child.props.label;
                 const route = child.props.route;
-                const navigate = child.props.navigation
+                const navigate = child.props.navigation;
+                const onClick = child.props.onClick;
                 return (
                   <li key={idx}>
                     <button
                       className="dropdown-link"
                       onClick={() => {
-                        navigate(route)
+                        onClick()
                         this.setState({ open: false });
                       }}
                     >
