@@ -28,8 +28,9 @@ export default class NewForum extends React.Component {
 
     
 
-    handleSubmit = () => {
-        delay(10000).then(() => console.log('ran after 10 seconds passed'));
+    handleSubmit = (event) => {
+        event.preventDefault();
+        //delay(10000).then(() => console.log('ran after 10 seconds passed'));
         console.log("In handlesubmit")
         var params = new URLSearchParams();
         //params.append('token', this.token)
@@ -46,10 +47,11 @@ export default class NewForum extends React.Component {
         var createForumRequestURL = endpoint + "addForum/?" + params
         console.log(createForumRequestURL)
         var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET", createForumRequestURL, false ); // false for synchronous request
+        xmlHttp.open( "GET", createForumRequestURL, true ); // false for synchronous request
         xmlHttp.send(null);
-        console.log(xmlHttp.responseText);
-        this.submitFunc(true);
+        //console.log(xmlHttp.responseText);
+        this.props.navigation('/feed', {replace:true});
+        
     }
 
     handleFileInputChange = (event) => {
@@ -70,7 +72,6 @@ export default class NewForum extends React.Component {
 
     convertToBase64 = (file) => {
         return new Promise(resolve => {
-            let fileInfo;
             let baseURL = "";
             // Make new FileReader
             let reader = new FileReader();
