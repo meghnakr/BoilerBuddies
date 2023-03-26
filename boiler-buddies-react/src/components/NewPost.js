@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {endpoint} from '../global';
+import Select from 'react-select';
 
 export default  class Post extends React.Component {
     static propTypes = {
@@ -15,7 +16,6 @@ export default  class Post extends React.Component {
             file: null,
             file64: '',
             content: '',
-            postId: '',
         }
     }
 
@@ -67,11 +67,11 @@ export default  class Post extends React.Component {
         const {
             handlePosting,
             handleFileInputChange,
-            state: {file, content, postId},
-            callback
+            state: {file, content},
         } = this
         return (
             <div className='post-container'>
+                <Select className="forum-select" placeholder="Choose a forum" options={null}/> 
             <textarea rows='1' className='create-post' placeholder='Share your thoughts' type='text' value={content} onChange={(event)=>{this.setState({content:event.target.value})}}/>
             {file && <div className='photo-uploaded-container'>
                 <button className='no-outline-btn' onClick={() => {this.setState({file:null, file64:''})}}><i className='fa fa-times-circle'></i></button>

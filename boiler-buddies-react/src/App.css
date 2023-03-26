@@ -538,6 +538,13 @@ input:focus {
   margin-top: 5px
 }
 
+.forum-select {
+  width: 40%;
+  font-size: smaller;
+  font-weight: bold;
+}
+
+
 .post-utils-container{
   float: left;
   width: 80%;
