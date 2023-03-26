@@ -22,7 +22,7 @@ const initialUser = {
   lastRefreshAt: "",
 };
 
-export const UserContext = createContext({ user: initialUser, isLoggedIn: false, username: '' });
+export const UserContext = createContext({ user: initialUser, isLoggedIn: false, username: '', token: '' });
 
 export function UserProvider(props) {
   const [user, setUser] = useState(initialUser);

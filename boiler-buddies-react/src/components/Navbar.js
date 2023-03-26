@@ -18,8 +18,9 @@ import useUser from '../hooks/useUser';
 
 const Navbar = () => {
 	const navigate = useNavigate();
-	const handleClick = () =>{
-		navigate('/', {replace:true});
+	const handleClick = (event) =>{
+		navigate(event.target.value, {replace:true});
+		event.target.focus()
 	}
 
 
@@ -27,17 +28,17 @@ return (
 	<>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 	<Nav>
-		<img className='App-logo' style={{marginTop: '3.5vmin', cursor: 'pointer'}} src={logo} alt="Logo"
+		<img className='App-logo' style={{marginTop: '3.5vmin', cursor: 'pointer'}} src={logo} alt="Logo" value='/'
 		onClick={handleClick} />
 		<NavMenu>
 			
-		<NavLink to='/feed' activeStyle>
+		<button className='Navbar-btn' value='/feed' onClick={handleClick}>
 			Feed
-		</NavLink>
+		</button>
 
-        <NavLink to='/friends' activeStyle>
+        <button className='Navbar-btn' value='/friends' onClick={handleClick}>
 			Friends
-		</NavLink>
+		</button>
 
 		<NavLink to='/forums' activeStyle>
 			Forums

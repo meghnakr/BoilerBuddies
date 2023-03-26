@@ -89,7 +89,7 @@ export default function EditProfile() {
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open( "GET", updateRequestURL, true ); // false for synchronous request
         xmlHttp.send(null);
-        console.log(xmlHttp.responseText);
+        
         navigate('/feed', {replace:true})
     }
 
