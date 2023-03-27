@@ -559,6 +559,10 @@ input:focus {
   width: 20%;
 }
 
+.post-button-container .default-btn:disabled{
+  opacity: 50%;
+}
+
 .photo-uploaded-container {
   position: relative;
   float: left;
@@ -595,3 +599,5 @@ input:focus {
 .post-stats-container .no-outline-btn, i{
   margin-right: 4px;
 }
+
+
