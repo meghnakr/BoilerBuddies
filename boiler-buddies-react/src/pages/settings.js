@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { signOutUser, deleteAccount } from '../utils/auth';
+import { ConfirmDialog } from 'primereact/confirmdialog';
 
 export default function Settings(props) {
   const navigate = useNavigate();

@@ -36,8 +36,8 @@ return (
 			Feed
 		</button>
 
-        <button className='Navbar-btn' value='/friends' onClick={handleClick}>
-			Friends
+        <button className='Navbar-btn' value='/search' onClick={handleClick}>
+			Search
 		</button>
 
 		<NavLink to='/forums' activeStyle>
