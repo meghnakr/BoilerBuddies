@@ -25,6 +25,21 @@
   color: #61dafb;
 }
 
+.Navbar-btn {
+  border: none;
+  background-color: transparent;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  height: 100%;
+  cursor: pointer;
+}
+
+.Navbar-btn:focus {
+  color:black;
+}
+
 .page-container {
   margin-top: 3vmin;
   display: flex;
@@ -224,6 +239,22 @@ input:focus {
   text-transform: uppercase;
   border: 1px solid #88BBF6;
 }
+
+.no-outline-btn {
+  border: none;
+  background-color: transparent;
+  color: grey;
+  font-weight: bold;
+  font-size: small;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.no-outline-btn:hover{
+  background-color: rgb(221, 221, 221);
+}
+
+
 
 .settings-btn {
   display: block;
@@ -476,4 +507,91 @@ input:focus {
   
 }
 
+/** Post CSS **/
+.post-container {
+  width: 70%;
+  border: 1px solid black;
+  padding: 0.75em;
+  padding-left: 2.5em;
+  padding-right: 2.5em;
+  margin: auto;
+  text-align: left;
+  display: block;
+}
+.create-post {
+  width: 100%;
+  padding-left: .5em;
+  border: none;
+  margin-right: 5px;
+  resize: none;
+  padding-top: .5em;
+  overflow: hidden;
+  font-size: 1.5em;
+}
 
+.create-post:focus {
+  outline: none
+}
+
+.post-container hr {
+  margin: 0;
+  margin-top: 5px
+}
+
+.forum-select {
+  width: 40%;
+  font-size: smaller;
+  font-weight: bold;
+}
+
+
+.post-utils-container{
+  float: left;
+  width: 80%;
+  margin-top: 0;
+  text-align: left;
+  padding-left: 1em;
+  padding-top: 1em
+}
+
+.post-button-container{
+  float: left;
+  width: 20%;
+}
+
+.photo-uploaded-container {
+  position: relative;
+  float: left;
+  text-align: left;
+  padding-left: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+.photo-uploaded-container .no-outline-btn {
+  position: absolute;
+  color: black;
+}
+
+.photo-uploaded-container img {
+  width: 20%;
+}
+
+.all-post {
+  margin: auto;
+  margin-top: 2em;
+  width: 100%;
+  display: block;
+}
+
+.all-post .post-container{
+  padding-bottom: 4px;
+  margin-bottom: 1em
+}
+
+.post-utils-container{
+  margin: 0;
+}
+
+.post-stats-container .no-outline-btn, i{
+  margin-right: 4px;
+}

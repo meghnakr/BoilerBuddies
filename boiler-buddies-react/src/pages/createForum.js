@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
 import NewForum from '../components/NewForum.js';
 import useUser from "../hooks/useUser";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function CreateForum(props) {
     props.funcNav(false);
     
     //const currentUser = useUser();
     const location = useLocation();
-
+    const navigate = useNavigate();
+    
 
     return (
         <div className='page-container' >
@@ -20,7 +21,8 @@ export default function CreateForum(props) {
             <p style={{ fontWeight: 'lighter'}}>Fill out the information below!</p>
             <NewForum name=''
             description=''
-            image=''/>
+            image=''
+            navigation={navigate}/>
         </div>
     )
 }

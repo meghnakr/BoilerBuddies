@@ -13,7 +13,6 @@ export default function Profile() {
     const [sendRequest, setSendRequest] = useState(false);
 
     useEffect(() => {
-        console.log(currentUser.username)
         setUsername(currentUser.username)
         if(!hasData) {
             var params = new URLSearchParams()

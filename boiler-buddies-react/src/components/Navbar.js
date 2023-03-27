@@ -18,8 +18,9 @@ import useUser from '../hooks/useUser';
 
 const Navbar = () => {
 	const navigate = useNavigate();
-	const handleClick = () =>{
-		navigate('/', {replace:true});
+	const handleClick = (event) =>{
+		navigate(event.target.value, {replace:true});
+		event.target.focus()
 	}
 
 
@@ -27,17 +28,17 @@ return (
 	<>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 	<Nav>
-		<img className='App-logo' style={{marginTop: '3.5vmin', cursor: 'pointer'}} src={logo} alt="Logo"
+		<img className='App-logo' style={{marginTop: '3.5vmin', cursor: 'pointer'}} src={logo} alt="Logo" value='/'
 		onClick={handleClick} />
 		<NavMenu>
 			
-		<NavLink to='/feed' activeStyle>
+		<button className='Navbar-btn' value='/feed' onClick={handleClick}>
 			Feed
-		</NavLink>
+		</button>
 
-        <NavLink to='/search' activeStyle>
-			Search
-		</NavLink>
+        <button className='Navbar-btn' value='/friends' onClick={handleClick}>
+			Friends
+		</button>
 
 		<NavLink to='/forums' activeStyle>
 			Forums
@@ -59,8 +60,8 @@ return (
 		{/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
 		</NavMenu>
 		<Dropdown title="My Account">
-			<div label="Profile" route="/profile" navigation={navigate}/>
-			<div label="Account Settings" route="/settings" navigation={navigate}/>
+			<div label="Profile" route="/profile"  onClick={()=>navigate('/profile', {replace:true})}/>
+			<div label="Account Settings" route="/settings" onClick={()=>navigate('/settings', {replace:true})}/>
 			<div label="Sign Out" onClick={()=>{signOutUser(navigate)}}/>
 			{/* Look up how to make it redirect after signout goes through */}
 			
