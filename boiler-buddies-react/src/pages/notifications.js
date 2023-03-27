@@ -21,6 +21,7 @@ const Notifications = () => {
       setFriendReqs(res.data);
     });
   }, []); // dependency array
+  
 
   console.log("FRIENDS: ", friendReqs);
 

@@ -40,28 +40,42 @@ export default class FriendRequest extends React.Component {
     if (this.state.acceptRequest) {
       return;
     }
+
+
     // make axios request to accept request
     console.log("CURRENT USER TOKEN: ", await getusertoken());
     console.log("OTHER USER ID: ", this.state.userId);
+    
+    // var myFormData = new FormData();
+    // myFormData.append("token", await getusertoken());
+    // myFormData.append("otherId", this.state.userId);
 
-    var myFormData = new FormData();
-    myFormData.append("token", await getusertoken());
-    myFormData.append("otherId", this.state.userId);
+    // /* Accept Friend Request Code */
+    // axios
+    //   .post("/acceptFriendRequest/", myFormData, {
+    //     "Content-Type": "multipart/form-data",
+    //   })
+    //   .then((data) => {
+    //     if (data.data !== "Invalid\n") {
+    //       //update sendRequest state
+    //       this.setState({
+    //         ...this.state,
+    //         acceptRequest: true,
+    //       });
+    //     }
+    //   });
 
-    /* Accept Friend Request Code */
-    axios
-      .post("/acceptFriendRequest/", myFormData, {
-        "Content-Type": "multipart/form-data",
-      })
-      .then((data) => {
-        if (data.data !== "Invalid\n") {
-          //update sendRequest state
-          this.setState({
-            ...this.state,
-            acceptRequest: true,
-          });
-        }
-      });
+    var token = await getusertoken()
+    var otherId = this.state.userId
+    var acceptRequestURL = "http://54.200.193.22:3000/acceptFriendRequest/?"
+    acceptRequestURL += "token=" + token + "&otherId=" + otherId
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", acceptRequestURL, false ); // false for synchronous request
+    this.state.acceptRequest = true;
+    xmlHttp.send(null);
+    var result = xmlHttp.responseText
+    console.log(result)
+
   }
 
   async handleDeclineClick() {

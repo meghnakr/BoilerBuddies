@@ -47,17 +47,16 @@ export default class FriendProfile extends React.Component {
         }
 
         var myFormData = new FormData();
-        myFormData.append("token", await getusertoken());
+        myFormData.append("token", await getusertoken());       // add an = sign?
         myFormData.append("otherId", this.state.userId);
 
         const data = {token: await getusertoken(), otherId: this.state.userId}
         
-
         // make axios request to send request
         console.log("CURRENT USER TOKEN: ", await getusertoken())
         console.log("OTHER USER ID: ", this.state.userId)
     
-        axios.post("/sendFriendRequest/", myFormData, {"Content-Type":"multipart/form-data"})
+        /*axios.post("/sendFriendRequest/?", myFormData, {"Content-Type":"multipart/form-data"})
             .then( (data) => {
                 if (data.data !== "Invalid\n") {        
                     //update sendRequest state
@@ -67,7 +66,17 @@ export default class FriendProfile extends React.Component {
                     })
                     
                 }
-            })
+            })*/
+        var token = await getusertoken()
+        var otherId = this.state.userId
+        var sendRequestURL = "http://54.200.193.22:3000/sendFriendRequest/?"
+        sendRequestURL += "token=" + token + "&otherId=" + otherId
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", sendRequestURL, false ); // false for synchronous request
+        this.state.sendRequest = true;
+        xmlHttp.send(null);
+        var result = xmlHttp.responseText
+        console.log(result)
        
 
         
