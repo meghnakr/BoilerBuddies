@@ -24,8 +24,17 @@ export default class FriendsTabProfile extends React.Component {
       userId: this.props.userId, //user_id property
     };
   }
-
-
+  async handleRemoveClick() {
+    var token = await getusertoken();
+    var otherId = this.state.userId;
+    var unfriendRequestURL = "http://54.200.193.22:3000/unfriendUser/?";
+    unfriendRequestURL += "token=" + token + "&otherId=" + otherId;
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", unfriendRequestURL, false); // false for synchronous request
+    xmlHttp.send(null);
+    var result = xmlHttp.responseText;
+    console.log(result);
+  }
   render() {
     return (
       <div className="profile-header">
@@ -40,6 +49,19 @@ export default class FriendsTabProfile extends React.Component {
           <h6>{this.state.interestTags}</h6>
         </div>
 
+        <div className="profile-button">
+          <button
+            className={"default-btn"}
+            style={{
+              fontWeight: "normal",
+              textTransform: "capitalize",
+              border: "1px solid #88BBF6",
+            }}
+            onClick={this.handleRemoveClick.bind(this)}
+          >
+            {'Remove Friend'}
+          </button>
+        </div>
       </div>
     );
   }
