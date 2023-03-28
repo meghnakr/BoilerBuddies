@@ -6,6 +6,7 @@ import logo from "../assets/logo_vector.png";
 import axios from "../utils/Axios";
 import { useEffect, useState } from "react";
 import FriendRequest from "../components/FriendRequest";
+import { getusertoken } from "../utils/auth";
 
 const Notifications = () => {
   function refreshPage() {
@@ -14,19 +15,51 @@ const Notifications = () => {
 
   const [friendReqs, setFriendReqs] = useState([]);
 
-  useEffect(() => {
-    /* Get Friend Requests */
-    axios.get(/getFriendRequests/).then((res) => {
-      // callback function
-      setFriendReqs(res.data);
-    });
-  }, []); // dependency array
-  
+  // var token = getusertoken()
+  // var sendRequestURL = "http://54.200.193.22:3000/getFriendRequests/?"
+  // sendRequestURL += "user_id=" + token
+  // var xmlHttp = new XMLHttpRequest();
+  // xmlHttp.open( "GET", sendRequestURL, false ); // false for synchronous request
+  // this.state.sendRequest = true;
+  // xmlHttp.send(null);
+  // setFriendReqs(xmlHttp.data)
+  // var result = xmlHttp.responseText
+  // console.log(result)
 
-  console.log("FRIENDS: ", friendReqs);
+  // useEffect(() => {
+  //   /* Get Friend Requests */
+  //   axios.get("/getFriendRequests/").then((res) => {
+  //     // callback function
+  //     //console.log("RES: ", res)
+  //     setFriendReqs(res.data);
+  //   });
+  // }, []); // dependency array
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios.get("/getFriendRequests/", {
+        params: {
+          user_id: "09aa1177-7e3d-4c83-9446-9079c048f5fe", //THIS SHOULD BE THE CURRENT USER'S USER ID
+        },
+      });
+      console.log("Result data:", result.data);
+      setFriendReqs(Object.values(result.data));
+    };
+
+    fetchData();
+    //console.log("FRIEND REQS NEW1: ", friendReqs);
+    //console.log ("length NEW1: ", friendReqs.length)
+  }, []);
+
+  useEffect(() => {
+    //console.log("FRIEND REQS IN USE: ", friendReqs);
+    //console.log ("length IN USE: ", friendReqs.length);
+  }, [friendReqs]);
+
+  console.log("FRIEND REQS 0: ", friendReqs);
 
   /* Get notifications */
-  axios
+  /*axios
     .get(/getNotifications/)
     .then((response) => {
       // handle success
@@ -35,14 +68,14 @@ const Notifications = () => {
     .catch((error) => {
       // handle error
       console.log("FAILED NOTIFICATIONS");
-    });
+    });*/
 
   /* Accept Friend Requests */
 
   return (
     <div className="page-container">
       <form className="notifs-content">
-      <div className="refresh">
+        <div className="refresh">
           <img
             style={{ width: 90, height: 90 }}
             src={refresh}
@@ -60,24 +93,21 @@ const Notifications = () => {
 
             {/* acceptFriendRequests */}
 
-            {friendReqs.map(
-              (
-                currentfriendrequest,
-                index // goes through each element in friendReqs and maps it out by index
-              ) => (
+            {friendReqs.length > 0 ? (
+              friendReqs.map((currentfriendrequest, index) => (
                 <FriendRequest
                   username={currentfriendrequest.username}
                   displayName={currentfriendrequest.displayName}
                   interestTags={currentfriendrequest.interestTags}
-                  userId={currentfriendrequest.userId} //user_id property
+                  userId={currentfriendrequest.userId}
                   key={index}
                 />
-              )
+              ))
+            ) : (
+              <p>No friend requests</p>
             )}
 
-            {/* 
-            
-            {Array(5)
+            {/*Array(5)
               .fill(0)
               .map(() => (
                 <FriendRequest username={"asaquib"}
@@ -85,10 +115,7 @@ const Notifications = () => {
                   interestTags={["books", "coffee"]}
                   userId={1} //user_id property
                    />
-              ))}
-
-            */}
-
+              ))*/}
 
             {/* Replace Array.fill with actual array from database holding friends to user */}
           </p>
@@ -120,7 +147,6 @@ const Notifications = () => {
             .map(() => (
               <NotifBox />
             ))}
-            
         </div>
       </form>
     </div>
