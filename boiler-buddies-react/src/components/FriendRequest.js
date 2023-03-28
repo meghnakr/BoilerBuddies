@@ -40,7 +40,7 @@ export default class FriendRequest extends React.Component {
     if (this.state.acceptRequest) {
       return;
     }
-
+    //this.state.preventDefault()
 
     // make axios request to accept request
     console.log("CURRENT USER TOKEN: ", await getusertoken());

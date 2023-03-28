@@ -37,6 +37,8 @@ const Friends = () => {
     fetchData();
   }, []);
 
+  console.log("FRIEND PROFS: ", friendProfs)
+
   return (
     <div className="page-container">
       <form className="notifs-content">
