@@ -26,7 +26,7 @@ export default class FriendsTabProfile extends React.Component {
   }
   async handleRemoveClick() {
     var token = await getusertoken();
-    var otherId = this.state.userId;
+    var otherId = this.state.userId;    // UNDEFINED
     var unfriendRequestURL = "http://54.200.193.22:3000/unfriendUser/?";
     unfriendRequestURL += "token=" + token + "&otherId=" + otherId;
     var xmlHttp = new XMLHttpRequest();
