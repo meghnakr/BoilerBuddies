@@ -168,15 +168,14 @@ const Notifications = () => {
               <p>No Notifications</p>
             )} */}
 
-          <div>
+          {/* <div>
             {notifications.map((notification, index) => (
               <p key={index}>{notification} </p>
             ))}
-          </div>
-
-          {/*notifications.map((notif, index) => (
-            <NotifBox key={index} content={notif.content} />
-          ))*/}
+          </div> */}
+          {notifications.map((notification, index) => (
+            <NotifBox key={index} content={notification} />
+          ))}
 
           {/*Array(5)
             .fill(0)
