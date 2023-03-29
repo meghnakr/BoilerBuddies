@@ -18,17 +18,6 @@ export default class FriendProfile extends React.Component {
     }
 
     constructor(props) {
-
-        // const {
-        //     state: {
-        //         username,
-        //         interestTags,
-        //         displayName,
-        //         sendRequest
-        //     },
-        //     handleClick
-        // } = this;
-
         super(props);
         
         this.state = {
