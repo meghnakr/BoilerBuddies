@@ -13,8 +13,27 @@ export default class FriendProfile extends React.Component {
     interestTags: PropTypes.string,
   };
 
-  constructor(props) {
-    super(props);
+    
+    
+    static propTypes = {
+        username: PropTypes.string,
+        displayName: PropTypes.string,
+        interestTags: PropTypes.string
+    }
+
+    constructor(props) {
+        super(props);
+        this.username = this.props.username
+        this.displayName =  this.props.displayName
+        this.interestTags= this.props.interestTags
+        this.img = this.props.img
+        this.userId = this.props.userId     //user_id property 
+        this.state = {
+            sendRequest: this.props.sendRequest,
+        };
+    }
+
+    async handleClick() {
 
     this.state = {
       username: this.props.username,
@@ -48,17 +67,54 @@ export default class FriendProfile extends React.Component {
                     
                 }
             })*/
-    var token = await getusertoken();
-    var otherId = this.state.userId;
-    var sendRequestURL = "http://54.200.193.22:3000/sendFriendRequest/?";
-    sendRequestURL += "token=" + token + "&otherId=" + otherId;
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", sendRequestURL, false); // false for synchronous request
-    this.state.sendRequest = true;
-    xmlHttp.send(null);
-    var result = xmlHttp.responseText;
-    console.log(result);
-  }
+        var token = await getusertoken()
+        var otherId = this.userId
+        var sendRequestURL = "http://54.200.193.22:3000/sendFriendRequest/?"
+        sendRequestURL += "token=" + token + "&otherId=" + otherId
+        console.log(sendRequestURL)
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", sendRequestURL, false ); // false for synchronous request
+        this.setState({sendRequest: true})
+        xmlHttp.send(null);
+        var result = xmlHttp.responseText
+        console.log(result)
+    }
+
+    render() {
+        
+
+        return (
+            <div className="profile-header">
+            <div className='profile-picture'>
+                <div className='profile-photo-circle' >
+                            <div className='upload-icon'>
+                                <i
+                                    className='fa fa-user'
+                                    style={{
+                                        fontSize: '9vmin'
+                                    }}></i>
+                            </div>
+                            {(this.img !== "null") ? <img src={this.img} alt='img'/>: <></>}
+
+                        </div>
+                </div>
+            <div className='profile-info'>
+                <h2>{this.displayName}</h2>
+                <h6>{this.username}</h6>
+                <h6>{this.interestTags}</h6>
+            </div>
+            <div className='profile-button'>
+                <button className= {this.state.sendRequest ? 'default-btn-white' : 'default-btn'} 
+                style= {{ fontWeight: 'normal', textTransform: 'capitalize', border: '1px solid #88BBF6'}}
+                onClick={this.handleClick.bind(this)}>
+                    { this.state.sendRequest ? 'Request Sent' : 'Send Request' }
+                </button>
+                {/* TODO: change button to edit if it's the user's profile */}
+            </div>
+            
+            </div>
+            )
+    }
 
   render() {
     return (
