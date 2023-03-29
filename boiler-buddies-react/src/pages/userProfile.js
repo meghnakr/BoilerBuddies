@@ -84,7 +84,7 @@ const UserProfile = () => {
             <FriendProfile username={userData.username} displayName={userData.displayName} interestTags={userData.interestTags} />
             <div className='all-post'> 
             {posts.map(post => {
-                return <Post disable={false} userId={post.userId} navigate={navigate}
+                return <Post token={currentUser.token} disable={false} userId={post.userId} navigate={navigate}
                 id={post.id} content={post.content} username={userData.username} postAt={post.postAt} likes={post.likes} comments={post.comments} liked={post.liked} />
             })}</div>
            

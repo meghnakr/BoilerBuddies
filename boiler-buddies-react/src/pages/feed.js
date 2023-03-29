@@ -12,6 +12,8 @@ const Feed = (props) => {
     const [postId , setPostId] = useState([]);
     const [forums, setForums] = useState([]);
     const navigate = useNavigate();
+    const [bottomPostedAt, setBottomPostedAt] = useState(new Date().toISOString().replace('T', ' ').replace('Z', ''))
+    const [bottomHotScore, setBottomHotScore] = useState(30000)
 
     useEffect(() => {
         var getForumsRequestURL = endpoint + "getForums/?"
@@ -27,13 +29,19 @@ const Feed = (props) => {
     }, [])
 
 
-/* Retrieve posts on feed
+
     useEffect(() => {
         var params = new URLSearchParams();
+        console.log(bottomPostedAt)
         params.append("token", currentuser.token)
-        var getPostsRequestURL = endpoint + "getPosts/?" + params
+        params.append("sort", 1)
+        params.append("bottomPostedAt", bottomPostedAt)
+        params.append("bottomHotScore", bottomHotScore)
+        var getFeedRequestURL = endpoint + "getFeed/?" + params
+        console.log(getFeedRequestURL)
         var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open("GET", getPostsRequestURL, false); // false for synchronous request
+        /*
+        xmlHttp.open("GET", getFeedRequestURL, false); // false for synchronous request
         xmlHttp.send(null);
         var response = JSON.parse(xmlHttp.responseText);
         var formatPosts = []
@@ -41,9 +49,9 @@ const Feed = (props) => {
             formatPosts.push({content: element.content, username})
         });
         console.log(formatForum)
-        setForums(formatForum)
+        setForums(formatForum)*/
     }, [postId])
-*/
+
 
 
     function getPostId (newPost) { //this function is called every time the "Post" button is clicked
@@ -62,7 +70,7 @@ const Feed = (props) => {
             <NewPost tokenId={currentuser.token} handleCallback={getPostId} forums={forums}/>
             <div className='all-post'>
                 {dummyPostId.map(post => {
-                    return <Post navigate={navigate} disable={false} userId={post.userId}
+                    return <Post navigate={navigate} token={currentuser.token} disable={false} userId={post.userId}
                     id={post.id} content={post.content} username={post.username} postAt={post.postAt} likes={post.likes} comments={post.comments} liked={post.liked}/>
                 })}
                 
