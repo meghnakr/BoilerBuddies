@@ -39,6 +39,8 @@ export async function getusertoken() {
   return token;
 }
 
+
+
 export function addNewUser(email, password) {
   // check if no email or password
   if (!email || !password) {

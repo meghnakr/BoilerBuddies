@@ -21,8 +21,6 @@ export default function Signin (props) {
   console.log(currentUser);
 
 
-
-
   /*
   const [user] = useAuthState(auth);
   useEffect(() => {

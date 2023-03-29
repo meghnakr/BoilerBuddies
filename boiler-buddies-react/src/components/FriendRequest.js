@@ -40,7 +40,7 @@ export default class FriendRequest extends React.Component {
     if (this.state.acceptRequest) {
       return;
     }
-
+    //this.state.preventDefault()
 
     // make axios request to accept request
     console.log("CURRENT USER TOKEN: ", await getusertoken());
@@ -70,7 +70,7 @@ export default class FriendRequest extends React.Component {
     var acceptRequestURL = "http://54.200.193.22:3000/acceptFriendRequest/?"
     acceptRequestURL += "token=" + token + "&otherId=" + otherId
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", acceptRequestURL, false ); // false for synchronous request
+    xmlHttp.open( "POST", acceptRequestURL, false ); // false for synchronous request
     this.state.acceptRequest = true;
     xmlHttp.send(null);
     var result = xmlHttp.responseText
@@ -79,9 +79,9 @@ export default class FriendRequest extends React.Component {
   }
 
   async handleDeclineClick() {
-    if (this.state.acceptRequest) {
+    /*if (this.state.acceptRequest) {
       return;
-    }
+    }*/
     // make axios request to decline request
     console.log("CURRENT USER TOKEN: ", await getusertoken());
     console.log("OTHER USER ID: ", this.state.userId);
@@ -99,9 +99,9 @@ export default class FriendRequest extends React.Component {
   }
 
   render() {
-    if (this.state.declineRequest == true) {
+    /*if (this.state.declineRequest == true) {
       return null;
-    }
+    }*/
     return (
       <div className="profile-header">
         <div className="profile-picture">
