@@ -2,6 +2,7 @@ import { React, useState } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Main from "./pages/main";
 import Feed from "./pages/feed.js";
 import Forum from "./pages/forums.js";
 import Searches from "./pages/search.js";
@@ -16,12 +17,13 @@ import Signup from "./pages/signup";
 import { UserProvider } from "./context/userContext";
 import Notifications from "./pages/notifications";
 import Friends from "./pages/friends.js";
-
+import PostWithComments from "./pages/postWithComments";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SetNewPassword from "./pages/forgotPassword/setNewPassword";
 import EditProfile from "./pages/editProfile";
 //import CreateProfile from "./pages/createProfile";
 import CreateForum from "./pages/createForum";
+import UserProfile from "./pages/userProfile";
 
 function App(location) {
   const [showNav, setShowNav] = useState(true);
@@ -31,10 +33,12 @@ function App(location) {
         <div className="App">
           {showNav && <Navbar />}
           <Routes>
-            <Route exact path="/" element={<Feed funcNav={setShowNav} />} />
+            <Route exact path="/" element={<Main />} />
             <Route path="/feed" element={<Feed funcNav={setShowNav} />} />
+            <Route path="/post/:postId" element={<PostWithComments funcNav={setShowNav} />}/>
             <Route path="/forums" element={<Forum funcNav={setShowNav} />} />
             <Route path="/friends" element={<Friends funcNav={setShowNav} />} />
+            <Route path="/user/:userId" element={<UserProfile />} />
             <Route path="/search" element={<Searches funcNav={setShowNav} />} />
             <Route
               path="/messages"
@@ -68,7 +72,6 @@ function App(location) {
               path="/notifications"
               element={<Notifications funcNav={setShowNav} />}
             />
-            {/*<Route path="/create-profile" element={<CreateProfile funcNav={setShowNav} />} />*/}
             <Route path="/create-forum" element={<CreateForum funcNav={setShowNav} />} />
           </Routes>
         </div>

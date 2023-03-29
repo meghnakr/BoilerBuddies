@@ -35,7 +35,7 @@ export default class Dropdown extends React.Component {
           style={{ marginTop: "3vmin" }}
           onClick={handleOpen}
         >
-          {title} <i>&#9660;</i>
+          {title} <i className="fa fa-chevron-down"></i>
         </button>
         {open ? (
           <div className="dropdown-content">
