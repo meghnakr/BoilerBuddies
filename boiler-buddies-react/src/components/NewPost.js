@@ -32,6 +32,7 @@ export default  class Post extends React.Component {
     }
 
     handlePosting = () => {
+        console.log(this.token)
         if(this.state.content === '' ) {return;}
         var params = new URLSearchParams();
         params.append('token', this.token)

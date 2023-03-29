@@ -22,7 +22,7 @@ const initialUser = {
   lastRefreshAt: "",
 };
 
-export const UserContext = createContext({ user: initialUser, isLoggedIn: false, username: '', token: '' });
+export const UserContext = createContext({ user: initialUser, loggedIn: false, username: '', token: '' });
 
 export function UserProvider(props) {
   const [user, setUser] = useState(initialUser);
@@ -55,6 +55,7 @@ export function UserProvider(props) {
       setLoggedIn(false);
       setUser(initialUser);
       setToken(null);
+      setUsername('');
       console.log("2")
       //console.log("IN USERCONTEXT FILE:", user);
     }

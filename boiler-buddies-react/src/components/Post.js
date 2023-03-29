@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {endpoint} from '../global';
+import { Link } from 'react-router-dom';
 
 export default  class Post extends React.Component {
     static propTypes = {
@@ -9,7 +10,10 @@ export default  class Post extends React.Component {
 
     constructor(props) {
         super(props)
+        this.disable = this.props.disable
+        this.id = this.props.id
         this.username = this.props.username
+        this.userId = this.props.userId
         this.postAt = this.props.postAt
         this.content = this.props.content
         this.img = this.props.img
@@ -29,15 +33,15 @@ export default  class Post extends React.Component {
     }
     render () {
         const {
-            content, img, username, postAt, 
+            content, img, username, postAt, id, disable, userId,
             state: {liked, likes, comments,}
         } = this
         return (
             <div className='post-container'>
-                <p style={{color:"grey", fontSize:"smaller"}}>Posted by <u> {username}</u> - {postAt} </p>
+                <p style={{color:"grey", fontSize:"smaller"}}>Posted by <button className='no-outline-btn' onClick={()=> {this.props.navigate(`/user/${userId}`, {replace:true})}}> {username}</button> - {postAt} </p>
                 <p>{content}</p>
                 <div className='post-stats-container'>
-                    <button className='no-outline-btn'><i className='fa fa-comment-o'></i> {comments} Comments</button>
+                    <button className='no-outline-btn' disable={disable}onClick={() => {this.props.navigate(`/post/${id}`, {replace:true})}}><i className='fa fa-comment-o'></i> {comments} Comments</button>
                     <button className='no-outline-btn' onClick={() => this.setState(this.handleLike)} style={liked ? {color: 'red'} : {color:'grey'}}>
                         <i className={liked ? 'fa fa-heart' : 'fa fa-heart-o'}></i> 
                          {likes} Likes

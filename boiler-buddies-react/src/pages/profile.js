@@ -64,7 +64,6 @@ export default function Profile() {
                 </div>
                 <div className='profile-button'>
                     
-                    {/* TODO: change button to edit if it's the user's profile */}
                 </div>
 
             </div>
