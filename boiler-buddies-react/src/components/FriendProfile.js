@@ -23,10 +23,9 @@ export default class FriendProfile extends React.Component {
         this.displayName =  this.props.displayName
         this.interestTags= this.props.interestTags
         this.img = this.props.img
+        this.userId = this.props.userId     //user_id property 
         this.state = {
-            
             sendRequest: this.props.sendRequest,
-            userId: this.props.userId     //user_id property 
         };
     }
 
@@ -38,13 +37,13 @@ export default class FriendProfile extends React.Component {
 
         var myFormData = new FormData();
         myFormData.append("token", await getusertoken());       // add an = sign?
-        myFormData.append("otherId", this.state.userId);
+        myFormData.append("otherId", this.userId);
 
         const data = {token: await getusertoken(), otherId: this.state.userId}
         
         // make axios request to send request
         console.log("CURRENT USER TOKEN: ", await getusertoken())
-        console.log("OTHER USER ID: ", this.state.userId)
+        console.log("OTHER USER ID: ", this.userId)
     
         /*axios.post("/sendFriendRequest/?", myFormData, {"Content-Type":"multipart/form-data"})
             .then( (data) => {
@@ -58,19 +57,16 @@ export default class FriendProfile extends React.Component {
                 }
             })*/
         var token = await getusertoken()
-        var otherId = this.state.userId
+        var otherId = this.userId
         var sendRequestURL = "http://54.200.193.22:3000/sendFriendRequest/?"
         sendRequestURL += "token=" + token + "&otherId=" + otherId
+        console.log(sendRequestURL)
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open( "GET", sendRequestURL, false ); // false for synchronous request
-        this.state.sendRequest = true;
+        this.setState({sendRequest: true})
         xmlHttp.send(null);
         var result = xmlHttp.responseText
         console.log(result)
-       
-
-        
-
     }
 
     render() {
