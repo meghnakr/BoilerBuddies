@@ -19,11 +19,12 @@ export default class FriendProfile extends React.Component {
 
     constructor(props) {
         super(props);
-        
+        this.username = this.props.username
+        this.displayName =  this.props.displayName
+        this.interestTags= this.props.interestTags
+        this.img = this.props.img
         this.state = {
-            username: this.props.username,
-            displayName: this.props.displayName,
-            interestTags: this.props.interestTags,
+            
             sendRequest: this.props.sendRequest,
             userId: this.props.userId     //user_id property 
         };
@@ -78,12 +79,22 @@ export default class FriendProfile extends React.Component {
         return (
             <div className="profile-header">
             <div className='profile-picture'>
-                <span><img src={logo} alt='img'/></span>
-            </div>
+                <div className='profile-photo-circle' >
+                            <div className='upload-icon'>
+                                <i
+                                    className='fa fa-user'
+                                    style={{
+                                        fontSize: '9vmin'
+                                    }}></i>
+                            </div>
+                            {(this.img !== "null") ? <img src={this.img} alt='img'/>: <></>}
+
+                        </div>
+                </div>
             <div className='profile-info'>
-                <h2>{this.state.displayName}</h2>
-                <h6>{this.state.username}</h6>
-                <h6>{this.state.interestTags}</h6>
+                <h2>{this.displayName}</h2>
+                <h6>{this.username}</h6>
+                <h6>{this.interestTags}</h6>
             </div>
             <div className='profile-button'>
                 <button className= {this.state.sendRequest ? 'default-btn-white' : 'default-btn'} 

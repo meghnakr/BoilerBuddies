@@ -61,7 +61,7 @@ export default  class Post extends React.Component {
         } = this
         return (
             <div className='post-container'>
-                <p style={{color:"grey", fontSize:"smaller"}}>Posted by <button className='no-outline-btn' onClick={()=> {this.props.navigate(`/user/${userId}`, {replace:true})}}> {username}</button> - {postAt} </p>
+                <p style={{color:"grey", fontSize:"smaller"}}>Posted by <button className='no-outline-btn' style={{padding:'0'}} onClick={()=> {this.props.navigate(`/user/${userId}`, {replace:true})}}>{username}</button> - {postAt} </p>
                 <p>{content}</p>
                 <div className='post-stats-container'>
                     <button className='no-outline-btn' disable={disable}onClick={() => {this.props.navigate(`/post/${id}`, {replace:true})}}><i className='fa fa-comment-o'></i> {formatNumber(comments, "Comment")}</button>

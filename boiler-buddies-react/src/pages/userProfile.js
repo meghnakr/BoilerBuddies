@@ -8,28 +8,39 @@ import Post from '../components/Post';
 const UserProfile = () => {
     const currentUser = useUser();
     const { userId } = useParams()
-    const [userData, setUserData] = useState({username: '', displayName: '', interests: '', bio: ''});
+    const [username, setUsername] = useState();
+    const [bio, setBio] = useState();
+    const [displayName, setDisplayName] = useState();
+    const [img, setImg] = useState();
+    const [interests, setInterests] = useState()
+    const [hasData, setHasData] = useState(false)
     const [posts, setUserPosts] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
         /* info about user */
         var params = new URLSearchParams()
-        params.append("user_id", userId)
-        var getUserByIdRequest = endpoint + "getUserById/?" + params
-        console.log(getUserByIdRequest)
         var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open("GET", getUserByIdRequest, false); // false for synchronous request
-        xmlHttp.send(null);
-        var response = JSON.parse(xmlHttp.responseText);
-        console.log(response)
-        if(response.interests === '&&') {
-            response.interests = '';
+        params.append("user_id", userId)
+        if(!hasData) {
+            
+            var getUserByIdRequest = endpoint + "getUserById/?" + params
+            console.log(getUserByIdRequest)
+            
+            xmlHttp.open("GET", getUserByIdRequest, false); // false for synchronous request
+            xmlHttp.send(null);
+            var response = JSON.parse(xmlHttp.responseText);
+            if(response.interests === '&&') {
+                response.interests = '';
+            }
+            setUsername(response.username)
+            setBio(response.intro)
+            setImg(response.big_image)
+            setInterests(response.interests.replaceAll('&&', ', '))
+            setDisplayName(response.display_name)
+            setHasData(true)
         }
-        setUserData(
-            {displayName: response.display_name, interests: response.interests.replaceAll('&&', ', '), bio: response.intro, image: response.big_image, username: response.username}
-        )
-
+        
         /* get all their posts */
         params.append("token", currentUser.token)
         var getPostsRequest = endpoint + "getPosts/?" + params
@@ -40,13 +51,12 @@ const UserProfile = () => {
         var allPosts = [];
         response_2.map(element => {
             var ago = timeDifference(new Date(), new Date(element.postedAt))
-            allPosts.push({id: element.postId, userId:{userId}, content: element.content, likes: element.likes, comments: element.comments, liked: element.isLiked, postAt: ago})
+            allPosts.push({id: element.postId, userId:userId, content: element.content, likes: element.likes, comments: element.comments, liked: element.isLiked, postAt: ago})
         });
         setUserPosts(allPosts)
-    }, [])
+    }, [username])
 
     function timeDifference(current, previous) {
-
         var msPerMinute = 60 * 1000;
         var msPerHour = msPerMinute * 60;
         var msPerDay = msPerHour * 24;
@@ -81,11 +91,11 @@ const UserProfile = () => {
 
     return (
         <div className='page-container'>
-            <FriendProfile username={userData.username} displayName={userData.displayName} interestTags={userData.interestTags} />
+            {displayName && <FriendProfile username={username} displayName={displayName} interestTags={interests} img={img}/>}
             <div className='all-post'> 
             {posts.map(post => {
                 return <Post token={currentUser.token} disable={false} userId={post.userId} navigate={navigate}
-                id={post.id} content={post.content} username={userData.username} postAt={post.postAt} likes={post.likes} comments={post.comments} liked={post.liked} />
+                id={post.id} content={post.content} username={username} postAt={post.postAt} likes={post.likes} comments={post.comments} liked={post.liked} />
             })}</div>
            
         </div>
