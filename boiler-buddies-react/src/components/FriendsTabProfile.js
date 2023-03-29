@@ -11,6 +11,7 @@ export default class FriendsTabProfile extends React.Component {
     username: PropTypes.string,
     displayName: PropTypes.string,
     interestTags: PropTypes.string,
+    
   };
 
   constructor(props) {
@@ -20,21 +21,59 @@ export default class FriendsTabProfile extends React.Component {
       username: this.props.username,
       displayName: this.props.displayName,
       interestTags: this.props.interestTags,
-      sendRequest: this.props.sendRequest,
       userId: this.props.userId, //user_id property
     };
   }
+
+
+  /*
+The code is re-rendering when the button is clicked because the handleRemoveClick() 
+function is an asynchronous function that is updating the component's state. When a 
+component's state changes, React re-renders the component to reflect the new state.
+
+In this case, the handleRemoveClick() function is retrieving the user token and 
+updating the component's state with the otherusername value, which is initially 
+undefined. Once the state is updated, React re-renders the component with the updated state.
+
+If you don't want the component to re-render when the button is clicked, you can 
+move the state update logic to a separate function that does not update the state 
+of the component. For example, you can define a separate function that retrieves the 
+user token and returns the otherusername value, and then pass that value to the 
+handleRemoveClick() function. This way, the component's state is not updated, and 
+React does not re-render the component unnecessarily.
+  */
+
+
+
   async handleRemoveClick() {
-    var token = await getusertoken();
-    var otherId = this.state.userId;    // UNDEFINED
-    var unfriendRequestURL = "http://54.200.193.22:3000/unfriendUser/?";
+    const token = await getusertoken();
+    const otherusername = this.state.username;    // UNDEFINED
+    console.log("OTHERID FTP: ", otherusername)
+
+    const otherId = await axios.get(
+      "http://54.200.193.22:3000/getUserIdFromUsername/",
+      {
+        params: {
+          username: otherusername,
+        },
+      }
+    );
+
+    console.log("NEW OTHERID: ", otherId);
+
+
+    const unfriendRequestURL = "http://54.200.193.22:3000/unfriendUser/?";
     unfriendRequestURL += "token=" + token + "&otherId=" + otherId;
-    var xmlHttp = new XMLHttpRequest();
+    const xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", unfriendRequestURL, false); // false for synchronous request
     xmlHttp.send(null);
-    var result = xmlHttp.responseText;
+    const result = xmlHttp.responseText;
     console.log(result);
   }
+
+
+
+  
   render() {
     return (
       <div className="profile-header">

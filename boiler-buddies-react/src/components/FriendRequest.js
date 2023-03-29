@@ -44,38 +44,41 @@ export default class FriendRequest extends React.Component {
 
     // make axios request to accept request
     console.log("CURRENT USER TOKEN: ", await getusertoken());
-    console.log("OTHER USER ID: ", this.state.userId);
-    
-    // var myFormData = new FormData();
-    // myFormData.append("token", await getusertoken());
-    // myFormData.append("otherId", this.state.userId);
+    console.log("0");
+    //console.log("OTHER USER ID: ", this.state.userId);
 
-    // /* Accept Friend Request Code */
-    // axios
-    //   .post("/acceptFriendRequest/", myFormData, {
-    //     "Content-Type": "multipart/form-data",
-    //   })
-    //   .then((data) => {
-    //     if (data.data !== "Invalid\n") {
-    //       //update sendRequest state
-    //       this.setState({
-    //         ...this.state,
-    //         acceptRequest: true,
-    //       });
-    //     }
-    //   });
+    console.log("1");
 
-    var token = await getusertoken()
-    var otherId = this.state.userId
-    var acceptRequestURL = "http://54.200.193.22:3000/acceptFriendRequest/?"
-    acceptRequestURL += "token=" + token + "&otherId=" + otherId
+    var token = await getusertoken();
+    var otherusername = this.state.username;
+
+    console.log("2");
+
+    var otherId = await axios.get(
+      "http://54.200.193.22:3000/getUserIdFromUsername/",
+      {
+        params: {
+          username: otherusername,
+        },
+      }
+    );
+    console.log("3");
+
+    console.log("NEW OTHERID: ", otherId);
+
+    var acceptRequestURL = "http://54.200.193.22:3000/acceptFriendRequest/?";
+    acceptRequestURL += "token=" + token + "&otherId=" + otherId;
+    console.log("FR OTHERID: ", otherId);
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "POST", acceptRequestURL, false ); // false for synchronous request
-    this.state.acceptRequest = true;
+    xmlHttp.open("POST", acceptRequestURL, false); // false for synchronous request
+    //this.state.acceptRequest = true;
     xmlHttp.send(null);
-    var result = xmlHttp.responseText
-    console.log(result)
-
+    var result = xmlHttp.responseText;
+    console.log(result);
+    // this.setState({
+    //   ...this.state,
+    //   acceptRequest: true,
+    // });
   }
 
   async handleDeclineClick() {
@@ -114,7 +117,6 @@ export default class FriendRequest extends React.Component {
           <h6>{this.state.username}</h6>
           <h6>{this.state.interestTags}</h6>
         </div>
-
         <div className="profile-button">
           <button
             className={
