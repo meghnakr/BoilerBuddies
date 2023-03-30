@@ -102,7 +102,7 @@ const ForumPage = (props) => {
                     {forumPostList.map(post => {
                         console.log(post)
                         console.log(post.content)
-                        return <Post content={post.content} username={post.username} postAt={post.postedAt} likes={post.likes} comments={post.comments} liked={post.isLiked}/>
+                        return <Post content={post.content} username={post.username} postAt={post.postedAt} likes={post.likes} comments={post.comments} liked={post.isLiked} img={post.bigImage}/>
                     })}
                     
                 </div>

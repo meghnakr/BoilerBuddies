@@ -49,10 +49,18 @@ const Feed = (props) => {
                 xmlHttp.onload = (e) => { //handle async request
                     if(xmlHttp.readyState === 4) {
                         if(xmlHttp.status === 200) {
-                            var response = JSON.parse(xmlHttp.responseText);
-                            var formatPosts = formatResults(response)
-                            setPosts(formatPosts)
-                            console.log(formatPosts)
+                            try {
+                                var response = JSON.parse(xmlHttp.responseText);
+                                var formatPosts = formatResults(response);
+                                setPosts(formatPosts);
+                                console.log(formatPosts);
+                            }
+                            catch (e) {
+                                if (e instanceof SyntaxError) {
+                                    console.log(xmlHttp.responseText);
+                                    window.location.reload()
+                                }
+                            }
                         } else { 
                             console.error(xmlHttp.statusText)
                         }

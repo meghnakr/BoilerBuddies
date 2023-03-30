@@ -84,11 +84,14 @@ export default  class Post extends React.Component {
             state: {liked, likes, comments,},
             formatNumber, timeDifference
         } = this
+        //console.log("IMAGE");
+        //console.log(img);
         return (
             <div className='post-container'>
                 <p style={{color:"grey", fontSize:"smaller"}}>Posted by <button className='no-outline-btn' style={{padding:'0'}} 
                 onClick={()=> {this.props.navigate(`/user/${userId}`, {replace:true})}}>{username}</button> - {timeDifference(new Date(), new Date(postAt))} </p>
                 <p>{content}</p>
+                <img src={img} alt="<image>" />
                 <div className='post-stats-container'>
                     <button className='no-outline-btn' disabled={disable}
                     onClick={() => {this.props.navigate(`/post/${id}`, {replace:true, 
