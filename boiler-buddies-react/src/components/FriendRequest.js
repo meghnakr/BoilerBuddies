@@ -36,7 +36,8 @@ export default class FriendRequest extends React.Component {
     };
   }
 
-  async handleAcceptClick() {
+  async handleAcceptClick(e) {
+    e.preventDefault();
     if (this.state.acceptRequest) {
       return;
     }
@@ -50,21 +51,23 @@ export default class FriendRequest extends React.Component {
     console.log("1");
 
     var token = await getusertoken();
+    console.log("Token: ", token)
     var otherusername = this.state.username;
 
     console.log("2");
 
-    var otherId = await axios.get(
+    var otherId = (await axios.get(
       "http://54.200.193.22:3000/getUserIdFromUsername/",
       {
         params: {
           username: otherusername,
         },
       }
-    );
+    )).data.user_id;
     console.log("3");
 
     console.log("NEW OTHERID: ", otherId);
+    
 
     var acceptRequestURL = "http://54.200.193.22:3000/acceptFriendRequest/?";
     acceptRequestURL += "token=" + token + "&otherId=" + otherId;

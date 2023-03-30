@@ -9,16 +9,20 @@ import FriendRequest from "../components/FriendRequest";
 import { getusertoken } from "../utils/auth";
 
 const Notifications = () => {
-  function refreshPage() {
-    window.location.reload(false);
-  }
+  // function refreshPage() {
+  //   window.location.reload(false);
+  // }
 
   const [friendReqs, setFriendReqs] = useState([]);
   const [notifications, setNotifications] = useState([]);
 
+
+
+  
   useEffect(() => {
     const fetchData = async () => {
       const token = await getusertoken();
+      console.log("FriendRequests token: ", token)
       const result = await axios.get("/getFriendRequests/", {
         params: {
           token: token,
@@ -66,6 +70,7 @@ const Notifications = () => {
   useEffect(() => {
     const fetchData = async () => {
       const token = await getusertoken();
+      console.log("Notifications token: ", token)
       const result = await axios.get("/getNotifications/", {
         params: {
           token: token,
@@ -101,7 +106,7 @@ const Notifications = () => {
             style={{ width: 90, height: 90 }}
             src={refresh}
             alt="img"
-            onClick={refreshPage}
+            //onClick={refreshPage}
           />
         </div>
         <div className="Signin-form-content">
