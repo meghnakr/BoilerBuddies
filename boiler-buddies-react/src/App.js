@@ -17,6 +17,8 @@ import Signup from "./pages/signup";
 import { UserProvider } from "./context/userContext";
 import Notifications from "./pages/notifications";
 import Friends from "./pages/friends.js";
+import ForumPage from "./pages/forumPage.js"
+
 import PostWithComments from "./pages/postWithComments";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SetNewPassword from "./pages/forgotPassword/setNewPassword";
@@ -73,6 +75,7 @@ function App(location) {
               element={<Notifications funcNav={setShowNav} />}
             />
             <Route path="/create-forum" element={<CreateForum funcNav={setShowNav} />} />
+            <Route path="/forum/:forumId" element={<ForumPage funcNav={setShowNav} />} />
           </Routes>
         </div>
       </Router>
