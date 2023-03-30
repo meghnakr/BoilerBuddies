@@ -46,7 +46,6 @@ const UserProfile = () => {
         var response_2 = JSON.parse(xmlHttp.responseText);
         var allPosts = [];
         response_2.map(element => {
-            var ago = timeDifference(new Date(), new Date(element.postedAt))
             allPosts.push({
                 id: element.postId,
                 userId: userId,
@@ -54,7 +53,7 @@ const UserProfile = () => {
                 likes: element.likes,
                 comments: element.comments,
                 liked: element.isLiked,
-                postAt: ago
+                postAt: element.postedAt
             })
         });
         setUserPosts(allPosts)

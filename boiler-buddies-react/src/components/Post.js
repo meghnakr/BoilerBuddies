@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 
 export default  class Post extends React.Component {
     static propTypes = {
-        content: PropTypes.string
+        content: PropTypes.string,
+        disable: PropTypes.bool
     }
 
     constructor(props) {
@@ -45,6 +46,30 @@ export default  class Post extends React.Component {
             this.setState({liked: true, likes: this.state.likes++})
         }
     }
+    timeDifference = (current, previous) => {
+        var msPerMinute = 60 * 1000;
+        var msPerHour = msPerMinute * 60;
+        var msPerDay = msPerHour * 24;
+        var msPerMonth = msPerDay * 30;
+
+        var elapsed = current - previous;
+
+        if (elapsed < msPerMinute) {
+            return Math.round(elapsed / 1000) + ' seconds ago';
+        } else if (elapsed < msPerHour) {
+            return Math.round(elapsed / msPerMinute) + ' minutes ago';
+        } else if (elapsed < msPerDay) {
+            return Math.round(elapsed / msPerHour) + ' hours ago';
+        } else if (elapsed < msPerMonth) {
+            var diff = Math.round(elapsed / msPerDay)
+            if (diff === 1) {
+                return '1 day ago';
+            }
+            return diff + ' days ago';
+        } else {
+            return previous.toDateString();
+        }
+    }
 
     formatNumber = (num, txt) => {
         if(num === 1) {
@@ -57,11 +82,11 @@ export default  class Post extends React.Component {
         const {
             content, img, username, postAt, id, disable, userId,
             state: {liked, likes, comments,},
-            formatNumber
+            formatNumber, timeDifference
         } = this
         return (
             <div className='post-container'>
-                <p style={{color:"grey", fontSize:"smaller"}}>Posted by <button className='no-outline-btn' style={{padding:'0'}} onClick={()=> {this.props.navigate(`/user/${userId}`, {replace:true})}}>{username}</button> - {postAt} </p>
+                <p style={{color:"grey", fontSize:"smaller"}}>Posted by <button className='no-outline-btn' style={{padding:'0'}} onClick={()=> {this.props.navigate(`/user/${userId}`, {replace:true})}}>{username}</button> - {timeDifference(new Date(), new Date(postAt))} </p>
                 <p>{content}</p>
                 <div className='post-stats-container'>
                     <button className='no-outline-btn' disable={disable}onClick={() => {this.props.navigate(`/post/${id}`, {replace:true})}}><i className='fa fa-comment-o'></i> {formatNumber(comments, "Comment")}</button>

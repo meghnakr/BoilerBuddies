@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {endpoint} from '../global';
 import Select from 'react-select';
 
-export default  class Post extends React.Component {
+export default  class NewPost extends React.Component {
     static propTypes = {
         tokenId: PropTypes.string,
     }

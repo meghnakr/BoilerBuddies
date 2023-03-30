@@ -63,10 +63,18 @@ export default class FriendProfile extends React.Component {
     render() {
         return (
             <div className="profile-header">
-                <div className="profile-picture">
-                    <span>
-                        <img src={logo} alt="img"/>
-                    </span>
+                <div className='profile-picture'>
+                <div className='profile-photo-circle' >
+                            <div className='upload-icon'>
+                                <i
+                                    className='fa fa-user'
+                                    style={{
+                                        fontSize: '9vmin'
+                                    }}></i>
+                            </div>
+                            {(this.img !== "") ? <img src={this.img} alt='img'/>: <></>}
+
+                        </div>
                 </div>
                 <div className="profile-info">
                     <h2>{this.displayName}</h2>
