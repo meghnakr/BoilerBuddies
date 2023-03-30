@@ -518,6 +518,11 @@ input:focus {
   text-align: left;
   display: block;
 }
+
+.post-container .no-outline-btn:disabled:hover {
+  cursor: default;
+  background-color: transparent;
+}
 .create-post {
   width: 100%;
   padding-left: .5em;
@@ -600,4 +605,20 @@ input:focus {
   margin-right: 4px;
 }
 
+.create-comment {
+  width: 100%;
+  padding-left: .5em;
+  margin-right: 5px;
+  resize: none;
+  padding-top: .5em;
+  overflow: hidden;
+}
+
+#comments .post-container {
+  border-bottom: none;
+}
+
+.comments {
+  width: 70%
+}
 

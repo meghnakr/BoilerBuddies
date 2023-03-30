@@ -36,7 +36,7 @@ const Feed = (props) => {
         var params = new URLSearchParams();
         if(currentuser.token !== null) {
             setToken(currentuser.token)
-            setTimeout(() => {
+            let timer = setTimeout(() => {
                 params.append("token", currentuser.token)
                 params.append("sort", 1)
                 params.append("bottomPostedAt", bottomPostedAt)
@@ -66,6 +66,7 @@ const Feed = (props) => {
                 xmlHttp.send(null)
                 
             }, 1000);
+            return () => clearTimeout(timer)
         }
         
     }, [postId, currentuser.token])
