@@ -18,6 +18,9 @@ const Feed = (props) => {
         {content: "Content of test post 1", username:"JaneDoe",  postAt:"March 26, 2023", likes:"20", comments:"2", liked:true, img:null},
         {content: "Content of test post 2", username:"Blahblah",  postAt:"March 22, 2023", likes:"10", comments:"5", liked:false, img:null},
     ]
+
+
+
     return ( 
         <div className='page-container'>
             <NewPost tokenId={currentuser.token} handleCallback={getPostId}/>

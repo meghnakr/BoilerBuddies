@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from "react";
 import { endpoint } from "../global";
 import ForumResult from '../components/ForumResult';
+import { useNavigate } from 'react-router-dom'
 
 function formatResults(result) {
     var jsonResults = JSON.parse(result);
@@ -10,7 +11,8 @@ function formatResults(result) {
     Object.keys(jsonResults).forEach(function(key) {
         //console.log('Key : ' + key + ', Value : ' + jsonResults[key])
         //formattedResults += jsonResults[key]["display_name"] + " " + jsonResults[key]["username"] + "| \n"
-        formattedResults[i] = <ForumResult name = {jsonResults[key]["name"]} 
+        formattedResults[i] = <ForumResult forumId = {jsonResults[key]["forum_id"]}
+            name = {jsonResults[key]["name"]} 
             description = {jsonResults[key]["description"]} />;
         console.log(String(i) + " " + jsonResults[key]["name"] + " " + jsonResults[key]["description"]);
         i++;
@@ -47,6 +49,9 @@ const Forums = () => {
         setSearchResult(result)
         console.log(searchResult)
     }
+
+    const navigate = useNavigate();
+
     return (
         <div className='page-container'>
             <input className='search-bar'
@@ -54,7 +59,12 @@ const Forums = () => {
             onChange={handleChange}
             value={search}/>
             <p>{searchResult}</p>
-            <button>Create a new forum</button>
+            <button className="default-btn" 
+                    style={{width: '20%'}}
+                    onClick={() => {
+                        navigate('/create-forum');
+                        this.setState({ open: false });
+                      }}>Create a new forum</button>
         </div>
     )  
 };

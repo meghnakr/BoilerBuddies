@@ -4,7 +4,7 @@ import useUser from "../hooks/useUser";
 import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function CreateForum(props) {
-    props.funcNav(false);
+    //props.funcNav(false);
     
     //const currentUser = useUser();
     const location = useLocation();

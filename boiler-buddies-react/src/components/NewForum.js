@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { endpoint } from '../global';
-
-function delay(time) {
-    return new Promise(resolve => setTimeout(resolve, time));
-}
+import axios from '../utils/Axios';
 
 export default class NewForum extends React.Component {
     static propTypes = {
@@ -33,6 +30,8 @@ export default class NewForum extends React.Component {
         //delay(10000).then(() => console.log('ran after 10 seconds passed'));
         console.log("In handlesubmit")
         var params = new URLSearchParams();
+
+        //getusertoken().then(result => params.append('token', result))
         //params.append('token', this.token)
         params.append('name', this.state.name)
         params.append('description', this.state.description)
@@ -46,12 +45,25 @@ export default class NewForum extends React.Component {
         */
         var createForumRequestURL = endpoint + "addForum/?" + params
         console.log(createForumRequestURL)
+        
+        /*
         var xmlHttp = new XMLHttpRequest();
+        console.log("Making request to create forum")
         xmlHttp.open( "GET", createForumRequestURL, true ); // false for synchronous request
         xmlHttp.send(null);
-        //console.log(xmlHttp.responseText);
-        this.props.navigation('/feed', {replace:true});
+        console.log(xmlHttp.responseText)*/
         
+        //var forumId = JSON.parse(xmlHttp.responseText).forumId
+        //console.log(forumId);
+        //this.returnForumID(forumId)
+        //console.log(xmlHttp.responseText);
+        //this.props.navigation('/feed', {replace:true});
+
+        axios.get(createForumRequestURL).then( (result)=>{ 
+            console.log("Making request to create forum")
+            console.log(result.data)
+            this.props.navigation('/forum/' + result.data.forumId, {replace:true});
+        } )
     }
 
     handleFileInputChange = (event) => {
