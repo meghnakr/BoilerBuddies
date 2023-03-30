@@ -621,4 +621,43 @@ input:focus {
 .comments {
   width: 70%
 }
+.confirmation-box-container {
+  background-color: white;
+  border-color: #88BBF6;
+  padding: 20px;
+}
 
+
+.confirmation-buttons {
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.yes-button {
+  background-color: #88BBF6;
+  color: white;
+  border: 1px solid gray;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.no-button {
+  background-color: #88BBF6;
+  color: white;
+  border: none;
+  border: 1px solid gray;
+  border-radius: 5px;
+  margin-left: 10px;
+
+}
+
+.confirmation-box-message {
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #333;
+  margin-bottom: 20px;
+}
