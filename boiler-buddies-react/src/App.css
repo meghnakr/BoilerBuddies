@@ -518,6 +518,11 @@ input:focus {
   text-align: left;
   display: block;
 }
+
+.post-container .no-outline-btn:disabled:hover {
+  cursor: default;
+  background-color: transparent;
+}
 .create-post {
   width: 100%;
   padding-left: .5em;
@@ -538,6 +543,13 @@ input:focus {
   margin-top: 5px
 }
 
+.forum-select {
+  width: 40%;
+  font-size: smaller;
+  font-weight: bold;
+}
+
+
 .post-utils-container{
   float: left;
   width: 80%;
@@ -550,6 +562,10 @@ input:focus {
 .post-button-container{
   float: left;
   width: 20%;
+}
+
+.post-button-container .default-btn:disabled{
+  opacity: 50%;
 }
 
 .photo-uploaded-container {
@@ -585,6 +601,63 @@ input:focus {
   margin: 0;
 }
 
-.post-stats-container .no-outline-btn, i{
+.post-stats-container .no-outline-btn, i {
   margin-right: 4px;
+}
+
+.create-comment {
+  width: 100%;
+  padding-left: .5em;
+  margin-right: 5px;
+  resize: none;
+  padding-top: .5em;
+  overflow: hidden;
+}
+
+#comments .post-container {
+  border-bottom: none;
+}
+
+.comments {
+  width: 70%
+}
+.confirmation-box-container {
+  background-color: white;
+  border-color: #88BBF6;
+  padding: 20px;
+}
+
+
+.confirmation-buttons {
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.yes-button {
+  background-color: #88BBF6;
+  color: white;
+  border: 1px solid gray;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.no-button {
+  background-color: #88BBF6;
+  color: white;
+  border: none;
+  border: 1px solid gray;
+  border-radius: 5px;
+  margin-left: 10px;
+
+}
+
+.confirmation-box-message {
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #333;
+  margin-bottom: 20px;
 }

@@ -6,6 +6,7 @@ import logo from "../assets/logo_vector.png";
 import axios from "../utils/Axios";
 import { useEffect, useState } from "react";
 import FriendRequest from "../components/FriendRequest";
+import { getusertoken } from "../utils/auth";
 
 const Notifications = () => {
   function refreshPage() {
@@ -13,35 +14,89 @@ const Notifications = () => {
   }
 
   const [friendReqs, setFriendReqs] = useState([]);
+  const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
-    /* Get Friend Requests */
-    axios.get(/getFriendRequests/).then((res) => {
-      // callback function
-      setFriendReqs(res.data);
-    });
-  }, []); // dependency array
+    const fetchData = async () => {
+      const token = await getusertoken();
+      const result = await axios.get("/getFriendRequests/", {
+        params: {
+          token: token,
+        },
+      });
 
-  console.log("FRIENDS: ", friendReqs);
+      /* Call getUserById */
+      const mappedUsers = await Promise.all(
+        Object.values(result.data).map(
+          // how to solve array of Promises
+          async (currentfriendrequest, index) => {
+            const otherId = currentfriendrequest.other_id;
+            //console.log("OtherId:", otherId);
+            const userObject = await axios.get("/getUserById/", {
+              // must be in an async function
+              params: {
+                user_id: otherId,
+              },
+            });
+            //          console.log(userObject.data);
+            return await userObject.data;
+          }
+        )
+      ); // closes map
+      //console.log("Mapped users: ", mappedUsers)
+      setFriendReqs(mappedUsers);
+    };
+    fetchData();
+  }, []);
+
+  //console.log("FRIEND REQS 0: ", friendReqs);
 
   /* Get notifications */
-  axios
-    .get(/getNotifications/)
-    .then((response) => {
-      // handle success
-      console.log("SUCCESS NOTIFICATIONS");
-    })
-    .catch((error) => {
-      // handle error
-      console.log("FAILED NOTIFICATIONS");
-    });
+  // const notifresult = axios
+  //   .get("/getNotifications/")
+  //   .then((response) => {
+  //     // handle success
+  //     console.log("SUCCESS NOTIFICATIONS");
+  //   })
+  //   .catch((error) => {
+  //     // handle error
+  //     console.log("FAILED NOTIFICATIONS");
+  //   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = await getusertoken();
+      const result = await axios.get("/getNotifications/", {
+        params: {
+          token: token,
+        },
+      });
+
+      /* Call getUserById */
+      console.log("result.data: ", Object.values(result.data));
+      const mappedNotif = await Promise.all(
+        Object.values(result.data).map(
+          // how to solve array of Promises
+          async (currentnotif, index) => {
+            console.log("Current Notif:", currentnotif);
+            return await currentnotif.content;
+          }
+        )
+      ); // closes map
+      //console.log("NOTIF: ", mappedUsers)
+      setNotifications(mappedNotif);
+    };
+    fetchData();
+  }, []);
+
+  console.log("ARRAY OF NOTIFS:", notifications);
 
   /* Accept Friend Requests */
 
   return (
     <div className="page-container">
       <form className="notifs-content">
-      <div className="refresh">
+        <div className="refresh">
           <img
             style={{ width: 90, height: 90 }}
             src={refresh}
@@ -59,24 +114,24 @@ const Notifications = () => {
 
             {/* acceptFriendRequests */}
 
-            {friendReqs.map(
-              (
-                currentfriendrequest,
-                index // goes through each element in friendReqs and maps it out by index
-              ) => (
-                <FriendRequest
-                  username={currentfriendrequest.username}
-                  displayName={currentfriendrequest.displayName}
-                  interestTags={currentfriendrequest.interestTags}
-                  userId={currentfriendrequest.userId} //user_id property
-                  key={index}
-                />
-              )
+            {friendReqs.length > 0 ? (
+              friendReqs.map((currentfriendrequest, index) => {
+                //console.log("Current Friend Request: ", currentfriendrequest);
+                return (
+                  <FriendRequest
+                    username={currentfriendrequest.username}
+                    displayName={currentfriendrequest.display_name}
+                    interestTags={currentfriendrequest.interests}
+                    userId={currentfriendrequest.user_id}
+                    key={index}
+                  />
+                );
+              })
+            ) : (
+              <p>No friend requests</p>
             )}
 
-            {/* 
-            
-            {Array(5)
+            {/*Array(5)
               .fill(0)
               .map(() => (
                 <FriendRequest username={"asaquib"}
@@ -84,10 +139,7 @@ const Notifications = () => {
                   interestTags={["books", "coffee"]}
                   userId={1} //user_id property
                    />
-              ))}
-
-            */}
-
+              ))*/}
 
             {/* Replace Array.fill with actual array from database holding friends to user */}
           </p>
@@ -102,24 +154,34 @@ const Notifications = () => {
 
           {/* INSERT IMPLEMENTATION FOR ADDING OTHER NOTIFICATIONS ARRAY HERE */}
 
-          {/* getNotifications */}
+          {/* {notifications.length > 0 ? (
+              notifications.map((currentnotif, index) => {
+                console.log("Current Friend Request: ", currentnotif);
+                return (
+                  <NotifBox
+                    content={currentnotif.content}
+                    key={index}
+                  />
+                );
+              })
+            ) : (
+              <p>No Notifications</p>
+            )} */}
 
-          {/* Check for likes on post */}
+          {/* <div>
+            {notifications.map((notification, index) => (
+              <p key={index}>{notification} </p>
+            ))}
+          </div> */}
+          {notifications.map((notification, index) => (
+            <NotifBox key={index} content={notification} />
+          ))}
 
-          {/* Check for comments on post */}
-
-          {/* Check for likes on my comment */}
-
-          {/* Check for replies to my comment */}
-
-          {/* Check for accepted friend requests */}
-
-          {Array(5)
+          {/*Array(5)
             .fill(0)
             .map(() => (
               <NotifBox />
-            ))}
-            
+            ))*/}
         </div>
       </form>
     </div>

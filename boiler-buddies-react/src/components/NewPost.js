@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {endpoint} from '../global';
+import Select from 'react-select';
 
-export default  class Post extends React.Component {
+export default  class NewPost extends React.Component {
     static propTypes = {
         tokenId: PropTypes.string,
     }
@@ -15,7 +16,8 @@ export default  class Post extends React.Component {
             file: null,
             file64: '',
             content: '',
-            postId: '',
+            selectedForum: null,
+            disableBtn: true,
         }
     }
 
@@ -30,22 +32,22 @@ export default  class Post extends React.Component {
     }
 
     handlePosting = () => {
-        if(this.state.content === '') {return;}
+        if(this.state.content === '' ) {return;}
         var params = new URLSearchParams();
         params.append('token', this.token)
         params.append('content', this.state.content)
         params.append('bigImage', this.state.file64)
-        
+        params.append('forumId', this.state.selectedForum.value)
         var postRequestURL = endpoint + "addPost/?" + params
         console.log(postRequestURL)
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open( "GET", postRequestURL, false ); // false for synchronous request
         xmlHttp.send(null);
         var postId = JSON.parse(xmlHttp.responseText).postId
-        console.log(postId);
         this.returnPostID(postId)
-        
+        window.location.reload()
     }
+
 
     convertToBase64 = (file) => {
         return new Promise(resolve => {
@@ -68,12 +70,25 @@ export default  class Post extends React.Component {
         const {
             handlePosting,
             handleFileInputChange,
-            state: {file, content, postId},
-            callback
+            state: {file, content, disableBtn, selectedForum},
         } = this
         return (
             <div className='post-container'>
-            <textarea rows='1' className='create-post' placeholder='Share your thoughts' type='text' value={content} onChange={(event)=>{this.setState({content:event.target.value})}}/>
+                <Select className="forum-select" placeholder="Choose a forum" options={this.props.forums} onChange={(selected)=> {
+                    if(content.length === 0 || selected === null) {
+                        this.setState({disableBtn: true})
+                    } else {
+                        this.setState({disableBtn: false})
+                    }
+                    this.setState({selectedForum:selected})}}/> 
+            <textarea rows='1' className='create-post' placeholder='Share your thoughts' type='text' value={content} 
+                onChange={(event)=>{
+                    if(event.target.value.length === 0 || selectedForum === null) {
+                        this.setState({disableBtn: true})
+                    } else {
+                        this.setState({disableBtn: false})
+                    }
+                    this.setState({content:event.target.value})}}/>
             {file && <div className='photo-uploaded-container'>
                 <button className='no-outline-btn' onClick={() => {this.setState({file:null, file64:''})}}><i className='fa fa-times-circle'></i></button>
                 <img src={file} alt='img'/>
@@ -92,7 +107,7 @@ export default  class Post extends React.Component {
                             />
             </div>
             <div className='post-button-container'>
-                <button className='default-btn' onClick={handlePosting}>Post</button>
+                <button className='default-btn' onClick={handlePosting} disabled={disableBtn}>Post</button>
             </div>
             
             </div>

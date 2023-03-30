@@ -17,16 +17,23 @@ import {Link, useNavigate } from "react-router-dom";
 import useUser from '../hooks/useUser';
 
 const Navbar = () => {
+	const currentUser = useUser()
 	const navigate = useNavigate();
 	const handleClick = (event) =>{
 		navigate(event.target.value, {replace:true});
 		event.target.focus()
 	}
 
+	const [loggedIn, setLoggedIn] = useState(false)
+
+	useEffect(() => {
+		if(currentUser.loggedIn) {
+			setLoggedIn(true)
+		}
+	}, [currentUser.loggedIn])
 
 return (
 	<>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 	<Nav>
 		<img className='App-logo' style={{marginTop: '3.5vmin', cursor: 'pointer'}} src={logo} alt="Logo" value='/'
 		onClick={handleClick} />
@@ -59,14 +66,20 @@ return (
 		{/* Second Nav */}
 		{/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
 		</NavMenu>
-		<Dropdown title="My Account">
-			<div label="Profile" route="/profile" navigation={navigate}/>
-			<div label="Account Settings" route="/settings" navigation={navigate}/>
+		{loggedIn 
+		? <Dropdown title="My Account">
+			<div label="Profile" route="/profile"  onClick={()=>navigate('/profile', {replace:true})}/>
+			<div label="Account Settings" route="/settings" onClick={()=>navigate('/settings', {replace:true})}/>
 			<div label="Sign Out" onClick={()=>{signOutUser(navigate)}}/>
 			{/* Look up how to make it redirect after signout goes through */}
 			
 		</Dropdown>
-		
+
+		: <div className='dropdown'>
+			<button className='default-btn-white' style={{ marginTop: "3vmin", paddingLeft: "2vmin", paddingRight: "2vmin" }}
+			onClick={() => {navigate('/signin', {replace:true})}}>SIGN IN</button>
+		</div>
+		}
 
 	</Nav>
 	</>

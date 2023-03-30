@@ -21,8 +21,6 @@ export default function Signin (props) {
   console.log(currentUser);
 
 
-
-
   /*
   const [user] = useAuthState(auth);
   useEffect(() => {
@@ -46,7 +44,7 @@ export default function Signin (props) {
   useEffect(() => {
     console.log("USER IS SIGNED IN");
     if (currentUser.loggedIn) {
-      navigate("/");
+      navigate("/feed");
     }
     
   },[currentUser.loggedIn]);

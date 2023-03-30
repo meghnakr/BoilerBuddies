@@ -13,7 +13,6 @@ export default function Profile() {
     const [sendRequest, setSendRequest] = useState(false);
 
     useEffect(() => {
-        console.log(currentUser.username)
         setUsername(currentUser.username)
         if(!hasData) {
             var params = new URLSearchParams()
@@ -65,7 +64,6 @@ export default function Profile() {
                 </div>
                 <div className='profile-button'>
                     
-                    {/* TODO: change button to edit if it's the user's profile */}
                 </div>
 
             </div>
