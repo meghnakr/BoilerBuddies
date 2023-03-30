@@ -16,6 +16,7 @@ export default function Settings(props) {
 
   function handleDeleteAccount() {
     setShowConfirmationBox(true);
+    
   }
 
   function handleConfirmationBoxCancel() {
@@ -23,9 +24,9 @@ export default function Settings(props) {
   }
 
   function handleConfirmationBoxConfirm() {
-    // Delete account logic goes here
-    deleteAccount(navigate)
     setShowConfirmationBox(false);
+    deleteAccount(navigate);
+
   }
 
   return (
@@ -59,16 +60,19 @@ export default function Settings(props) {
                 className="settings-btn"
                 onClick={() => {
                   handleDeleteAccount();
+                  
                 }}
               >
                 Delete Account
               </button>
               {showConfirmationBox && (
+                <div className="confirmation-box-container">
                 <ConfirmationBox
                   message="Are you sure you want to delete your account?"
                   onNo={handleConfirmationBoxCancel}
                   onYes={handleConfirmationBoxConfirm}
                 />
+                </div>
               )}
               
               {/* <div className="confirmation-box">
