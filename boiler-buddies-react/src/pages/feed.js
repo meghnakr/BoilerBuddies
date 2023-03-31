@@ -18,7 +18,9 @@ const Feed = (props) => {
     const [bottomHotScore, setBottomHotScore] = useState(30000)
 
     useEffect(() => {
+        
         var getForumsRequestURL = endpoint + "getForums/?"
+        console.log(getForumsRequestURL)
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open("GET", getForumsRequestURL, true); // false for synchronous request
         xmlHttp.onload = (e) => { //handle async request
@@ -57,7 +59,6 @@ const Feed = (props) => {
                 params.append("token", currentuser.token)
                 params.append("sort", 1)
                 params.append("bottomPostedAt", bottomPostedAt)
-                console.log(bottomPostedAt)
                 params.append("bottomHotScore", bottomHotScore)
                 var getFeedRequestURL = endpoint + "getFeed/?" + params
                 console.log(getFeedRequestURL)

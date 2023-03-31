@@ -10,7 +10,8 @@ import { useNavigate } from 'react-router-dom';
 const PostWithComments = () => {
     const currentUser = useUser()
     const {postId} = useParams()
-    const location = useLocation();
+    const location = useLocation()
+    const [post, setPost] = useState({})
     const [comments, setComments] = useState([])
     const [token, setToken] = useState()
     const navigate = useNavigate();
@@ -23,7 +24,7 @@ const PostWithComments = () => {
                 params.append("token", currentUser.token)
                 params.append("postId", postId)
                 var getCommentRequestURL = endpoint + "getPostComments/?" + params
-                console.log(getCommentRequestURL)
+                var getPostRequestURL = endpoint + "getPost/?" + params
                 var xmlHttp = new XMLHttpRequest();
                 xmlHttp.open("GET", getCommentRequestURL, true); // false for synchronous request
                 xmlHttp.onload = (e) => { //handle async request
@@ -31,7 +32,6 @@ const PostWithComments = () => {
                         if(xmlHttp.status === 200) {
                             var response = JSON.parse(xmlHttp.responseText);
                             var formattedComments = formatResults(response);
-                            console.log(formattedComments)
                         } else {
                             console.error(xmlHttp.statusText)
                         }
@@ -43,6 +43,28 @@ const PostWithComments = () => {
                 }
 
                 xmlHttp.send(null)
+
+                /* get post */
+                var xmlHttp2 = new XMLHttpRequest();
+                xmlHttp2.open("GET", getPostRequestURL, true); // false for synchronous request
+                xmlHttp2.onload = (e) => { //handle async request
+                    if(xmlHttp.readyState === 4) {
+                        if(xmlHttp.status === 200) {
+                            var response = JSON.parse(xmlHttp2.responseText);
+                            var post = {userId:response.userId, username:response.username, lastVisitAt:response.lastVisitedAt, content:response.content,
+                            image:response.bigImage, likes:response.likes,comments:response.comments, liked:response.isLiked, postAt:response.postedAt}
+                            setPost(post)
+                        } else {
+                            console.error(xmlHttp.statusText)
+                        }
+                    }
+                }
+
+                xmlHttp2.onerror = (e) => {
+                    console.error(xmlHttp.statusText)
+                }
+
+                xmlHttp2.send(null)
 
             }, 1000);
 
@@ -127,7 +149,9 @@ const PostWithComments = () => {
                     likes={location.state.likes}
                     comments={location.state.comments}
                     liked={location.state.liked}
-                    navigate={navigate}/>
+                    navigate={navigate}
+                    forumId={location.state.forumId}
+                    forumName={location.state.forumName}/>
                 <div
                     className="post-container"
                     style={{

@@ -4,6 +4,9 @@ import FriendProfile from '../components/FriendProfile';
 import {endpoint} from '../global';
 import useUser from '../hooks/useUser';
 import Post from '../components/Post';
+import Tabs from '../components/Tabs';
+import Comment from '../components/Comment';
+import ProfileComment from '../components/ProfileComment';
 
 const UserProfile = () => {
     const currentUser = useUser();
@@ -14,6 +17,7 @@ const UserProfile = () => {
     const [img, setImg] = useState();
     const [interests, setInterests] = useState()
     const [posts, setUserPosts] = useState([]);
+    const [comments, setUserComments] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -40,8 +44,8 @@ const UserProfile = () => {
         /* get all their posts */
         params.append("token", currentUser.token)
         var getPostsRequest = endpoint + "getPosts/?" + params
-        xmlHttp = new XMLHttpRequest();
-        xmlHttp.open("GET", getPostsRequest, true); // false for synchronous request
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("GET", getPostsRequest, false); // false for synchronous request
         xmlHttp.onload = (e) => { //handle async request
             if (xmlHttp.readyState === 4) {
                 if (xmlHttp.status === 200) {
@@ -63,6 +67,46 @@ const UserProfile = () => {
                             })
                         });
                         setUserPosts(allPosts)
+                    } catch (e) {
+                        if (e instanceof SyntaxError) {
+                            console.log(xmlHttp.responseText);
+                            window
+                                .location
+                                .reload()
+                        }
+                    }
+                } else {
+                    console.error(xmlHttp.statusText)
+                }
+            }
+        }
+
+        xmlHttp.onerror = (e) => {
+            console.error(xmlHttp.statusText)
+        }
+        xmlHttp.send(null);
+
+        var getCommentsRequest = endpoint + "getComments/?" + params
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("GET", getCommentsRequest, false); // false for synchronous request
+        xmlHttp.onload = (e) => { //handle async request
+            if (xmlHttp.readyState === 4) {
+                if (xmlHttp.status === 200) {
+                    try {
+                        var response_3 = JSON.parse(xmlHttp.responseText);
+                        var allComments = [];
+                        response_3.map(element => {
+                            allComments.push({
+                                id: element.commentId,
+                                userId: response.userId,
+                                postId: element.postId,
+                                content: element.content,
+                                likes: element.likes,
+                                liked: element.isLiked,
+                                commentAt: element.commentedAt
+                            })
+                        });
+                        setUserComments(allComments)
                     } catch (e) {
                         if (e instanceof SyntaxError) {
                             console.log(xmlHttp.responseText);
@@ -120,26 +164,43 @@ const UserProfile = () => {
                         img={img}
                         userId={userId}/>
             }
-            <div className='all-post'>
-                {
-                    posts.map(post => {
-                        return <Post
-                            token={currentUser.token}
-                            disable={false}
-                            userId={post.userId}
-                            navigate={navigate}
-                            id={post.id}
-                            content={post.content}
-                            username={username}
-                            postAt={post.postAt}
-                            likes={post.likes}
-                            comments={post.comments}
-                            liked={post.liked}
-                            img={post.image}
-                            forumId={post.forumId}
-                            forumName={post.forumName}/>
-                    })
-                }</div>
+            <Tabs>
+                <div label="Posts" className='all-post'>
+                    {
+                        posts.map(post => {
+                            return <Post
+                                token={currentUser.token}
+                                disable={false}
+                                userId={post.userId}
+                                navigate={navigate}
+                                id={post.id}
+                                content={post.content}
+                                username={username}
+                                postAt={post.postAt}
+                                likes={post.likes}
+                                comments={post.comments}
+                                liked={post.liked}
+                                img={post.image}
+                                forumId={post.forumId}
+                                forumName={post.forumName}/>
+                        })
+                    }</div>
+                    <div label="Comments" className='all-comment'>
+                    {
+                        comments.map(comment => {
+                            return <ProfileComment
+                                token={currentUser.token}
+                                userId={comment.userId}
+                                postId={comment.postId}
+                                navigate={navigate}
+                                id={comment.id}
+                                content={comment.content}
+                                username={username}
+                                commentAt={comment.commentAt}/>
+                        })
+                    }
+                    </div>
+            </Tabs>
 
         </div>
     )
