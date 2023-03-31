@@ -44,7 +44,13 @@ const Feed = (props) => {
             }
         }
         xmlHttp.send(null);
-        
+        var response = JSON.parse(xmlHttp.responseText);
+        var formatForum = []
+        response.map(element => {
+            formatForum.push({value: element.id, label: element.name})
+        });
+        console.log("Format Forum: " + formatForum)
+        setForums(formatForum)
     }, [])
 
 
