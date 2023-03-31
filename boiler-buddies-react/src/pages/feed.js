@@ -27,6 +27,7 @@ const Feed = (props) => {
         response.map(element => {
             formatForum.push({value: element.id, label: element.name})
         });
+        console.log("Format Forum: " + formatForum)
         setForums(formatForum)
     }, [])
 

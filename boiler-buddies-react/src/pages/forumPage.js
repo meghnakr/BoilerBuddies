@@ -14,10 +14,11 @@ const ForumPage = (props) => {
     const currentuser = useUser()
     const [forumPostList, setForumPostList] = useState([]);
     const [forumData, setForumData] = useState([]);
+    const [postId , setPostId] = useState([]);
 
-    // function getPostId (newPost) {
-    //     setPostId(postId => [...postId, newPost])
-    // }
+    function getPostId (newPost) {
+        setPostId(postId => [...postId, newPost])
+    }
 
     console.log("FORUM ID:" + forumId)
 
@@ -93,9 +94,19 @@ const ForumPage = (props) => {
     }, []);
 
 
+    // var formatForum = []
+    // var response = JSON.parse(JSON.stringify(forumData));
+    // response.map(element => {
+    //     formatForum.push({value: forumId, label: element.name})
+    // });
+    // console.log("Format Forum: " + formatForum)
+
+    var formatForum = [{"value":forumId, "label":forumData.name}]
+
+
         return ( 
             <div className='page-container'>
-                {/*<NewPost tokenId={currentuser.token} handleCallback={getPostId}/>*/}
+                {<NewPost tokenId={currentuser.token} handleCallback={getPostId} selectedForum={forumId} forums={formatForum}/>}
                 <h2>{forumData.name}</h2>
                 <h5>{forumData.description}</h5>
                 <div className='all-post'>
