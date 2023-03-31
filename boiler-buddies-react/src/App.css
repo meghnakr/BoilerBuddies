@@ -587,6 +587,7 @@ input:focus {
 
 
 .post-utils-container{
+  border-top: solid black 1px;
   float: left;
   width: 80%;
   margin-top: 0;
@@ -596,6 +597,7 @@ input:focus {
 }
 
 .post-button-container{
+  border-top: solid black 1px;
   float: right;
   width: 20%;
 }
@@ -605,6 +607,7 @@ input:focus {
 }
 
 .photo-uploaded-container {
+  display:block;
   position: relative;
   float: left;
   text-align: left;
@@ -618,7 +621,9 @@ input:focus {
 }
 
 .photo-uploaded-container img {
-  width: 20%;
+  width:100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .all-post {

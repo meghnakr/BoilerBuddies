@@ -91,8 +91,8 @@ export default  class Post extends React.Component {
         return (
             <div className='post-container'>
                 <p style={{color:"grey", fontSize:"smaller"}}>In <button className='no-outline-btn' style={{padding:'0', }} 
-                onClick={()=> {this.props.navigate(`/forum/${forumId}`, {replace:true})}}> {forumName}</button> - Posted by <button className='no-outline-btn' style={{padding:'0'}} 
-                onClick={()=> {this.props.navigate(`/user/${userId}`, {replace:true})}}>{username}</button> - {timeDifference(new Date(), new Date(postAt))} </p>
+                onClick={()=> {this.props.navigate(`/forum/${forumId}`)}}> {forumName}</button> - Posted by <button className='no-outline-btn' style={{padding:'0'}} 
+                onClick={()=> {this.props.navigate(`/user/${userId}`)}}>{username}</button> - {timeDifference(new Date(), new Date(postAt))} </p>
                 <p>{content}</p>
                 {(img !== "") ? <div className="image-container">
                     <img src={img} alt="<image>"/> 

@@ -115,7 +115,6 @@ export default  class NewPost extends React.Component {
                 <button className='no-outline-btn' onClick={() => {this.setState({file:null, file64:''})}}><i className='fa fa-times-circle'></i></button>
                 <img src={file} alt='img'/>
             </div>}
-            <hr class="solid" ></hr>
             <div className='post-utils-container' >
                 <label htmlFor="upload-photo"><i className='fa fa-file-image-o' style={{fontSize: '1.5em', fontWeight:'light', color: '#88BBF6', cursor:'pointer'}}></i></label>
                 <input
