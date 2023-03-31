@@ -43,6 +43,8 @@ const Feed = (props) => {
                 }
             }
         }
+        xmlHttp.send(null);
+        
     }, [])
 
 

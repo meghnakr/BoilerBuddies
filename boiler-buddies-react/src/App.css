@@ -323,7 +323,7 @@ input:focus {
   margin: auto;
   float: left;
   align-items: center;
-  width: 10%;
+  width: 30%;
   position: relative;
   
 }
@@ -494,7 +494,6 @@ input:focus {
   padding-bottom: 2vmin;
   display: flex;
   border-radius: 8px;
-  width: 80%
 }
 
 .forum-header h2 {
@@ -505,6 +504,33 @@ input:focus {
   top:0;
   right:0;
   
+}
+
+.forum-picture {
+  margin: auto;
+  float: left;
+  align-items: center;
+  width: 10%;
+  position: relative;
+  
+}
+
+.forum-picture img {
+  width: 100%;
+  vertical-align: middle;
+}
+
+.forum-header .forum-info {
+  float: left;
+  width: 70%;
+  text-align: left;
+  padding-left: 2vmin;
+  line-height: 0;
+}
+
+.forum-button {
+  width: 20%;
+  float: left;
 }
 
 /** Post CSS **/

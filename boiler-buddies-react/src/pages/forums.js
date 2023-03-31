@@ -13,7 +13,8 @@ function formatResults(result) {
         //formattedResults += jsonResults[key]["display_name"] + " " + jsonResults[key]["username"] + "| \n"
         formattedResults[i] = <ForumResult forumId = {jsonResults[key]["forum_id"]}
             name = {jsonResults[key]["name"]} 
-            description = {jsonResults[key]["description"]} />;
+            description = {jsonResults[key]["description"]} 
+            big_image = {jsonResults[key]["big_image"]}/>;
         console.log(String(i) + " " + jsonResults[key]["name"] + " " + jsonResults[key]["description"]);
         i++;
     });
@@ -38,8 +39,6 @@ const Forums = () => {
 
         searchRequestURL += "searchText=" + searchText
         console.log(searchRequestURL)
-
-        //var searchRequestURL = "http://54.200.193.22:3000/searchUser/?searchText=myforum"
         
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open( "GET", searchRequestURL, false ); // false for synchronous request
@@ -63,7 +62,7 @@ const Forums = () => {
                     style={{width: '20%'}}
                     onClick={() => {
                         navigate('/create-forum');
-                        this.setState({ open: false });
+                        //this.setState({ open: false });
                       }}>Create a new forum</button>
         </div>
     )  

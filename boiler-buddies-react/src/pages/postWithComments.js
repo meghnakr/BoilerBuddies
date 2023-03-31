@@ -5,6 +5,7 @@ import useUser from "../hooks/useUser";
 import NewComment from "../components/NewComment";
 import Comment from "../components/Comment";
 import { uuidNil, endpoint } from '../global';
+import { useNavigate } from 'react-router-dom';
 
 const PostWithComments = () => {
     const currentUser = useUser()
@@ -12,6 +13,7 @@ const PostWithComments = () => {
     const location = useLocation();
     const [comments, setComments] = useState([])
     const [token, setToken] = useState()
+    const navigate = useNavigate();
     
     useEffect(() => {
         if(currentUser.token !== null) {
@@ -124,7 +126,8 @@ const PostWithComments = () => {
                     postAt={location.state.postAt}
                     likes={location.state.likes}
                     comments={location.state.comments}
-                    liked={location.state.liked}/>
+                    liked={location.state.liked}
+                    navigate={navigate}/>
                 <div
                     className="post-container"
                     style={{

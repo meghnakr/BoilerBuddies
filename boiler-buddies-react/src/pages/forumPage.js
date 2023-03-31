@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { endpoint } from "../global";
 import axios from '../utils/Axios';
 import { useNavigate } from 'react-router-dom';
+import logo from "../assets/logo_vector.png";
 
 const ForumPage = (props) => {
     props.funcNav(true);
@@ -15,6 +16,9 @@ const ForumPage = (props) => {
     const [forumPostList, setForumPostList] = useState([]);
     const [forumData, setForumData] = useState([]);
     const [postId , setPostId] = useState([]);
+    const [img, setImg] = useState();
+    const navigate = useNavigate();
+    const [userToken, setUserToken] = useState();
 
     function getPostId (newPost) {
         setPostId(postId => [...postId, newPost])
@@ -73,6 +77,8 @@ const ForumPage = (props) => {
 
         setForumPostList(postList)
 
+        setUserToken(currentuser.token)
+
     } );
     }, [currentuser.token]);
 
@@ -89,6 +95,7 @@ const ForumPage = (props) => {
             setForumData(result.data);
             console.log("Forum data:");
             console.log(result.data);
+            setImg(result.data.big_image);
     
         } );
     }, []);
@@ -103,17 +110,29 @@ const ForumPage = (props) => {
 
     var formatForum = [{"value":forumId, "label":forumData.name}]
 
-
         return ( 
             <div className='page-container'>
-                {<NewPost tokenId={currentuser.token} handleCallback={getPostId} selectedForum={forumId} forums={formatForum}/>}
+                {console.log("THE TOKEN IS " + currentuser.token)}
+                {currentuser.token && <NewPost tokenId={currentuser.token} handleCallback={getPostId} selectedForum={forumId} forums={formatForum}/>}
+                <div className='forum-picture'>
+                <div className='profile-photo-circle'>
+                {
+                    (img !== "")
+                        ? <img src={img} alt={logo}/>
+                        : <></>
+                }
+                </div>
+                </div>
                 <h2>{forumData.name}</h2>
                 <h5>{forumData.description}</h5>
                 <div className='all-post'>
                     {forumPostList.map(post => {
                         console.log(post)
                         console.log(post.content)
-                        return <Post content={post.content} username={post.username} postAt={post.postedAt} likes={post.likes} comments={post.comments} liked={post.isLiked} img={post.bigImage}/>
+                        return <Post navigate={navigate} token={currentuser.token} content={post.content} 
+                        disable={false} userId={post.userId} forumId={forumId} username={post.username} 
+                        postAt={post.postedAt} likes={post.likes} comments={post.comments} liked={post.isLiked} 
+                        img={post.bigImage} forumName={forumData.name} id={post.postId}/>
                     })}
                     
                 </div>

@@ -99,7 +99,7 @@ export default  class Post extends React.Component {
                     </div>: <></>}
                 <div className='post-stats-container'>
                     <button className='no-outline-btn' disabled={disable}
-                    onClick={() => {this.props.navigate(`/post/${id}`, {replace:true, 
+                    onClick={() => {this.props.navigate(`/post/${id}`, {
                     state: {content: content, img:img, username:username,postAt:postAt, userId:userId, liked:liked, likes: likes, comments:comments, forumId:forumId, forumName:forumName}})}}>
                         <i className='fa fa-comment-o'></i> {formatNumber(comments, "Comment")}</button>
                     <button className='no-outline-btn' onClick={() => this.setState(this.handleLike)} style={liked ? {color: 'red'} : {color:'grey'}}>

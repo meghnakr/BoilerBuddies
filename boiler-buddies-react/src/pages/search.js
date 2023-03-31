@@ -30,6 +30,7 @@ function formatResults(result) {
         userId={jsonResults[key]["user_id"]}
         username={jsonResults[key]["username"]}
         interestTags={interests}
+        img={jsonResults[key]["big_image"]}
       />
     );
       /*
