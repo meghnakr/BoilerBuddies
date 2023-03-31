@@ -86,24 +86,50 @@ export default class FriendRequest extends React.Component {
     // });
   }
 
-  async handleDeclineClick() {
-    /*if (this.state.acceptRequest) {
+  async handleDeclineClick(e) {
+    // /*if (this.state.acceptRequest) {
+    //   return;
+    // }*/
+    // // make axios request to decline request
+    // console.log("CURRENT USER TOKEN: ", await getusertoken());
+    // console.log("OTHER USER ID: ", this.state.userId);
+
+    // var myFormData = new FormData();
+    // myFormData.append("token", await getusertoken());
+    // myFormData.append("otherId", this.state.userId);
+
+    // /* Accept Friend Request Code */
+    // //update declineRequest state
+    // this.setState({
+    //   ...this.state,
+    //   declineRequest: true,
+    // });
+    e.preventDefault();
+    if (this.state.declineRequest) {
       return;
-    }*/
-    // make axios request to decline request
+    }
+
+    // make axios request to accept request
     console.log("CURRENT USER TOKEN: ", await getusertoken());
-    console.log("OTHER USER ID: ", this.state.userId);
-
-    var myFormData = new FormData();
-    myFormData.append("token", await getusertoken());
-    myFormData.append("otherId", this.state.userId);
-
-    /* Accept Friend Request Code */
-    //update declineRequest state
-    this.setState({
-      ...this.state,
-      declineRequest: true,
-    });
+    var token = await getusertoken();
+    var otherusername = this.state.username;
+    var otherId = (await axios.get(
+      "http://54.200.193.22:3000/getUserIdFromUsername/",
+      {
+        params: {
+          username: otherusername,
+        },
+      }
+    )).data.user_id;
+    var declineRequestURL = "http://54.200.193.22:3000/declineFriendRequest/?";
+    declineRequestURL += "token=" + token + "&otherId=" + otherId;
+    console.log("FR OTHERID: ", otherId);
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("POST", declineRequestURL, false); // false for synchronous request
+    xmlHttp.send(null);
+    var result = xmlHttp.responseText;
+    console.log(result);
+    this.state.updateRequestProfiles(this.state.username);
   }
 
   render() {
