@@ -9,9 +9,9 @@ import FriendRequest from "../components/FriendRequest";
 import { getusertoken } from "../utils/auth";
 
 const Notifications = () => {
-  // function refreshPage() {
-  //   window.location.reload(false);
-  // }
+  function refreshPage() {
+    window.location.reload(false);
+  }
 
   const [friendReqs, setFriendReqs] = useState([]);
   const [notifications, setNotifications] = useState([]);
@@ -96,7 +96,17 @@ const Notifications = () => {
 
   console.log("ARRAY OF NOTIFS:", notifications);
 
-  /* Accept Friend Requests */
+  function updateRequestsList(username) {
+    console.log("FriendProfiles Before: ", friendReqs)
+    const newFriendReqs = friendReqs.filter((currentfriendreq) => {
+      if (currentfriendreq.username == username) {
+        return false;
+      }
+      return true;
+    });
+    console.log("FriendProfiles After: ", newFriendReqs)
+    setFriendReqs(newFriendReqs)
+  }
 
   return (
     <div className="page-container">
@@ -106,7 +116,7 @@ const Notifications = () => {
             style={{ width: 90, height: 90 }}
             src={refresh}
             alt="img"
-            //onClick={refreshPage}
+            onClick={refreshPage}
           />
         </div>
         <div className="Signin-form-content">
@@ -129,6 +139,7 @@ const Notifications = () => {
                     interestTags={currentfriendrequest.interests}
                     userId={currentfriendrequest.user_id}
                     key={index}
+                    updateRequestProfiles={updateRequestsList}
                   />
                 );
               })

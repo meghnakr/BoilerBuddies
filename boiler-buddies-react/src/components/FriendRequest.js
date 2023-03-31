@@ -11,6 +11,7 @@ export default class FriendRequest extends React.Component {
     username: PropTypes.string,
     displayName: PropTypes.string,
     interestTags: PropTypes.string,
+    updateRequestProfiles: PropTypes.func,
   };
 
   constructor(props) {
@@ -33,6 +34,7 @@ export default class FriendRequest extends React.Component {
       acceptRequest: false,
       declineRequest: false,
       userId: this.props.userId, //user_id property
+      updateRequestProfiles: this.props.updateRequestProfiles,
     };
   }
 
@@ -41,12 +43,10 @@ export default class FriendRequest extends React.Component {
     if (this.state.acceptRequest) {
       return;
     }
-    //this.state.preventDefault()
 
     // make axios request to accept request
     console.log("CURRENT USER TOKEN: ", await getusertoken());
     console.log("0");
-    //console.log("OTHER USER ID: ", this.state.userId);
 
     console.log("1");
 
@@ -78,6 +78,8 @@ export default class FriendRequest extends React.Component {
     xmlHttp.send(null);
     var result = xmlHttp.responseText;
     console.log(result);
+    this.state.updateRequestProfiles(this.state.username);
+
     // this.setState({
     //   ...this.state,
     //   acceptRequest: true,
