@@ -41,11 +41,31 @@ export default  class NewPost extends React.Component {
         var postRequestURL = endpoint + "addPost/?" + params
         console.log(postRequestURL)
         var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET", postRequestURL, false ); // false for synchronous request
+        xmlHttp.open( "GET", postRequestURL, true); // false for synchronous request
+        xmlHttp.onload = (e) => { //handle async request
+            if(xmlHttp.readyState === 4) {
+                if(xmlHttp.status === 200) {
+                    try {
+                        var postId = JSON.parse(xmlHttp.responseText).postId
+                        //this.returnPostID(postId)
+                        window.location.reload()
+                    }
+                    catch (e) {
+                        if (e instanceof SyntaxError) {
+                            console.log(xmlHttp.responseText);
+                            window.location.reload()
+                        }
+                    }
+                } else { 
+                    console.error(xmlHttp.statusText)
+                }
+            }
+        }
+        xmlHttp.onerror = (e) => {
+            console.error(xmlHttp.statusText)
+        }
         xmlHttp.send(null);
-        var postId = JSON.parse(xmlHttp.responseText).postId
-        this.returnPostID(postId)
-        window.location.reload()
+        
     }
 
 

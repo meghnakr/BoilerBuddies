@@ -54,10 +54,30 @@ export default  class NewComment extends React.Component {
         var commentRequestURL = endpoint + "addComment/?" + params
         console.log(commentRequestURL)
         var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET", commentRequestURL, false ); // false for synchronous request
+        xmlHttp.open( "GET", commentRequestURL, true); // false for synchronous request
+        xmlHttp.onload = (e) => { //handle async request
+            if(xmlHttp.readyState === 4) {
+                if(xmlHttp.status === 200) {
+                    try {
+                        var commentId = JSON.parse(xmlHttp.responseText).commentId
+                        window.location.reload()
+                    }
+                    catch (e) {
+                        if (e instanceof SyntaxError) {
+                            console.log(xmlHttp.responseText);
+                            window.location.reload()
+                        }
+                    }
+                } else { 
+                    console.error(xmlHttp.statusText)
+                }
+            }
+        }
+        xmlHttp.onerror = (e) => {
+            console.error(xmlHttp.statusText)
+        }
         xmlHttp.send(null);
-        var commentId = JSON.parse(xmlHttp.responseText).commentId
-        window.location.reload()
+        
     }
 
     render() {
@@ -67,8 +87,8 @@ export default  class NewComment extends React.Component {
             handleFileInputChange, handleCommenting
         } = this
         return (
-            <>
-                <label style={{fontWeight:'normal'}}>Comment as <b>{username}</b></label>
+            <div>
+                {username && <label style={{fontWeight:'normal'}}>Comment as <b>{username}</b></label>}
                  <textarea rows='6' className='create-comment' placeholder='What are your thoughts?' type='text' value={content} 
                 onChange={(event)=>{
                     if(event.target.value.length === 0) {
@@ -98,7 +118,7 @@ export default  class NewComment extends React.Component {
             <div className='post-button-container'>
                 <button className='default-btn' disabled={disableBtn} onClick={handleCommenting}>Comment</button>
             </div>
-            </>
+            </div>
         )
     }
 }

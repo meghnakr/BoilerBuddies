@@ -19,6 +19,8 @@ export default  class Post extends React.Component {
         this.postAt = this.props.postAt
         this.content = this.props.content
         this.img = this.props.img
+        this.forumId = this.props.forumId
+        this.forumName = this.props.forumName
         this.state = {
             liked: this.props.liked,
             likes: this.props.likes,
@@ -80,7 +82,7 @@ export default  class Post extends React.Component {
     }
     render () {
         const {
-            content, img, username, postAt, id, disable, userId,
+            content, img, username, postAt, id, disable, userId, forumId, forumName,
             state: {liked, likes, comments,},
             formatNumber, timeDifference
         } = this
@@ -88,10 +90,11 @@ export default  class Post extends React.Component {
         //console.log(img);
         return (
             <div className='post-container'>
-                <p style={{color:"grey", fontSize:"smaller"}}>Posted by <button className='no-outline-btn' style={{padding:'0'}} 
+                <p style={{color:"grey", fontSize:"smaller"}}>In <button className='no-outline-btn' style={{padding:'0', }} 
+                onClick={()=> {this.props.navigate(`/forum/${forumId}`, {replace:true})}}> {forumName}</button> - Posted by <button className='no-outline-btn' style={{padding:'0'}} 
                 onClick={()=> {this.props.navigate(`/user/${userId}`, {replace:true})}}>{username}</button> - {timeDifference(new Date(), new Date(postAt))} </p>
                 <p>{content}</p>
-                <img src={img} alt=""/>
+                {(img !== "") ? <img src={img} alt="<image>"/> : <></>}
                 <div className='post-stats-container'>
                     <button className='no-outline-btn' disabled={disable}
                     onClick={() => {this.props.navigate(`/post/${id}`, {replace:true, 

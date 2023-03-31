@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import logo from "../assets/logo_vector.png";
-import { endpoint } from "../global";
 import axios from "../utils/Axios";
 import { getusertoken } from "../utils/auth";
 
@@ -11,7 +9,8 @@ export default class FriendsTabProfile extends React.Component {
     username: PropTypes.string,
     displayName: PropTypes.string,
     interestTags: PropTypes.string,
-    
+    updateFriendProfiles: PropTypes.func,
+
   };
 
   constructor(props) {
@@ -21,7 +20,8 @@ export default class FriendsTabProfile extends React.Component {
       username: this.props.username,
       displayName: this.props.displayName,
       interestTags: this.props.interestTags,
-      userId: this.props.userId, //user_id property
+      updateFriendProfiles: this.props.updateFriendProfiles,
+
     };
   }
 
@@ -44,31 +44,38 @@ React does not re-render the component unnecessarily.
   */
 
 
+  /* Function to remove the friend from the friendProfs state */
 
-  async handleRemoveClick() {
+
+  async handleRemoveClick(e) {
+    e.preventDefault();
     const token = await getusertoken();
-    const otherusername = this.state.username;    // UNDEFINED
-    console.log("OTHERID FTP: ", otherusername)
-
-    const otherId = await axios.get(
+    console.log("Token: ", token)
+    //const otherusername = this.state.username;    // UNDEFINED
+    //console.log("OTHERID FTP: ", otherusername)
+    
+    const otherId = (await axios.get(
       "http://54.200.193.22:3000/getUserIdFromUsername/",
       {
         params: {
-          username: otherusername,
+          username: this.state.username,
         },
       }
-    );
+    )).data.user_id;
 
     console.log("NEW OTHERID: ", otherId);
 
 
-    const unfriendRequestURL = "http://54.200.193.22:3000/unfriendUser/?";
+    let unfriendRequestURL = "http://54.200.193.22:3000/unfriendOther/?";
     unfriendRequestURL += "token=" + token + "&otherId=" + otherId;
     const xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", unfriendRequestURL, false); // false for synchronous request
     xmlHttp.send(null);
     const result = xmlHttp.responseText;
     console.log(result);
+
+    console.log("BUTTON WAS CLICKED")
+    this.state.updateFriendProfiles(this.state.username);
   }
 
 

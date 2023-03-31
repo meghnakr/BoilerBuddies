@@ -560,7 +560,7 @@ input:focus {
 }
 
 .post-button-container{
-  float: left;
+  float: right;
   width: 20%;
 }
 

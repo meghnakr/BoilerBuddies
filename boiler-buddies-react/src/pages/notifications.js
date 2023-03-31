@@ -16,9 +16,13 @@ const Notifications = () => {
   const [friendReqs, setFriendReqs] = useState([]);
   const [notifications, setNotifications] = useState([]);
 
+
+
+  
   useEffect(() => {
     const fetchData = async () => {
       const token = await getusertoken();
+      console.log("FriendRequests token: ", token)
       const result = await axios.get("/getFriendRequests/", {
         params: {
           token: token,
@@ -66,6 +70,7 @@ const Notifications = () => {
   useEffect(() => {
     const fetchData = async () => {
       const token = await getusertoken();
+      console.log("Notifications token: ", token)
       const result = await axios.get("/getNotifications/", {
         params: {
           token: token,
@@ -91,7 +96,17 @@ const Notifications = () => {
 
   console.log("ARRAY OF NOTIFS:", notifications);
 
-  /* Accept Friend Requests */
+  function updateRequestsList(username) {
+    console.log("FriendProfiles Before: ", friendReqs)
+    const newFriendReqs = friendReqs.filter((currentfriendreq) => {
+      if (currentfriendreq.username == username) {
+        return false;
+      }
+      return true;
+    });
+    console.log("FriendProfiles After: ", newFriendReqs)
+    setFriendReqs(newFriendReqs)
+  }
 
   return (
     <div className="page-container">
@@ -124,6 +139,7 @@ const Notifications = () => {
                     interestTags={currentfriendrequest.interests}
                     userId={currentfriendrequest.user_id}
                     key={index}
+                    updateRequestProfiles={updateRequestsList}
                   />
                 );
               })

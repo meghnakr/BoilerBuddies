@@ -28,7 +28,6 @@ const PostWithComments = () => {
                             var response = JSON.parse(xmlHttp.responseText);
                             var formattedComments = formatResults(response);
                             console.log(formattedComments)
-                            setComments(formattedComments)
                         } else {
                             console.error(xmlHttp.statusText)
                         }
@@ -51,17 +50,65 @@ const PostWithComments = () => {
     function formatResults(result) {
         var jsonResults = result;
         var formattedResults = [];
+        var keys = []
         var i = 0;
         Object.keys(jsonResults).forEach(function (key) {
             var curr = jsonResults[key]
-            var comment = {id: curr["commentId"], userId: curr["userId"], username: curr["username"], lastVisitAt: curr["lastVisitAt"], content: curr["content"],
-                        parentUserId: curr["parentUserId"], parentUsername: curr["parentUsername"], likes: curr["likes"], liked: curr["isLiked"], postAt: curr["postedAt"]}
-            formattedResults.push(comment)
+            var id = curr["commentId"]
+            var parentCommentId = curr["parentCommentId"]
+            var comment = {id: id, userId: curr["userId"], username: curr["username"], lastVisitAt: curr["lastVisitedAt"], content: curr["content"],
+                        parentUserId: curr["parentUserId"], parentUsername: curr["parentUsername"], parentCommentId: parentCommentId,
+                        likes: curr["likes"], liked: curr["isLiked"], postAt: curr["postedAt"], 
+                        }
+            formattedResults.push({
+                value: comment,
+                children: []
+            })
+            keys.push(id)
+            
+            //append current comment to its parent
+            if( keys.includes(parentCommentId)) {
+                var index = keys.indexOf(parentCommentId)
+                formattedResults[index].children.push(id)
+            }
             i++;
-          })
+        })
+        
+        formattedResults.forEach(element => {
+            console.log(element)
+            if(element === undefined) {return}
+            commentThread(formattedResults, keys, element.value.id, -5 )  } )
           
         return formattedResults;
       }
+
+
+    function commentThread(arr, keys, id, leftMargin) {
+        if(arr.length === 0) { return; }
+        leftMargin+= 5
+        var left = leftMargin + 'em'
+        var index = keys.indexOf(id)
+        var element = arr[index]
+        var comment = element.value
+        var children = element.children
+        var newComment = <Comment marginLeft={left} token={currentUser.token} id={comment.id} username={comment.username} content={comment.content} 
+                postAt={comment.postAt} postId={postId} likes={comment.likes} liked={comment.liked}/>
+        setComments(comments => [...comments, newComment])
+        delete arr[index]
+        children.forEach(childId => commentThread(arr, keys, childId, leftMargin))
+        /*
+        arr.map(
+            element => {
+                var comment = element.value
+                var children = element.children
+                var newComment = <Comment marginLeft={left} token={currentUser.token} id={comment.id} username={comment.username} content={comment.content} 
+                postAt={comment.postAt} postId={postId} likes={comment.likes} liked={comment.liked}/>
+                delete arr[keys.indexOf[comment.id]]
+                setComments(comments => [...comments, newComment])
+                children.forEach(childComment => commentThread(arr, keys, leftMargin))
+                
+            })*/
+    }
 
     return (
         <div className="page-container" id="comments">
@@ -89,10 +136,22 @@ const PostWithComments = () => {
                     height: '3vmin'
                 }}></div>
                 <div className="comments">
-                    {comments.map(element => {
-                        return <Comment marginLeft='0em' id={element.id} username={element.username} content={element.content} 
-                        postAt={element.postAt}/>
-                    })}
+                    <p>{comments}</p>
+                    {/*comments.map(element => {
+                        var comment = element.value
+                        var left = 0;
+                        return <>
+                            <Comment marginLeft='0em' token={currentUser.token} id={comment.id} username={comment.username} content={comment.content} 
+                                postAt={comment.postAt} postId={postId} likes={comment.likes} liked={comment.liked}/>
+                            {element.children.forEach(commentId => {
+                                left = getMarginLeft(left)
+                                var index = keys.indexOf(commentId)
+                                var childComment = comments[index]
+                                return <Comment marginLeft={left + 'em'} token={currentUser.token} id={childComment.id} username={childComment.username} content={childComment.content} 
+                                postAt={childComment.postAt} postId={postId} likes={childComment.likes} liked={childComment.liked}/>
+                            })}
+                        </>
+                    })*/}
                 </div>
             
             <div style={{height: '5vmax'}}/>
