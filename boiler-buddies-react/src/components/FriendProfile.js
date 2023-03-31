@@ -82,7 +82,8 @@ export default class FriendProfile extends React.Component {
                     <h6>{this.interestTags}</h6>
                 </div>
                 <div className="profile-button">
-                    <button
+                    {this.props.currentUser !== this.username 
+                    ? <button
                         className={this.state.sendRequest
                             ? "default-btn-white"
                             : "default-btn"
@@ -101,7 +102,7 @@ export default class FriendProfile extends React.Component {
                                 : "Send Request"
                         }
                     </button>
-                    {/* TODO: change button to edit if it's the user's profile */}
+                    : <></>}
                 </div>
             </div>
         );

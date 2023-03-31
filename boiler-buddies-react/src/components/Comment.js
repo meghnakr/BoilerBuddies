@@ -4,6 +4,7 @@ import NewComment from './NewComment';
 export default class Comment extends React.Component {
     constructor(props) {
         super(props)
+        this.token = this.props.token
         this.id = this.props.id
         this.parentCommentId = this.props.parentCommentId
         this.username = this.props.username
@@ -13,27 +14,27 @@ export default class Comment extends React.Component {
         this.postAt = this.props.postAt
         this.state = {
             openTextBox: false,
-            liked: true,
-            likes: 2
+            liked: this.props.liked,
+            likes: this.props.likes
         }
     }
 
     handleLike = () => {
         var params = new URLSearchParams()
         params.append("token", this.token)
-        params.append("postId", this.id)
+        params.append("commentId", this.id)
         var xmlHttp = new XMLHttpRequest();
         
         if (this.state.liked) {
-            var unlikePostRequest = endpoint + 'unlikePost/?' + params
-            console.log(unlikePostRequest)
-            xmlHttp.open("POST", unlikePostRequest, true); // false for synchronous request
+            var unlikeCommentRequest = endpoint + 'unlikeComment/?' + params
+            console.log(unlikeCommentRequest)
+            xmlHttp.open("POST", unlikeCommentRequest, true); // false for synchronous request
             xmlHttp.send(null)
             this.setState({liked: false, likes: this.state.likes--})
         } else {
-            var likePostRequest = endpoint + 'likePost/?' + params
-            console.log(likePostRequest)
-            xmlHttp.open("POST", likePostRequest, true); // false for synchronous request
+            var likeCommentRequest = endpoint + 'likeComment/?' + params
+            console.log(likeCommentRequest)
+            xmlHttp.open("POST", likeCommentRequest, true); // false for synchronous request
             xmlHttp.send(null)
             this.setState({liked: true, likes: this.state.likes++})
         }
@@ -92,7 +93,7 @@ export default class Comment extends React.Component {
                         {formatNumber(likes, "Like")}
                     </button>
                 </div>
-                {openTextBox && <NewComment />}
+                {openTextBox && <NewComment token={this.token} username={null} parentCommentId={this.id} postId={this.props.postId}/>}
             
             </div>
         )

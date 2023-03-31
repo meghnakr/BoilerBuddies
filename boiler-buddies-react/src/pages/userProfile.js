@@ -53,7 +53,8 @@ const UserProfile = () => {
                 likes: element.likes,
                 comments: element.comments,
                 liked: element.isLiked,
-                postAt: element.postedAt
+                postAt: element.postedAt,
+                image: element.image
             })
         });
         setUserPosts(allPosts)
@@ -88,6 +89,7 @@ const UserProfile = () => {
         <div className='page-container'>
             {
                 displayName && <FriendProfile
+                        currentUser={currentUser.username}
                         username={username}
                         displayName={displayName}
                         interestTags={interests}
@@ -108,7 +110,8 @@ const UserProfile = () => {
                             postAt={post.postAt}
                             likes={post.likes}
                             comments={post.comments}
-                            liked={post.liked}/>
+                            liked={post.liked}
+                            img={post.image}/>
                     })
                 }</div>
 

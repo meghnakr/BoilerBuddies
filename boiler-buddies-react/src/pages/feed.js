@@ -20,14 +20,31 @@ const Feed = (props) => {
     useEffect(() => {
         var getForumsRequestURL = endpoint + "getForums/?"
         var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open("GET", getForumsRequestURL, false); // false for synchronous request
+        xmlHttp.open("GET", getForumsRequestURL, true); // false for synchronous request
+        xmlHttp.onload = (e) => { //handle async request
+            if(xmlHttp.readyState === 4) {
+                if(xmlHttp.status === 200) {
+                    try {
+                        var response = JSON.parse(xmlHttp.responseText);
+                        var formatForum = []
+                        response.map(element => {
+                            formatForum.push({value: element.id, label: element.name})
+                        });
+                        setForums(formatForum)
+                    }
+                    catch (e) {
+                        if (e instanceof SyntaxError) {
+                            console.log(xmlHttp.responseText);
+                            window.location.reload()
+                        }
+                    }
+                } else { 
+                    console.error(xmlHttp.statusText)
+                }
+            }
+        }
         xmlHttp.send(null);
-        var response = JSON.parse(xmlHttp.responseText);
-        var formatForum = []
-        response.map(element => {
-            formatForum.push({value: element.id, label: element.name})
-        });
-        setForums(formatForum)
+        
     }, [])
 
 
@@ -91,7 +108,7 @@ const Feed = (props) => {
           } else {
             var curr = jsonResults[key]
             var post = {id: curr["postId"], userId: curr["userId"], username: curr["username"], lastVisitAt: curr["lastVisitAt"], content: curr["content"],
-                        image: curr["smallImage"], forumId: curr["forumId"], likes: curr["likes"], comments: curr["comments"], liked: curr["isLiked"], postAt: curr["postedAt"]}
+                        image: curr["image"], forumId: curr["forumId"], likes: curr["likes"], comments: curr["comments"], liked: curr["isLiked"], postAt: curr["postedAt"]}
             formattedResults.push(post)
           }
           i++;
@@ -111,7 +128,7 @@ const Feed = (props) => {
             {token && <NewPost tokenId={token} handleCallback={getPostId} forums={forums}/>}
             <div className='all-post'>
                 {posts.map(post => {
-                    return <Post navigate={navigate} token={currentuser.token} disable={false} userId={post.userId}
+                    return <Post navigate={navigate} token={currentuser.token} disable={false} userId={post.userId} img={post.image}
                     id={post.id} content={post.content} username={post.username} postAt={post.postAt} likes={post.likes} comments={post.comments} liked={post.liked}/>
                 })}
                 
