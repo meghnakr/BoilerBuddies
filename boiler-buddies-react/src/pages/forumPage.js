@@ -116,6 +116,14 @@ const ForumPage = (props) => {
                 {currentuser.token && <NewPost tokenId={currentuser.token} handleCallback={getPostId} selectedForum={forumId} forums={formatForum}/>}
                 <div className='forum-picture'>
                 <div className='profile-photo-circle'>
+                <div className="upload-icon">
+              <i
+                className="fa fa-user"
+                style={{
+                  fontSize: "9vmin",
+                }}
+              ></i>
+            </div>
                 {
                     (img !== "")
                         ? <img src={img} alt={logo}/>

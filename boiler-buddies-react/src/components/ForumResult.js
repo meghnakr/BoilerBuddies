@@ -68,7 +68,11 @@ export default class ForumResult extends React.Component {
                 }}
               ></i>
             </div>
-            {this.img !== "" ? <img src={big_image} alt=""/> : <></>}
+            {
+                    (big_image !== "")
+                        ? <img src={big_image} alt={logo}/>
+                        : <></>
+                }
           </div>
         </div>
             <div className='forum-info'>
