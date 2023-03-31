@@ -60,7 +60,15 @@ export default class ForumResult extends React.Component {
             <div className="forum-header" align = "left">
             <div className="profile-picture">
             <div className="profile-photo-circle">
-            {this.img !== "" ? <img src={big_image} alt={logo} /> : <></>}
+            <div className="upload-icon">
+              <i
+                className="fa fa-user"
+                style={{
+                  fontSize: "9vmin",
+                }}
+              ></i>
+            </div>
+            {this.img !== "" ? <img src={big_image} alt=""/> : <></>}
           </div>
         </div>
             <div className='forum-info'>
