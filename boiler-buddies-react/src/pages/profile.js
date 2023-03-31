@@ -40,6 +40,7 @@ export default function Profile() {
                 params.append("user_id", response.userId)
                 params.append("token", currentUser.token)
                 var getPostsRequest = endpoint + "getPosts/?" + params
+                console.log(getPostsRequest)
                 xmlHttp = new XMLHttpRequest();
                 xmlHttp.open("GET", getPostsRequest, true); // false for synchronous request
                 xmlHttp.onload = (e) => { //handle async request

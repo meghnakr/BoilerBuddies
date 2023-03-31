@@ -523,6 +523,16 @@ input:focus {
   cursor: default;
   background-color: transparent;
 }
+
+.post-container .image-container {
+  width: 50%;
+}
+.image-container img {
+  height: 100%;
+  width: 100%;
+  object-fit:contain
+
+}
 .create-post {
   width: 100%;
   padding-left: .5em;

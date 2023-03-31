@@ -11,9 +11,11 @@ const PostWithComments = () => {
     const {postId} = useParams()
     const location = useLocation();
     const [comments, setComments] = useState([])
+    const [token, setToken] = useState()
     
     useEffect(() => {
         if(currentUser.token !== null) {
+            setToken(currentUser.token)
             var params = new URLSearchParams()
             let timer = setTimeout(() => {
                 params.append("token", currentUser.token)
@@ -75,7 +77,6 @@ const PostWithComments = () => {
         })
         
         formattedResults.forEach(element => {
-            console.log(element)
             if(element === undefined) {return}
             commentThread(formattedResults, keys, element.value.id, -5 )  } )
           
@@ -129,7 +130,7 @@ const PostWithComments = () => {
                     style={{
                         borderTop: 'none', borderBottom: '1px solid black'
                     }}>
-                    <NewComment token={currentUser.token} username={currentUser.username} parentCommentId={uuidNil} postId={postId}/>
+                    {token && <NewComment token={token} username={currentUser.username} parentCommentId={""} postId={postId}/>}
                 </div>
 
             <div style={{

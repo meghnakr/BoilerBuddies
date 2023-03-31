@@ -94,11 +94,13 @@ export default  class Post extends React.Component {
                 onClick={()=> {this.props.navigate(`/forum/${forumId}`, {replace:true})}}> {forumName}</button> - Posted by <button className='no-outline-btn' style={{padding:'0'}} 
                 onClick={()=> {this.props.navigate(`/user/${userId}`, {replace:true})}}>{username}</button> - {timeDifference(new Date(), new Date(postAt))} </p>
                 <p>{content}</p>
-                {(img !== "") ? <img src={img} alt="<image>"/> : <></>}
+                {(img !== "") ? <div className="image-container">
+                    <img src={img} alt="<image>"/> 
+                    </div>: <></>}
                 <div className='post-stats-container'>
                     <button className='no-outline-btn' disabled={disable}
                     onClick={() => {this.props.navigate(`/post/${id}`, {replace:true, 
-                    state: {content: content, img:img, username:username,postAt:postAt, userId:userId, liked:liked, likes: likes, comments:comments}})}}>
+                    state: {content: content, img:img, username:username,postAt:postAt, userId:userId, liked:liked, likes: likes, comments:comments, forumId:forumId, forumName:forumName}})}}>
                         <i className='fa fa-comment-o'></i> {formatNumber(comments, "Comment")}</button>
                     <button className='no-outline-btn' onClick={() => this.setState(this.handleLike)} style={liked ? {color: 'red'} : {color:'grey'}}>
                         <i className={liked ? 'fa fa-heart' : 'fa fa-heart-o'}></i> 
