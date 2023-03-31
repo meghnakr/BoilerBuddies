@@ -87,7 +87,7 @@ export default  class NewComment extends React.Component {
             handleFileInputChange, handleCommenting
         } = this
         return (
-            <>
+            <div>
                 {username && <label style={{fontWeight:'normal'}}>Comment as <b>{username}</b></label>}
                  <textarea rows='6' className='create-comment' placeholder='What are your thoughts?' type='text' value={content} 
                 onChange={(event)=>{
@@ -118,7 +118,7 @@ export default  class NewComment extends React.Component {
             <div className='post-button-container'>
                 <button className='default-btn' disabled={disableBtn} onClick={handleCommenting}>Comment</button>
             </div>
-            </>
+            </div>
         )
     }
 }

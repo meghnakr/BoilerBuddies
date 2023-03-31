@@ -41,23 +41,47 @@ const UserProfile = () => {
         params.append("token", currentUser.token)
         var getPostsRequest = endpoint + "getPosts/?" + params
         xmlHttp = new XMLHttpRequest();
-        xmlHttp.open("GET", getPostsRequest, false); // false for synchronous request
+        xmlHttp.open("GET", getPostsRequest, true); // false for synchronous request
+        xmlHttp.onload = (e) => { //handle async request
+            if (xmlHttp.readyState === 4) {
+                if (xmlHttp.status === 200) {
+                    try {
+                        var response_2 = JSON.parse(xmlHttp.responseText);
+                        var allPosts = [];
+                        response_2.map(element => {
+                            allPosts.push({
+                                id: element.postId,
+                                userId: response.userId,
+                                content: element.content,
+                                likes: element.likes,
+                                comments: element.comments,
+                                liked: element.isLiked,
+                                postAt: element.postedAt,
+                                image: element.image,
+                                forumId: element.forumId,
+                                forumName: element.forumName
+                            })
+                        });
+                        setUserPosts(allPosts)
+                    } catch (e) {
+                        if (e instanceof SyntaxError) {
+                            console.log(xmlHttp.responseText);
+                            window
+                                .location
+                                .reload()
+                        }
+                    }
+                } else {
+                    console.error(xmlHttp.statusText)
+                }
+            }
+        }
+
+        xmlHttp.onerror = (e) => {
+            console.error(xmlHttp.statusText)
+        }
         xmlHttp.send(null);
-        var response_2 = JSON.parse(xmlHttp.responseText);
-        var allPosts = [];
-        response_2.map(element => {
-            allPosts.push({
-                id: element.postId,
-                userId: userId,
-                content: element.content,
-                likes: element.likes,
-                comments: element.comments,
-                liked: element.isLiked,
-                postAt: element.postedAt,
-                image: element.image
-            })
-        });
-        setUserPosts(allPosts)
+        
     }, [])
 
     function timeDifference(current, previous) {
@@ -111,7 +135,9 @@ const UserProfile = () => {
                             likes={post.likes}
                             comments={post.comments}
                             liked={post.liked}
-                            img={post.image}/>
+                            img={post.image}
+                            forumId={post.forumId}
+                            forumName={post.forumName}/>
                     })
                 }</div>
 

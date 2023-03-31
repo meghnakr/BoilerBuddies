@@ -47,7 +47,7 @@ export default  class NewPost extends React.Component {
                 if(xmlHttp.status === 200) {
                     try {
                         var postId = JSON.parse(xmlHttp.responseText).postId
-                        this.returnPostID(postId)
+                        //this.returnPostID(postId)
                         window.location.reload()
                     }
                     catch (e) {

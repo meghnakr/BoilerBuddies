@@ -108,7 +108,7 @@ const Feed = (props) => {
           } else {
             var curr = jsonResults[key]
             var post = {id: curr["postId"], userId: curr["userId"], username: curr["username"], lastVisitAt: curr["lastVisitAt"], content: curr["content"],
-                        image: curr["image"], forumId: curr["forumId"], likes: curr["likes"], comments: curr["comments"], liked: curr["isLiked"], postAt: curr["postedAt"]}
+                        image: curr["image"], forumId: curr["forumId"], forumName: curr["forumName"], likes: curr["likes"], comments: curr["comments"], liked: curr["isLiked"], postAt: curr["postedAt"]}
             formattedResults.push(post)
           }
           i++;
@@ -128,7 +128,7 @@ const Feed = (props) => {
             {token && <NewPost tokenId={token} handleCallback={getPostId} forums={forums}/>}
             <div className='all-post'>
                 {posts.map(post => {
-                    return <Post navigate={navigate} token={currentuser.token} disable={false} userId={post.userId} img={post.image}
+                    return <Post navigate={navigate} token={currentuser.token} disable={false} userId={post.userId} img={post.image} forumId={post.forumId} forumName={post.forumName}
                     id={post.id} content={post.content} username={post.username} postAt={post.postAt} likes={post.likes} comments={post.comments} liked={post.liked}/>
                 })}
                 
