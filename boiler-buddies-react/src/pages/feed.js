@@ -69,6 +69,7 @@ const Feed = (props) => {
                         if(xmlHttp.status === 200) {
                             try {
                                 var response = JSON.parse(xmlHttp.responseText);
+                                console.log(response)
                                 var formatPosts = formatResults(response);
                                 setPosts(formatPosts);
                                 console.log(formatPosts);

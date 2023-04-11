@@ -19,8 +19,6 @@ export default  class NewPost extends React.Component {
             selectedForum: null,
             disableBtn: true,
         }
-        console.log("THIS.TOKEN" + this.token)
-        console.log("THIS.PROPS.TOKENID"+this.props.tokenId)
     }
 
     handleFileInputChange = (event) => {
