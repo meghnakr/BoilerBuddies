@@ -116,7 +116,7 @@ const PostWithComments = () => {
         var element = arr[index]
         var comment = element.value
         var children = element.children
-        var newComment = <Comment marginLeft={left} token={currentUser.token} id={comment.id} username={comment.username} content={comment.content} 
+        var newComment = <Comment currentUser={currentUser.username} marginLeft={left} token={currentUser.token} id={comment.id} username={comment.username} content={comment.content} 
                 postAt={comment.postAt} postId={postId} likes={comment.likes} liked={comment.liked}/>
         setComments(comments => [...comments, newComment])
         delete arr[index]

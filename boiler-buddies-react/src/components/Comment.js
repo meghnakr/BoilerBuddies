@@ -1,9 +1,13 @@
 import React from 'react';
 import { endpoint } from '../global';
 import NewComment from './NewComment';
+import FriendProfile  from './FriendProfile';
+import { Dialog, DialogContent, DialogTitle } from '@mui/material';
+
 export default class Comment extends React.Component {
     constructor(props) {
         super(props)
+        this.currentUser = this.props.currentUser
         this.token = this.props.token
         this.id = this.props.id
         this.parentCommentId = this.props.parentCommentId
@@ -15,7 +19,9 @@ export default class Comment extends React.Component {
         this.state = {
             openTextBox: false,
             liked: this.props.liked,
-            likes: this.props.likes
+            likes: this.props.likes,
+            open: false,
+            postLikes: null
         }
     }
 
@@ -73,29 +79,98 @@ export default class Comment extends React.Component {
         }
     }
 
+    openDialog = () => {
+        this.setState({open:true})
+        var params = new URLSearchParams()
+        params.append("token", this.token)
+        params.append("commentId", this.id)
+        var xmlHttp = new XMLHttpRequest();
+        var getCommentLikesRequest = endpoint + 'getCommentLikes/?' + params
+        console.log(getCommentLikesRequest)
+        xmlHttp.open("GET", getCommentLikesRequest, true); // false for synchronous request
+        xmlHttp.onload = (e) => { //handle async request
+            if(xmlHttp.readyState === 4) {
+                if(xmlHttp.status === 200) {
+                    try {
+                        var response = JSON.parse(xmlHttp.responseText);
+                        console.log(response)
+                        var formatted = this.formatResults(response)
+                        this.setState({postLikes: formatted})
+                    }
+                    catch (e) {
+                        if (e instanceof SyntaxError) {
+                            console.log(xmlHttp.responseText);
+                            window.location.reload()
+                        }
+                    }
+                } else { 
+                    console.error(xmlHttp.statusText)
+                }
+            }
+        }
+        xmlHttp.send(null)
+    }
+
+    closeDialog = () => {
+        this.setState({open: false})
+    }
+
+    formatResults = (result) => {
+        var jsonResults = result;
+        var formattedResults = [];
+        var currUser = this.currentUser
+        Object.keys(jsonResults).forEach(function (key) {
+            var curr = jsonResults[key]
+            var user = (<FriendProfile 
+                currentUser={currUser}
+                displayName={curr["display_name"]}
+                userId = {curr["otherId"]}
+                username = {curr["username"]}
+                img = {curr["big_image"]}/>)
+            formattedResults.push(user)
+        });
+        return formattedResults;
+      }
+
 
     render() {
         const {
             username, content, marginLeft, postAt,
-            state: {liked, likes, openTextBox},
-            formatNumber, timeDifference
+            state: {liked, likes, openTextBox, postLikes, open},
+            formatNumber, timeDifference, openDialog, closeDialog
         } = this
         return(
+            <>
             <div className='post-container' style={{border:'none', borderLeft:'black 1px solid', marginLeft: `${marginLeft}`, borderBottom:'black 1px solid'}}>
                 <p style={{color:"grey", fontSize:"smaller"}}>Posted by <button className='no-outline-btn' style={{padding:'0'}} 
                 >{username}</button> - {timeDifference(new Date(), new Date(postAt))} </p>
                 <p>{content}</p>
                 <div className='post-stats-container'>
+                    {(likes!==0) ?
+                    <button className='no-outline-btn' onClick={openDialog}>
+                        {formatNumber(likes, "Like")}
+                    </button>
+                    : null }
+                </div>
+                <div className='post-stats-container'>
                     <button className='no-outline-btn' onClick={() => this.setState({openTextBox: !openTextBox})}> <i className='fa fa-comment-o'></i>  Reply</button>
                     
                     <button className='no-outline-btn' onClick={() => this.setState(this.handleLike)} style={liked ? {color: 'red'} : {color:'grey'}}>
                         <i className={liked ? 'fa fa-heart' : 'fa fa-heart-o'}></i> 
-                        {formatNumber(likes, "Like")}
+                        Like
                     </button>
                 </div>
                 {openTextBox && <NewComment token={this.token} username={null} parentCommentId={this.id} postId={this.props.postId}/>}
             
             </div>
+            <Dialog fullWidth={true} open={open} onClose={closeDialog} >
+            <DialogTitle sx={{textAlign:'center', fontWeight:'bold', borderBottom:'solid grey 1px'}}>Likes 
+            <i className='fa fa-close' style={{float:'right', cursor:'pointer'}} onClick={closeDialog}/></DialogTitle>
+            <DialogContent>
+                {postLikes}
+            </DialogContent>
+            </Dialog>
+            </>
         )
     }
 }

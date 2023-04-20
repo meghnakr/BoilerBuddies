@@ -60,7 +60,7 @@ export default class FriendProfile extends React.Component {
         </div>
         <div className="profile-info">
           <h2>{this.displayName}</h2>
-          <h6>{this.username}</h6>
+          <h6 style={{fontWeight:'normal'}}>{this.username}</h6>
           <h6>{this.interestTags}</h6>
         </div>
         <div className="profile-button">

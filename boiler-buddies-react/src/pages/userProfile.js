@@ -185,7 +185,7 @@ const UserProfile = () => {
                                 forumName={post.forumName}/>
                         })
                     }</div>
-                    <div label="Comments" className='all-comment'>
+                    <div label="Comments" className='all-post'>
                     {
                         comments.map(comment => {
                             return <ProfileComment

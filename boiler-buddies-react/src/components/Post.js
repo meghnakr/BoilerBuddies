@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {endpoint} from '../global';
-import { Link } from 'react-router-dom';
 import { Dialog, DialogContent, DialogTitle } from '@mui/material';
 import FriendProfile from './FriendProfile';
 
@@ -125,9 +124,11 @@ export default  class Post extends React.Component {
     formatResults = (result) => {
         var jsonResults = result;
         var formattedResults = [];
+        var currUser = this.props.currentUser
         Object.keys(jsonResults).forEach(function (key) {
             var curr = jsonResults[key]
             var user = (<FriendProfile 
+                currentUser={currUser}
                 displayName={curr["display_name"]}
                 userId = {curr["otherId"]}
                 username = {curr["username"]}
