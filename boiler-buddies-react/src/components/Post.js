@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {endpoint} from '../global';
 import { Link } from 'react-router-dom';
 import { Dialog, DialogContent, DialogTitle } from '@mui/material';
+import FriendProfile from './FriendProfile';
 
 
 export default  class Post extends React.Component {
@@ -100,6 +101,8 @@ export default  class Post extends React.Component {
                     try {
                         var response = JSON.parse(xmlHttp.responseText);
                         console.log(response)
+                        var formatted = this.formatResults(response)
+                        this.setState({postLikes: formatted})
                     }
                     catch (e) {
                         if (e instanceof SyntaxError) {
@@ -118,6 +121,22 @@ export default  class Post extends React.Component {
     closeDialog = () => {
         this.setState({open: false})
     }
+
+    formatResults = (result) => {
+        var jsonResults = result;
+        var formattedResults = [];
+        Object.keys(jsonResults).forEach(function (key) {
+            var curr = jsonResults[key]
+            var user = (<FriendProfile 
+                displayName={curr["display_name"]}
+                userId = {curr["otherId"]}
+                username = {curr["username"]}
+                img = {curr["big_image"]}/>)
+            formattedResults.push(user)
+        });
+        return formattedResults;
+      }
+
     render () {
         const {
             content, img, username, postAt, id, disable, userId, forumId, forumName,
@@ -135,9 +154,11 @@ export default  class Post extends React.Component {
                     <img src={img} alt="<image>"/> 
                     </div>: <></>}
                 <div className='post-stats-container'>
+                    {(likes!==0) ?
                     <button className='no-outline-btn' onClick={openDialog}>
                         {formatNumber(likes, "Like")}
                     </button>
+                    : null }
                 </div>
                 <div className='post-stats-container'>
                     <button className='no-outline-btn' disabled={disable}
@@ -150,10 +171,11 @@ export default  class Post extends React.Component {
                     </button>
                 </div>
             </div>
-            <Dialog open={open} onClose={closeDialog} >
-            <DialogTitle sx={{textAlign:'center'}}>Likes</DialogTitle>
+            <Dialog fullWidth={true} open={open} onClose={closeDialog} >
+            <DialogTitle sx={{textAlign:'center', fontWeight:'bold', borderBottom:'solid grey 1px'}}>Likes 
+            <i className='fa fa-close' style={{float:'right', cursor:'pointer'}} onClick={closeDialog}/></DialogTitle>
             <DialogContent>
-                Sample content
+                {postLikes}
             </DialogContent>
             </Dialog>
             </>

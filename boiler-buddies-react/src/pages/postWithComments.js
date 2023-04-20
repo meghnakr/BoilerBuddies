@@ -102,7 +102,7 @@ const PostWithComments = () => {
         
         formattedResults.forEach(element => {
             if(element === undefined) {return}
-            commentThread(formattedResults, keys, element.value.id, -5 )  } )
+            commentThread(formattedResults, keys, element.value.id, -10 )  } )
           
         return formattedResults;
       }

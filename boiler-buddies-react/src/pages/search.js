@@ -2,53 +2,12 @@ import axios from "../utils/Axios";
 import React from "react";
 import { useState, useEffect } from "react";
 import FriendProfile from "../components/FriendProfile";
-import ProfileHeader from "../components/ProfileHeader";
-import { json } from "react-router";
-
-function refreshPage() {
-  window.location.reload(false);
-}
-function formatResults(result) {
-  console.log(result);
-  //  var jsonResults = JSON.parse(result);
-  var jsonResults = result;
-  var formattedResults = Array(20).fill("");
-  var i = 0;
-  Object.keys(jsonResults).forEach(function (key) {
-    //console.log('Key : ' + key + ', Value : ' + jsonResults[key])
-    //formattedResults += jsonResults[key]["display_name"] + " " + jsonResults[key]["username"] + "| \n"
-    //console.log("JSON RESULTS", jsonResults[key]);
-    var interests = jsonResults[key]["interests"];
-    interests = interests
-      .trim()
-      .substring(0, interests.length)
-      .trim();
-    interests = "#" + interests.replaceAll("&&", " #");
-    formattedResults[i] = (
-      <FriendProfile
-        displayName={jsonResults[key]["display_name"]}
-        userId={jsonResults[key]["user_id"]}
-        username={jsonResults[key]["username"]}
-        interestTags={interests}
-        img={jsonResults[key]["big_image"]}
-      />
-    );
-      /*
-    console.log(
-      String(i) +
-        " " +
-        jsonResults[key]["display_name"] +
-        " " +
-        jsonResults[key]["username"]
-    );*/
-    i++;
-  });
-  return formattedResults;
-}
+import { useNavigate } from "react-router-dom";
 
 const Searches = () => {
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState("");
+  const navigate = useNavigate();
   console.log(searchResult);
 
   const handleChange = (event) => {
@@ -126,6 +85,46 @@ const Searches = () => {
     }
   };
 
+  function formatResults(result) {
+    
+    console.log(result);
+    //  var jsonResults = JSON.parse(result);
+    var jsonResults = result;
+    var formattedResults = Array(20).fill("");
+    var i = 0;
+    Object.keys(jsonResults).forEach(function (key) {
+      //console.log('Key : ' + key + ', Value : ' + jsonResults[key])
+      //formattedResults += jsonResults[key]["display_name"] + " " + jsonResults[key]["username"] + "| \n"
+      //console.log("JSON RESULTS", jsonResults[key]);
+      var interests = jsonResults[key]["interests"];
+      interests = interests
+        .trim()
+        .substring(0, interests.length)
+        .trim();
+      interests = "#" + interests.replaceAll("&&", " #");
+      formattedResults[i] = (
+        <FriendProfile
+          displayName={jsonResults[key]["display_name"]}
+          userId={jsonResults[key]["user_id"]}
+          username={jsonResults[key]["username"]}
+          interestTags={interests}
+          img={jsonResults[key]["big_image"]}
+          navigate={navigate}
+        />
+      );
+        /*
+      console.log(
+        String(i) +
+          " " +
+          jsonResults[key]["display_name"] +
+          " " +
+          jsonResults[key]["username"]
+      );*/
+      i++;
+    });
+    return formattedResults;
+  }
+
   return (
     <div className="page-container">
       <input
@@ -135,7 +134,7 @@ const Searches = () => {
         onChange={handleChange}
       />
       {/*console.log("SEARCH: ", search)*/}
-      <p>{searchResult}</p>
+      <p className="search-result">{searchResult}</p>
       {/*console.log("SEARCH RESULT: ", searchResult)*/}
     </div>
   );
