@@ -23,6 +23,7 @@ export default  class Post extends React.Component {
         this.img = this.props.img
         this.forumId = this.props.forumId
         this.forumName = this.props.forumName
+        this.chatId = this.props.chatId
         this.state = {
             liked: this.props.liked,
             likes: this.props.likes,
@@ -140,7 +141,7 @@ export default  class Post extends React.Component {
 
     render () {
         const {
-            content, img, username, postAt, id, disable, userId, forumId, forumName,
+            content, img, username, postAt, id, disable, userId, forumId, forumName, chatId,
             state: {liked, likes, comments, open, postLikes},
             formatNumber, timeDifference, openDialog, closeDialog
         } = this
@@ -169,6 +170,9 @@ export default  class Post extends React.Component {
                     <button className='no-outline-btn' onClick={() => this.setState(this.handleLike)} style={liked ? {color: 'red'} : {color:'grey'}}>
                         <i className={liked ? 'fa fa-heart' : 'fa fa-heart-o'}></i> 
                         Like
+                    </button>
+                    <button className='no-outline-btn' /*onClick={() => {this.props.navigate(`/chat/${chatId}`)}*/ >
+                        <i className='fa fa-paper-plane-o'></i> Direct Message
                     </button>
                 </div>
             </div>
