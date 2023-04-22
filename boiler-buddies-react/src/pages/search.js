@@ -3,6 +3,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import FriendProfile from "../components/FriendProfile";
 import { useNavigate } from "react-router-dom";
+import { endpoint } from "../global";
+import { getusertoken } from "../utils/auth";
 
 const Searches = () => {
   const [search, setSearch] = useState("");
@@ -73,11 +75,48 @@ const Searches = () => {
     // xmlHttp.send(null);
     // var result = xmlHttp.responseText
 
+    /* One request to get block list from database */
+    let unfilteredResults = [];
+    let filteredResults = [];
+
     // declare anonymous function
-    axios.get(searchRequestURL).then((result) => {
-      const formattedResult = formatResults(result.data);
-      setSearchResult(formattedResult);
-      console.log(searchResult);
+
+    axios.get(searchRequestURL).then(async (result) => {
+      //setSearchResult(formattedResult);
+      console.log("Unfiltered Results: ", unfilteredResults);
+      // axios.get("http://54.200.193.22:3000/blockOther/?").then((result) => {
+      //   console.log("Blocked request: " + result.data)
+      // });
+
+      var token = await getusertoken();
+      var blockUserURL = "http://54.200.193.22:3000/getBlockers/?";
+      blockUserURL += "token=" + token;
+      console.log(blockUserURL);
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open("GET", blockUserURL, false); // false for synchronous request
+      xmlHttp.send(null);
+      var blockedResult = JSON.parse(xmlHttp.responseText);
+      console.log("Blocked request: ", blockedResult, typeof blockedResult);
+      const blockedIDs = new Set();
+      Object.keys(blockedResult).map((key) => {
+        console.log("key", key, blockedResult[key].other_id); // get this to output other_id
+        blockedIDs.add(blockedResult[key].other_id); // this gives us the other_id
+      });
+
+      console.log("Blocked IDs ", blockedIDs)
+      const formattedResult = formatResults(result.data, blockedIDs);   // array of components
+      unfilteredResults = formattedResult;
+
+
+      /* Filter out by the other_id */
+      // done in format results
+      // unfilteredObjects.filter((e) => {
+      //   //if e.id is in blockedIDs,
+      //   if (blockedIDs.has(e)) {
+      //   }
+      // });
+
+      setSearchResult(unfilteredResults);
     });
 
     {
@@ -85,22 +124,26 @@ const Searches = () => {
     }
   };
 
-  function formatResults(result) {
-    
-    console.log(result);
+  function formatResults(result, blockedIDs) {
+    console.log("In formatResults: ", result);
     //  var jsonResults = JSON.parse(result);
     var jsonResults = result;
-    var formattedResults = Array(20).fill("");
+    var formattedResults = [];
     var i = 0;
     Object.keys(jsonResults).forEach(function (key) {
       //console.log('Key : ' + key + ', Value : ' + jsonResults[key])
       //formattedResults += jsonResults[key]["display_name"] + " " + jsonResults[key]["username"] + "| \n"
       //console.log("JSON RESULTS", jsonResults[key]);
+
+      /* Check if user is blocked by anyone */
+      console.log("JSON results ", jsonResults[key], blockedIDs.has(jsonResults[key].user_id))
+      if (blockedIDs.has(jsonResults[key].user_id)) {
+        console.log("User is blocked by someone ", jsonResults[key].user_id);
+        console.log("Blocked IDS: ", blockedIDs)
+        return;
+      }
       var interests = jsonResults[key]["interests"];
-      interests = interests
-        .trim()
-        .substring(0, interests.length)
-        .trim();
+      interests = interests.trim().substring(0, interests.length).trim();
       interests = "#" + interests.replaceAll("&&", " #");
       formattedResults[i] = (
         <FriendProfile
@@ -112,7 +155,7 @@ const Searches = () => {
           navigate={navigate}
         />
       );
-        /*
+      /*
       console.log(
         String(i) +
           " " +
@@ -124,6 +167,7 @@ const Searches = () => {
     });
     return formattedResults;
   }
+
 
   return (
     <div className="page-container">

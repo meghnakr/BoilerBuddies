@@ -21,6 +21,7 @@ export default class FriendProfile extends React.Component {
     this.userId = this.props.userId; //user_id property
     this.state = {
       sendRequest: this.props.sendRequest,
+      blockUser: this.props.blockUser,
     };
   }
 
@@ -37,6 +38,24 @@ export default class FriendProfile extends React.Component {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", sendRequestURL, false); // false for synchronous request
     this.setState({ sendRequest: true });
+    xmlHttp.send(null);
+    var result = xmlHttp.responseText;
+    console.log(result);
+  }
+
+  async handleBlockClick() {
+    if (this.state.blockUser) {
+      return;
+    }
+    console.log("CURRENT USER TOKEN: ", await getusertoken());
+    var token = await getusertoken();
+    var otherId = this.userId;
+    var blockUserURL = "http://54.200.193.22:3000/blockOther/?";
+    blockUserURL += "token=" + token + "&otherId=" + otherId;
+    console.log(blockUserURL);
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", blockUserURL, false); // false for synchronous request
+    this.setState({ blockUser: true });
     xmlHttp.send(null);
     var result = xmlHttp.responseText;
     console.log(result);
@@ -60,7 +79,7 @@ export default class FriendProfile extends React.Component {
         </div>
         <div className="profile-info">
           <h2>{this.displayName}</h2>
-          <h6 style={{fontWeight:'normal'}}>{this.username}</h6>
+          <h6 style={{ fontWeight: "normal" }}>{this.username}</h6>
           <h6>{this.interestTags}</h6>
         </div>
         <div className="profile-button">
@@ -81,6 +100,26 @@ export default class FriendProfile extends React.Component {
           ) : (
             <></>
           )}
+
+          <div className="profile-button">
+            {this.props.currentUser !== this.username ? (
+              <button
+                className={
+                  this.state.blockUser ? "default-btn-white" : "default-btn"
+                }
+                style={{
+                  fontWeight: "normal",
+                  textTransform: "capitalize",
+                  border: "1px solid #88BBF6",
+                }}
+                onClick={this.handleBlockClick.bind(this)}
+              >
+                {this.state.blockUser ? "User Blocked" : "Block User"}
+              </button>
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
       </div>
     );
