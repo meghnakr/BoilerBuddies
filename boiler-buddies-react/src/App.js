@@ -18,6 +18,7 @@ import { UserProvider } from "./context/userContext";
 import Notifications from "./pages/notifications";
 import Friends from "./pages/friends.js";
 import ForumPage from "./pages/forumPage.js"
+import ChatPage from "./pages/chatPage.js"
 
 import PostWithComments from "./pages/postWithComments";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -26,6 +27,7 @@ import EditProfile from "./pages/editProfile";
 //import CreateProfile from "./pages/createProfile";
 import CreateForum from "./pages/createForum";
 import UserProfile from "./pages/userProfile";
+
 
 function App(location) {
   const [showNav, setShowNav] = useState(true);
@@ -76,6 +78,8 @@ function App(location) {
             />
             <Route path="/create-forum" element={<CreateForum funcNav={setShowNav} />} />
             <Route path="/forum/:forumId" element={<ForumPage funcNav={setShowNav} />} />
+            <Route path="/chat/:otherId" element={<ChatPage funcNav={setShowNav} />} />
+            {/*<Route path="/group-chat/:groupId" element={<GroupChatPage funcNav={setShowNav} />} />*/}
           </Routes>
         </div>
       </Router>
