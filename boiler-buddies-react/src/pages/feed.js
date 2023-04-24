@@ -69,6 +69,7 @@ const Feed = (props) => {
                         if(xmlHttp.status === 200) {
                             try {
                                 var response = JSON.parse(xmlHttp.responseText);
+                                console.log(response)
                                 var formatPosts = formatResults(response);
                                 setPosts(formatPosts);
                                 console.log(formatPosts);
@@ -129,7 +130,7 @@ const Feed = (props) => {
             {token && <NewPost tokenId={token} handleCallback={getPostId} forums={forums}/>}
             <div className='all-post'>
                 {posts.map(post => {
-                    return <Post navigate={navigate} token={currentuser.token} disable={false} userId={post.userId} img={post.image} forumId={post.forumId} forumName={post.forumName}
+                    return <Post navigate={navigate} currentUser={currentuser.username} token={currentuser.token} disable={false} userId={post.userId} img={post.image} forumId={post.forumId} forumName={post.forumName}
                     id={post.id} content={post.content} username={post.username} postAt={post.postAt} likes={post.likes} comments={post.comments} liked={post.liked}/>
                 })}
                 
