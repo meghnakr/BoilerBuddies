@@ -104,6 +104,7 @@ const Searches = () => {
       });
 
       console.log("Blocked IDs ", blockedIDs)
+      setSearchResult([]);
       const formattedResult = formatResults(result.data, blockedIDs);   // array of components
       unfilteredResults = formattedResult;
 

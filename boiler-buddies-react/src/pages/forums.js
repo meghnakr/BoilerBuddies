@@ -4,23 +4,6 @@ import { endpoint } from "../global";
 import ForumResult from '../components/ForumResult';
 import { useNavigate } from 'react-router-dom'
 
-function formatResults(result) {
-    var jsonResults = JSON.parse(result);
-    var formattedResults = Array(20).fill("");
-    var i = 0;
-    Object.keys(jsonResults).forEach(function(key) {
-        //console.log('Key : ' + key + ', Value : ' + jsonResults[key])
-        //formattedResults += jsonResults[key]["display_name"] + " " + jsonResults[key]["username"] + "| \n"
-        formattedResults[i] = <ForumResult forumId = {jsonResults[key]["forum_id"]}
-            name = {jsonResults[key]["name"]} 
-            description = {jsonResults[key]["description"]} 
-            big_image = {jsonResults[key]["big_image"]}/>;
-        console.log(String(i) + " " + jsonResults[key]["name"] + " " + jsonResults[key]["description"]);
-        i++;
-    });
-    return formattedResults;
-}
-
 const Forums = () => {
     const [search, setSearch] = useState('');
     const [searchResult, setSearchResult] = useState('');
@@ -28,6 +11,7 @@ const Forums = () => {
 
     const handleChange = (event) => {
         setSearch(event.target.value)
+        setSearchResult([])
         //call search algorithm here and return an array of results
         var searchRequestURL = endpoint + "searchForum/?"
 
@@ -47,6 +31,24 @@ const Forums = () => {
         result = formatResults(result)
         setSearchResult(result)
         console.log(searchResult)
+    }
+
+    function formatResults(result) {
+        var jsonResults = JSON.parse(result);
+        //var formattedResults = Array(20).fill("");
+        var formattedResults = [];
+        var i = 0;
+        Object.keys(jsonResults).forEach(function(key) {
+            //console.log('Key : ' + key + ', Value : ' + jsonResults[key])
+            //formattedResults += jsonResults[key]["display_name"] + " " + jsonResults[key]["username"] + "| \n"
+            formattedResults[i] = <ForumResult forumId = {jsonResults[key]["forum_id"]}
+                name = {jsonResults[key]["name"]} 
+                description = {jsonResults[key]["description"]} 
+                big_image = {jsonResults[key]["big_image"]}/>;
+            console.log(String(i) + " " + jsonResults[key]["name"] + " " + jsonResults[key]["description"]);
+            i++;
+        });
+        return formattedResults;
     }
 
     const navigate = useNavigate();
