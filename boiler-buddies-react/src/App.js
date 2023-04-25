@@ -17,8 +17,9 @@ import Signup from "./pages/signup";
 import { UserProvider } from "./context/userContext";
 import Notifications from "./pages/notifications";
 import Friends from "./pages/friends.js";
-import ForumPage from "./pages/forumPage.js"
-import ChatPage from "./pages/chatPage.js"
+import ForumPage from "./pages/forumPage.js";
+import ChatPage from "./pages/chatPage.js";
+import BlockedList from "./pages/blockedList";
 
 import PostWithComments from "./pages/postWithComments";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -27,7 +28,6 @@ import EditProfile from "./pages/editProfile";
 //import CreateProfile from "./pages/createProfile";
 import CreateForum from "./pages/createForum";
 import UserProfile from "./pages/userProfile";
-
 
 function App(location) {
   const [showNav, setShowNav] = useState(true);
@@ -39,7 +39,10 @@ function App(location) {
           <Routes>
             <Route exact path="/" element={<Main />} />
             <Route path="/feed" element={<Feed funcNav={setShowNav} />} />
-            <Route path="/post/:postId" element={<PostWithComments funcNav={setShowNav} />}/>
+            <Route
+              path="/post/:postId"
+              element={<PostWithComments funcNav={setShowNav} />}
+            />
             <Route path="/forums" element={<Forum funcNav={setShowNav} />} />
             <Route path="/friends" element={<Friends funcNav={setShowNav} />} />
             <Route path="/user/:userId" element={<UserProfile />} />
@@ -68,6 +71,10 @@ function App(location) {
               element={<EditProfile funcNav={setShowNav} />}
             />
             <Route
+              path="/manage-blocked-users"
+              element={<BlockedList funcNav={setShowNav} />}
+            />
+            <Route
               path="/settings"
               element={<Settings funcNav={setShowNav} />}
             />
@@ -76,9 +83,18 @@ function App(location) {
               path="/notifications"
               element={<Notifications funcNav={setShowNav} />}
             />
-            <Route path="/create-forum" element={<CreateForum funcNav={setShowNav} />} />
-            <Route path="/forum/:forumId" element={<ForumPage funcNav={setShowNav} />} />
-            <Route path="/chat/:chatId/:directOrGroup" element={<ChatPage funcNav={setShowNav} />} />
+            <Route
+              path="/create-forum"
+              element={<CreateForum funcNav={setShowNav} />}
+            />
+            <Route
+              path="/forum/:forumId"
+              element={<ForumPage funcNav={setShowNav} />}
+            />
+            <Route
+              path="/chat/:chatId/:directOrGroup"
+              element={<ChatPage funcNav={setShowNav} />}
+            />
             {/*<Route path="/group-chat/:groupId" element={<GroupChatPage funcNav={setShowNav} />} />*/}
           </Routes>
         </div>
