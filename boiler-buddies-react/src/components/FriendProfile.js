@@ -5,7 +5,9 @@ import logo from "../assets/logo_vector.png";
 import { endpoint } from "../global";
 import axios from "../utils/Axios";
 import { getusertoken } from "../utils/auth";
+
 export default class FriendProfile extends React.Component {
+
   static propTypes = {
     username: PropTypes.string,
     displayName: PropTypes.string,
@@ -59,6 +61,22 @@ export default class FriendProfile extends React.Component {
     xmlHttp.send(null);
     var result = xmlHttp.responseText;
     console.log(result);
+  }
+
+  async handleMessageClick() {
+    var getDirectMessageURL = endpoint + "getDirectChat/?"
+    var chatParams = new URLSearchParams();
+    var token = await getusertoken();
+    var otherId = this.userId;
+    chatParams.append('token', token);
+    chatParams.append('otherId', otherId);
+    getDirectMessageURL = getDirectMessageURL + chatParams
+    try {
+      const response = await axios.get(getDirectMessageURL);
+      this.props.navigate('/chat/' + response.data.chat_id + "/D", {replace:true});
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   render() {
@@ -115,6 +133,24 @@ export default class FriendProfile extends React.Component {
                 onClick={this.handleBlockClick.bind(this)}
               >
                 {this.state.blockUser ? "User Blocked" : "Block User"}
+              </button>
+            ) : (
+              <></>
+            )}
+          </div>
+
+          <div className="profile-button">
+            {this.props.currentUser !== this.username ? (
+              <button
+                className="default-btn"
+                style={{
+                  fontWeight: "normal",
+                  textTransform: "capitalize",
+                  border: "1px solid #88BBF6",
+                }}
+                onClick={this.handleMessageClick.bind(this)}
+              >
+                Message
               </button>
             ) : (
               <></>

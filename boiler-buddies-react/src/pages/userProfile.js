@@ -162,7 +162,8 @@ const UserProfile = () => {
                         displayName={displayName}
                         interestTags={interests}
                         img={img}
-                        userId={userId}/>
+                        userId={userId}
+                        navigate={navigate}/>
             }
             <Tabs>
                 <div label="Posts" className='all-post'>

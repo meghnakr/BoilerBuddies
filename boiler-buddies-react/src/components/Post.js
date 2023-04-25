@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {endpoint} from '../global';
 import { Dialog, DialogContent, DialogTitle } from '@mui/material';
 import FriendProfile from './FriendProfile';
+import { useNavigate } from "react-router-dom";
 
 
 export default  class Post extends React.Component {
@@ -123,6 +124,7 @@ export default  class Post extends React.Component {
     }
 
     formatResults = (result) => {
+        const navigate = useNavigate();
         var jsonResults = result;
         var formattedResults = [];
         var currUser = this.props.currentUser
@@ -133,7 +135,8 @@ export default  class Post extends React.Component {
                 displayName={curr["display_name"]}
                 userId = {curr["otherId"]}
                 username = {curr["username"]}
-                img = {curr["big_image"]}/>)
+                img = {curr["big_image"]}
+                navigate={navigate}/>)
             formattedResults.push(user)
         });
         return formattedResults;

@@ -3,6 +3,7 @@ import { endpoint } from '../global';
 import NewComment from './NewComment';
 import FriendProfile  from './FriendProfile';
 import { Dialog, DialogContent, DialogTitle } from '@mui/material';
+import { useNavigate } from "react-router-dom";
 
 export default class Comment extends React.Component {
     constructor(props) {
@@ -116,6 +117,7 @@ export default class Comment extends React.Component {
     }
 
     formatResults = (result) => {
+        const navigate = useNavigate();
         var jsonResults = result;
         var formattedResults = [];
         var currUser = this.currentUser
@@ -126,7 +128,8 @@ export default class Comment extends React.Component {
                 displayName={curr["display_name"]}
                 userId = {curr["otherId"]}
                 username = {curr["username"]}
-                img = {curr["big_image"]}/>)
+                img = {curr["big_image"]}
+                navigate={navigate}/>)
             formattedResults.push(user)
         });
         return formattedResults;

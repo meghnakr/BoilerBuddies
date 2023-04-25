@@ -66,11 +66,12 @@ const Friends = () => {
         <span style={{ fontWeight: "bold", fontSize: 20 }}>Friends: </span>
         {friendProfs.length > 0 ? (
           friendProfs.map((currentfriend, index) => {
+            currentfriend.interests = currentfriend.interests.replaceAll("&&", " #")
             return (
               <FriendsTabProfile
                 username={currentfriend.username}
                 displayName={currentfriend.display_name}
-                interestTags={currentfriend.interests}
+                interestTags={"#" + currentfriend.interests}
                 key={index}
                 updateFriendProfiles={updateFriendsList}
               />
