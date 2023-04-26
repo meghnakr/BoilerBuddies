@@ -21,6 +21,8 @@ import ForumPage from "./pages/forumPage.js";
 import ChatPage from "./pages/chatPage.js";
 import BlockedList from "./pages/blockedList";
 
+import ReportPage from "./pages/reportpage";
+
 import PostWithComments from "./pages/postWithComments";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SetNewPassword from "./pages/forgotPassword/setNewPassword";
@@ -74,6 +76,14 @@ function App(location) {
               path="/manage-blocked-users"
               element={<BlockedList funcNav={setShowNav} />}
             />
+            {/* <Route
+              path="/reportuser"
+              element={<ReportPage funcNav={setShowNav} />}
+            /> */}
+            <Route path="/user/:userId/reportuser" element={<ReportPage />} />
+
+
+
             <Route
               path="/settings"
               element={<Settings funcNav={setShowNav} />}

@@ -114,6 +114,8 @@ export async function signOutUser(navigate) {
   navigate("/signin");
 }
 
+
+
 export function deleteAccount(navigate) {
   deleteUser(auth.currentUser)
     .then(() => {

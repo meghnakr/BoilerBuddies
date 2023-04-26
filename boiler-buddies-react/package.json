@@ -5,6 +5,7 @@
   "dependencies": {
     "@apideck/better-ajv-errors": "^0.3.6",
     "@babel/regjsgen": "^0.8.0",
+    "@emailjs/browser": "^3.11.0",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/material": "^5.11.16",
