@@ -17,8 +17,11 @@ import Signup from "./pages/signup";
 import { UserProvider } from "./context/userContext";
 import Notifications from "./pages/notifications";
 import Friends from "./pages/friends.js";
-import ForumPage from "./pages/forumPage.js"
-import ChatPage from "./pages/chatPage.js"
+import ForumPage from "./pages/forumPage.js";
+import ChatPage from "./pages/chatPage.js";
+import BlockedList from "./pages/blockedList";
+
+import ReportPage from "./pages/reportpage";
 
 import PostWithComments from "./pages/postWithComments";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -40,7 +43,10 @@ function App(location) {
           <Routes>
             <Route exact path="/" element={<Main />} />
             <Route path="/feed" element={<Feed funcNav={setShowNav} />} />
-            <Route path="/post/:postId" element={<PostWithComments funcNav={setShowNav} />}/>
+            <Route
+              path="/post/:postId"
+              element={<PostWithComments funcNav={setShowNav} />}
+            />
             <Route path="/forums" element={<Forum funcNav={setShowNav} />} />
             <Route path="/friends" element={<Friends funcNav={setShowNav} />} />
             <Route path="/user/:userId" element={<UserProfile />} />
@@ -68,6 +74,18 @@ function App(location) {
               path="/edit-profile"
               element={<EditProfile funcNav={setShowNav} />}
             />
+            <Route
+              path="/manage-blocked-users"
+              element={<BlockedList funcNav={setShowNav} />}
+            />
+            {/* <Route
+              path="/reportuser"
+              element={<ReportPage funcNav={setShowNav} />}
+            /> */}
+            <Route path="/user/:userId/reportuser" element={<ReportPage />} />
+
+
+
             <Route
               path="/settings"
               element={<Settings funcNav={setShowNav} />}
