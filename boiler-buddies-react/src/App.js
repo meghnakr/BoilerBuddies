@@ -27,6 +27,7 @@ import EditProfile from "./pages/editProfile";
 //import CreateProfile from "./pages/createProfile";
 import CreateForum from "./pages/createForum";
 import UserProfile from "./pages/userProfile";
+import CreateGroup from "./pages/createGroup";
 
 
 function App(location) {
@@ -78,6 +79,7 @@ function App(location) {
             />
             <Route path="/create-forum" element={<CreateForum funcNav={setShowNav} />} />
             <Route path="/forum/:forumId" element={<ForumPage funcNav={setShowNav} />} />
+            <Route path="/create-group" element={<CreateGroup funcNav={setShowNav} />} />
             <Route path="/chat/:chatId/:directOrGroup" element={<ChatPage funcNav={setShowNav} />} />
             {/*<Route path="/group-chat/:groupId" element={<GroupChatPage funcNav={setShowNav} />} />*/}
           </Routes>

@@ -851,3 +851,8 @@ input:focus {
   border-radius: 5px;
   color: black;
 }
+
+.message-display-name {
+  font-size: smaller;
+  font-weight: bold;
+}

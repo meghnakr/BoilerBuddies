@@ -3,15 +3,37 @@ import { useParams } from "react-router-dom";
 import {getusertoken} from "../utils/auth";
 import { endpoint, socket } from '../global';
 import axios from "../utils/Axios";
+import { display } from '@mui/system';
 
-function formatMessages(response, currentUserId) {
+function formatMessages(response, currentUserId, directOrGroup) {
     console.log(response)
-    var formattedMessages = Array(50).fill("");
+    var formattedMessages = Array(100).fill("");
     var i = 0;
     var prevDate = "";
+    var idToName = {};
     Object.keys(response).forEach(function (key) {
 
         var fullTimestamp = response[key]["sent_at"]
+        fullTimestamp = fullTimestamp.substring(0, fullTimestamp.indexOf("."))
+        console.log(fullTimestamp)
+
+        // // Get the user's timezone
+        // var userTimezone = moment.tz.zone("America/New_York");
+
+        // const format = "YYYY-MM-DDTHH:mm:ss"
+
+        // // Create a moment object with the original date and time
+        // const originalDateTime = moment(fullTimestamp, format);
+
+        // // Convert to the user's timezone
+        // const localDateTime = originalDateTime.tz(userTimezone);
+
+        // Return the converted date and time as a string
+        // fullTimestamp = localDateTime.format(format);
+
+        // fullTimestamp = moment(fullTimestamp).tz("America/New_York").format();
+
+        // console.log(fullTimestamp)
 
         var dateOfMessage = fullTimestamp.substring(0, fullTimestamp.indexOf("T"))
         var timeOfMessage = fullTimestamp.substring(fullTimestamp.indexOf("T") + 1, fullTimestamp.indexOf("T") + 6)
@@ -36,8 +58,13 @@ function formatMessages(response, currentUserId) {
         }
         else {
             // Someone else sent this message 
+            var displayName = ""
+            if (directOrGroup == "G" || directOrGroup == "g") {
+                displayName = response[key]["display_name"]
+            }
             formattedMessages[i] = (
                 <div className="other-message">
+                    <div className="message-display-name">{displayName}</div>
                     <p className="message-content">{response[key]["content"]}</p>
                     <div className="message-timestamp-right">{timeOfMessage}</div>
                 </div>
@@ -166,7 +193,7 @@ const ChatPage = (props) => {
                     var getMessagesURL = endpoint + "getMessages/?" + messageParams
                     axios.get(getMessagesURL).then( (result)=>{ 
                         console.log("Making request to get messages");
-                        setMessages(formatMessages(result.data, idResult.data.myId));
+                        setMessages(formatMessages(result.data, idResult.data.myId, directOrGroup));
                 } )
                 })
             }
