@@ -20,6 +20,7 @@ const Notifications = () => {
 
   
   useEffect(() => {
+    
     const fetchData = async () => {
       const token = await getusertoken();
       console.log("FriendRequests token: ", token)
@@ -35,9 +36,7 @@ const Notifications = () => {
           // how to solve array of Promises
           async (currentfriendrequest, index) => {
             const otherId = currentfriendrequest.other_id;
-            //console.log("OtherId:", otherId);
             const userObject = await axios.get("/getUserById/", {
-              // must be in an async function
               params: {
                 user_id: otherId,
               },
@@ -47,25 +46,11 @@ const Notifications = () => {
           }
         )
       ); // closes map
-      //console.log("Mapped users: ", mappedUsers)
       setFriendReqs(mappedUsers);
     };
     fetchData();
   }, []);
 
-  //console.log("FRIEND REQS 0: ", friendReqs);
-
-  /* Get notifications */
-  // const notifresult = axios
-  //   .get("/getNotifications/")
-  //   .then((response) => {
-  //     // handle success
-  //     console.log("SUCCESS NOTIFICATIONS");
-  //   })
-  //   .catch((error) => {
-  //     // handle error
-  //     console.log("FAILED NOTIFICATIONS");
-  //   });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -125,13 +110,10 @@ const Notifications = () => {
           </span>
           <p></p>
           <p>
-            {/* INSERT IMPLEMENTATION FOR ADDING FRIEND REQUESTS ARRAY HERE */}
 
             {/* acceptFriendRequests */}
-
             {friendReqs.length > 0 ? (
               friendReqs.map((currentfriendrequest, index) => {
-                //console.log("Current Friend Request: ", currentfriendrequest);
                 return (
                   <FriendRequest
                     username={currentfriendrequest.username}
@@ -147,17 +129,6 @@ const Notifications = () => {
               <p>No friend requests</p>
             )}
 
-            {/*Array(5)
-              .fill(0)
-              .map(() => (
-                <FriendRequest username={"asaquib"}
-                  displayName={"Samara"}
-                  interestTags={["books", "coffee"]}
-                  userId={1} //user_id property
-                   />
-              ))*/}
-
-            {/* Replace Array.fill with actual array from database holding friends to user */}
           </p>
 
           <p></p>
@@ -168,36 +139,11 @@ const Notifications = () => {
           </span>
           <p></p>
 
-          {/* INSERT IMPLEMENTATION FOR ADDING OTHER NOTIFICATIONS ARRAY HERE */}
 
-          {/* {notifications.length > 0 ? (
-              notifications.map((currentnotif, index) => {
-                console.log("Current Friend Request: ", currentnotif);
-                return (
-                  <NotifBox
-                    content={currentnotif.content}
-                    key={index}
-                  />
-                );
-              })
-            ) : (
-              <p>No Notifications</p>
-            )} */}
-
-          {/* <div>
-            {notifications.map((notification, index) => (
-              <p key={index}>{notification} </p>
-            ))}
-          </div> */}
           {notifications.map((notification, index) => (
             <NotifBox key={index} content={notification} />
           ))}
 
-          {/*Array(5)
-            .fill(0)
-            .map(() => (
-              <NotifBox />
-            ))*/}
         </div>
       </form>
     </div>
