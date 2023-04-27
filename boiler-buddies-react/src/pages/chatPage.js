@@ -4,6 +4,7 @@ import {getusertoken} from "../utils/auth";
 import { endpoint, socket } from '../global';
 import axios from "../utils/Axios";
 import { display } from '@mui/system';
+import logo from "../assets/logo_vector.png";
 
 function formatMessages(response, currentUserId, directOrGroup) {
     console.log(response)
@@ -88,6 +89,7 @@ const ChatPage = (props) => {
     const [messageText, setMessageText] = useState('');
     const [messages, setMessages] = useState("");
     const [chatName, setChatName] = useState('');
+    const [img, setImg] = useState();
 
     const [token, setToken] = useState('');
 
@@ -156,7 +158,7 @@ const ChatPage = (props) => {
 
             if (token != "") {
                 // get title of chat
-                var getNameURL = endpoint + "getChatName/?"
+                var getNameURL = endpoint + "getChatNameAndPicture/?"
                 var titleParams = new URLSearchParams();
                 titleParams.append('token', token);
                 titleParams.append('chatId', chatId);
@@ -171,6 +173,8 @@ const ChatPage = (props) => {
                 axios.get(getNameURL).then((nameResult)=>{
                     console.log("Name:", nameResult.data.name);
                     setChatName(nameResult.data.name);
+                    console.log("Image:", nameResult.data.big_image);
+                    setImg(nameResult.data.big_image);
                 });
                 
 
@@ -272,6 +276,23 @@ const ChatPage = (props) => {
 
     return (
         <div className = "container">
+            <div className='forum-picture'>
+                <div className='profile-photo-circle'>
+                <div className="upload-icon">
+              <i
+                className="fa fa-user"
+                style={{
+                  fontSize: "9vmin",
+                }}
+              ></i>
+            </div>
+                {
+                    (img !== "")
+                        ? <img src={img} alt={logo}/>
+                        : <></>
+                }
+                </div>
+                </div>
             <p className="chat-title">{chatName}</p>
             <div className="message-container" ref={listRef}>
                 <p>{messages}</p>
