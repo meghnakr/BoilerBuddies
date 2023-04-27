@@ -20,6 +20,8 @@ import Friends from "./pages/friends.js";
 import ForumPage from "./pages/forumPage.js";
 import ChatPage from "./pages/chatPage.js";
 import BlockedList from "./pages/blockedList";
+import ViewMembers from "./pages/viewmembers";
+import AddPage from "./pages/addpage";
 
 import ReportPage from "./pages/reportpage";
 
@@ -56,6 +58,8 @@ function App(location) {
               element={<Messages funcNav={setShowNav} />}
             />
             <Route path="/account" element={<Account funcNav={setShowNav} />} />
+            <Route path="/viewmembers" element={<ViewMembers funcNav={setShowNav} />} />
+            <Route path="/addpage" element={<AddPage funcNav={setShowNav} />} />
             <Route path="/signin" element={<Signin funcNav={setShowNav} />} />
             <Route
               path="/forgot-password"
