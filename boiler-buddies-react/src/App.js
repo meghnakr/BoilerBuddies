@@ -22,6 +22,7 @@ import ChatPage from "./pages/chatPage.js";
 import BlockedList from "./pages/blockedList";
 import ViewMembers from "./pages/viewmembers";
 import AddPage from "./pages/addpage";
+import NotificationSettings from "./pages/notificationsettings";
 
 import ReportPage from "./pages/reportpage";
 
@@ -33,6 +34,7 @@ import EditProfile from "./pages/editProfile";
 import CreateForum from "./pages/createForum";
 import UserProfile from "./pages/userProfile";
 import CreateGroup from "./pages/createGroup";
+import EditGroupChat from "./components/EditGroupChat";
 
 
 function App(location) {
@@ -60,6 +62,8 @@ function App(location) {
             <Route path="/account" element={<Account funcNav={setShowNav} />} />
             <Route path="/viewmembers" element={<ViewMembers funcNav={setShowNav} />} />
             <Route path="/addpage" element={<AddPage funcNav={setShowNav} />} />
+            <Route path="/notificationsettings" element={<NotificationSettings funcNav={setShowNav} />} />
+            
             <Route path="/signin" element={<Signin funcNav={setShowNav} />} />
             <Route
               path="/forgot-password"
@@ -102,6 +106,7 @@ function App(location) {
             <Route path="/create-forum" element={<CreateForum funcNav={setShowNav} />} />
             <Route path="/forum/:forumId" element={<ForumPage funcNav={setShowNav} />} />
             <Route path="/create-group" element={<CreateGroup funcNav={setShowNav} />} />
+            <Route path="/edit-group" element={<EditGroupChat funcNav={setShowNav} />} />
             <Route path="/chat/:chatId/:directOrGroup" element={<ChatPage funcNav={setShowNav} />} />
             {/*<Route path="/group-chat/:groupId" element={<GroupChatPage funcNav={setShowNav} />} />*/}
           </Routes>

@@ -54,7 +54,7 @@ export default function Settings(props) {
               >
                 Change Password
               </button>
-
+ 
 
               <button
                 type="manageBlocked"
@@ -63,6 +63,15 @@ export default function Settings(props) {
                 onClick={handleClick}
               >
                 Manage Blocked Users
+              </button>
+
+              <button
+                type="notificationsettings"
+                className="settings-btn"
+                value="/notificationsettings"
+                onClick={handleClick}
+              >
+                Notification Settings
               </button>
 
 
