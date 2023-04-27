@@ -24,7 +24,6 @@ export default  class Post extends React.Component {
         this.img = this.props.img
         this.forumId = this.props.forumId
         this.forumName = this.props.forumName
-        this.chatId = this.props.chatId
         this.state = {
             liked: this.props.liked,
             likes: this.props.likes,
@@ -124,7 +123,6 @@ export default  class Post extends React.Component {
     }
 
     formatResults = (result) => {
-        const navigate = useNavigate();
         var jsonResults = result;
         var formattedResults = [];
         var currUser = this.props.currentUser
@@ -136,17 +134,47 @@ export default  class Post extends React.Component {
                 userId = {curr["otherId"]}
                 username = {curr["username"]}
                 img = {curr["big_image"]}
-                navigate={navigate}/>)
+                />)
             formattedResults.push(user)
         });
         return formattedResults;
       }
 
+    openChat = () => {
+        var params = new URLSearchParams()
+        params.append("token", this.token)
+        params.append("otherId", this.userId)
+        var xmlHttp = new XMLHttpRequest();
+        var getDirectChatRequest = endpoint + 'getDirectChat/?' + params
+        console.log(getDirectChatRequest)
+        xmlHttp.open("GET", getDirectChatRequest, true); // false for synchronous request
+        xmlHttp.onload = (e) => { //handle async request
+            if(xmlHttp.readyState === 4) {
+                if(xmlHttp.status === 200) {
+                    try {
+                        var response = JSON.parse(xmlHttp.responseText);
+                        var chatId = response.chat_id
+                        this.props.navigate(`/chat/${chatId}/D`)
+                    }
+                    catch (e) {
+                        if (e instanceof SyntaxError) {
+                            console.log(xmlHttp.responseText);
+                            window.location.reload()
+                        }
+                    }
+                } else { 
+                    console.error(xmlHttp.statusText)
+                }
+            }
+        }
+        xmlHttp.send(null)
+    }
+
     render () {
         const {
-            content, img, username, postAt, id, disable, userId, forumId, forumName, chatId,
+            content, img, username, postAt, id, disable, userId, forumId, forumName,
             state: {liked, likes, comments, open, postLikes},
-            formatNumber, timeDifference, openDialog, closeDialog
+            formatNumber, timeDifference, openDialog, closeDialog, openChat
         } = this
         return (
             <>
@@ -174,7 +202,7 @@ export default  class Post extends React.Component {
                         <i className={liked ? 'fa fa-heart' : 'fa fa-heart-o'}></i> 
                         Like
                     </button>
-                    <button className='no-outline-btn' /*onClick={() => {this.props.navigate(`/chat/${chatId}`)}*/ >
+                    <button className='no-outline-btn' onClick={openChat} >
                         <i className='fa fa-paper-plane-o'></i> Direct Message
                     </button>
                 </div>

@@ -35,9 +35,8 @@ const Navbar = () => {
 return (
 	<>
 	<Nav>
-		<img className='App-logo' style={{marginTop: '3.5vmin'}} src={logo} alt="Logo" value='/'/>
 		<NavMenu>
-			
+		<img className='App-logo' style={{marginTop: '0', marginRight: '3vmin'}} src={logo} alt="Logo" value='/'/>
 		<button className='Navbar-btn' value='/feed' onClick={handleClick}>
 			Feed
 		</button>

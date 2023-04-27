@@ -43,7 +43,7 @@ function formatMessages(response, currentUserId, directOrGroup) {
       fullTimestamp.indexOf("T") + 6
     );
 
-    if (dateOfMessage != prevDate) {
+    if (dateOfMessage !== prevDate) {
       // new date, so indicate that in the chat
       formattedMessages[i] = (
         <div className="message-date">{dateOfMessage}</div>
@@ -52,7 +52,7 @@ function formatMessages(response, currentUserId, directOrGroup) {
       prevDate = dateOfMessage;
     }
 
-    if (response[key]["user_id"] == currentUserId) {
+    if (response[key]["user_id"] === currentUserId) {
       // I sent this message (to another user or a group chat)
       formattedMessages[i] = (
         <div className="my-message">
@@ -63,7 +63,7 @@ function formatMessages(response, currentUserId, directOrGroup) {
     } else {
       // Someone else sent this message
       var displayName = "";
-      if (directOrGroup == "G" || directOrGroup == "g") {
+      if (directOrGroup === "G" || directOrGroup === "g") {
         displayName = response[key]["display_name"];
       }
       formattedMessages[i] = (
@@ -114,15 +114,15 @@ const ChatPage = (props) => {
     var params = new URLSearchParams();
     (async () => {
       setToken(await getusertoken());
-      if (token != "") {
+      if (token !== "") {
         params.append("token", token);
         // use the params variable here
         console.log("TOKEN: " + token);
         params.append("chatId", chatId);
         params.append("content", messageText);
-        if (directOrGroup == "D" || directOrGroup == "d") {
+        if (directOrGroup === "D" || directOrGroup === "d") {
           params.append("isGroup", "false");
-        } else if (directOrGroup == "G" || directOrGroup == "g") {
+        } else if (directOrGroup === "G" || directOrGroup === "g") {
           params.append("isGroup", "true");
         }
         var sendMessageURL = endpoint + "addMessage/?" + params;
@@ -160,15 +160,15 @@ const ChatPage = (props) => {
         }
       }
 
-      if (token != "") {
+      if (token !== "") {
         // get title of chat
         var getNameURL = endpoint + "getChatName/?";
         var titleParams = new URLSearchParams();
         titleParams.append("token", token);
         titleParams.append("chatId", chatId);
-        if (directOrGroup == "D" || directOrGroup == "d") {
+        if (directOrGroup === "D" || directOrGroup === "d") {
           titleParams.append("isGroup", "false");
-        } else if (directOrGroup == "G" || directOrGroup == "g") {
+        } else if (directOrGroup === "G" || directOrGroup === "g") {
           titleParams.append("isGroup", "true");
         }
         getNameURL = getNameURL + titleParams;
@@ -188,9 +188,9 @@ const ChatPage = (props) => {
           var messageParams = new URLSearchParams();
           messageParams.append("token", token);
           messageParams.append("chatId", chatId);
-          if (directOrGroup == "D" || directOrGroup == "d") {
+          if (directOrGroup === "D" || directOrGroup === "d") {
             messageParams.append("isGroup", "false");
-          } else if (directOrGroup == "G" || directOrGroup == "g") {
+          } else if (directOrGroup === "G" || directOrGroup === "g") {
             messageParams.append("isGroup", "true");
           }
           var getMessagesURL = endpoint + "getMessages/?" + messageParams;
@@ -214,7 +214,7 @@ const ChatPage = (props) => {
       }
     }
 
-    if (token != "") {
+    if (token !== "") {
       var socketParams = new URLSearchParams();
       socketParams.append("token", token);
 
@@ -222,16 +222,16 @@ const ChatPage = (props) => {
         "ws://54.200.193.22:3000/channelListener/?" + socketParams
       );
 
-        if (token != "") {
+        if (token !== "") {
             // get title of chat
             var getNameURL = endpoint + "getChatNameAndPicture/?"
             var titleParams = new URLSearchParams();
             titleParams.append('token', token);
             titleParams.append('chatId', chatId);
-            if (directOrGroup == "D" || directOrGroup == "d") {
+            if (directOrGroup === "D" || directOrGroup === "d") {
                 titleParams.append('isGroup', "false");
             }
-            else if (directOrGroup == "G" || directOrGroup == "g") {
+            else if (directOrGroup === "G" || directOrGroup === "g") {
                 titleParams.append('isGroup', "true");
             }
             getNameURL = getNameURL + titleParams
@@ -254,10 +254,10 @@ const ChatPage = (props) => {
                 var messageParams = new URLSearchParams();
                 messageParams.append('token', token);
                 messageParams.append('chatId', chatId);
-                if (directOrGroup == "D" || directOrGroup == "d") {
+                if (directOrGroup === "D" || directOrGroup === "d") {
                     messageParams.append('isGroup', "false");
                 }
-                else if (directOrGroup == "G" || directOrGroup == "g") {
+                else if (directOrGroup === "G" || directOrGroup === "g") {
                     messageParams.append('isGroup', "true");
                 }
                 var getMessagesURL = endpoint + "getMessages/?" + messageParams
@@ -274,12 +274,12 @@ const ChatPage = (props) => {
               socket.addEventListener("message", (event) => {
                 console.log("Received message: ", event.data);
                 // Do something with the received message
-                if (event.data == "sync") {
+                if (event.data === "sync") {
                   var syncUserURL = endpoint + "syncUser/?" + socketParams;
                   console.log(syncUserURL);
                   axios.get(syncUserURL).then((result) => {
                     console.log("Sync User returned:", result.data);
-                    if (result.data.hasInteraction == true) {
+                    if (result.data.hasInteraction === true) {
                       loadMessages();
                       loadMessageSignal = loadMessageSignal * -1;
                     }
@@ -291,7 +291,7 @@ const ChatPage = (props) => {
     })();
 
   console.log(messages);
-  if (messages == "" || messages == []) {
+  if (messages === "" || messages === []) {
     loadMessages();
   }
 

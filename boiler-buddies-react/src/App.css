@@ -808,9 +808,10 @@ input:focus {
 }
 
 .container {
+  margin-top: 3vmin;
   display: flex;
   flex-flow:column;
-  height: 100vh;
+  height: 82vh;
 }
 
 .send-button {
@@ -855,4 +856,64 @@ input:focus {
 .message-display-name {
   font-size: smaller;
   font-weight: bold;
+}
+
+.chat-entry {
+  width: 70%;
+  padding: 2vmin;
+  padding-left: 3vmin;
+  margin: 1vmin;
+  border-radius: 10px;
+}
+
+.chat-entry h4{
+  font-weight: bold;
+}
+
+.chat-entry:hover {
+  background-color: lightgrey;
+  cursor: pointer;
+}
+
+.chat-photo {
+  margin: auto;
+  float: left;
+  align-items: center;
+  width: 10vmin;
+  position: relative;
+  margin-right: 2vmin;
+}
+
+.chat-photo-circle {
+  cursor:default;
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding: 100% 0 0;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid black;
+}
+
+.chat-photo-circle img {
+  cursor: default;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.chat-entry .profile-info {
+  float: left;
+  text-align: left;
+  padding-left: 2vmin;
+  line-height: 0;
+}
+
+.chat-entry .profile-button {
+  width: 20%;
+  float: right;
+  color: grey
 }

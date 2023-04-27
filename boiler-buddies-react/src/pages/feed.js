@@ -101,7 +101,6 @@ const Feed = (props) => {
     function formatResults(result) {
         var jsonResults = result;
         var formattedResults = [];
-        var i = 0;
         var highest = (Object.keys(jsonResults).length-1).toString();
         Object.keys(jsonResults).forEach(function (key) {
           if(key === highest) {
@@ -113,7 +112,6 @@ const Feed = (props) => {
                         image: curr["image"], forumId: curr["forumId"], forumName: curr["forumName"], likes: curr["likes"], comments: curr["comments"], liked: curr["isLiked"], postAt: curr["postedAt"]}
             formattedResults.push(post)
           }
-          i++;
         });
         return formattedResults;
       }
