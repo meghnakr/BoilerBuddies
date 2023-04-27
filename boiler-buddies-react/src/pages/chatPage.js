@@ -5,7 +5,6 @@ import { endpoint, socket } from "../global";
 import axios from "../utils/Axios";
 import { display } from '@mui/system';
 import logo from "../assets/logo_vector.png";
-import { display } from "@mui/system";
 import { Navigate } from "react-router";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -97,6 +96,7 @@ const ChatPage = (props) => {
   const [messageText, setMessageText] = useState("");
   const [messages, setMessages] = useState("");
   const [chatName, setChatName] = useState("");
+  const [img, setImg] = useState("");
 
   const [token, setToken] = useState("");
 
@@ -325,8 +325,24 @@ const ChatPage = (props) => {
 
   return (
     <div className="container">
+        <div className='forum-picture'>
+                <div className='profile-photo-circle'>
+                <div className="upload-icon">
+              <i
+                className="fa fa-user"
+                style={{
+                  fontSize: "9vmin",
+                }}
+              ></i>
+            </div>
+                {
+                    (img !== "")
+                        ? <img src={img} alt={logo}/>
+                        : <></>
+                }
+                </div>
+                </div>
       <p className="chat-title">{chatName}</p>
-
       <button
         className="default-btn"
         value={"/addpage"}
