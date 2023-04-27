@@ -1,7 +1,7 @@
 import React from 'react';
 import { endpoint } from '../global';
 import NewComment from './NewComment';
-import FriendProfile  from './FriendProfile';
+import ProfileHeader  from './ProfileHeader';
 import { Dialog, DialogContent, DialogTitle } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 
@@ -17,6 +17,7 @@ export default class Comment extends React.Component {
         this.disable = this.props.disable
         this.marginLeft = this.props.marginLeft
         this.postAt = this.props.postAt
+        this.img = this.props.img
         this.state = {
             openTextBox: false,
             liked: this.props.liked,
@@ -117,19 +118,18 @@ export default class Comment extends React.Component {
     }
 
     formatResults = (result) => {
-        const navigate = useNavigate();
         var jsonResults = result;
         var formattedResults = [];
         var currUser = this.currentUser
         Object.keys(jsonResults).forEach(function (key) {
             var curr = jsonResults[key]
-            var user = (<FriendProfile 
+            var user = (<ProfileHeader
                 currentUser={currUser}
                 displayName={curr["display_name"]}
                 userId = {curr["otherId"]}
                 username = {curr["username"]}
                 img = {curr["big_image"]}
-                navigate={navigate}/>)
+                />)
             formattedResults.push(user)
         });
         return formattedResults;
@@ -138,7 +138,7 @@ export default class Comment extends React.Component {
 
     render() {
         const {
-            username, content, marginLeft, postAt,
+            username, content, marginLeft, postAt, img,
             state: {liked, likes, openTextBox, postLikes, open},
             formatNumber, timeDifference, openDialog, closeDialog
         } = this
@@ -148,6 +148,9 @@ export default class Comment extends React.Component {
                 <p style={{color:"grey", fontSize:"smaller"}}>Posted by <button className='no-outline-btn' style={{padding:'0'}} 
                 >{username}</button> - {timeDifference(new Date(), new Date(postAt))} </p>
                 <p>{content}</p>
+                {(img !== "") ? <div className="image-container">
+                    <img src={img} alt="<image>"/> 
+                    </div>: <></>}
                 <div className='post-stats-container'>
                     {(likes!==0) ?
                     <button className='no-outline-btn' onClick={openDialog}>

@@ -156,7 +156,8 @@ export default class FriendProfile extends React.Component {
             ) : (
               <></>
             )}
-            <Link to="reportuser">
+            {this.props.currentUser !== this.username ? (
+              <Link to="reportuser">
               <button
                 className="default-btn"
                 style={{
@@ -168,6 +169,8 @@ export default class FriendProfile extends React.Component {
                 Report User
               </button>
             </Link>
+            ) : <></>}
+            
           </div>
 
           <div className="profile-button">

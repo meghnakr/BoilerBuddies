@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {endpoint} from '../global';
 import { Dialog, DialogContent, DialogTitle } from '@mui/material';
-import FriendProfile from './FriendProfile';
+import ProfileHeader from './ProfileHeader';
 import { useNavigate } from "react-router-dom";
 
 
@@ -128,7 +128,7 @@ export default  class Post extends React.Component {
         var currUser = this.props.currentUser
         Object.keys(jsonResults).forEach(function (key) {
             var curr = jsonResults[key]
-            var user = (<FriendProfile 
+            var user = (<ProfileHeader 
                 currentUser={currUser}
                 displayName={curr["display_name"]}
                 userId = {curr["otherId"]}

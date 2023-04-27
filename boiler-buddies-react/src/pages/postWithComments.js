@@ -31,6 +31,7 @@ const PostWithComments = () => {
                     if(xmlHttp.readyState === 4) {
                         if(xmlHttp.status === 200) {
                             var response = JSON.parse(xmlHttp.responseText);
+                            console.log(response)
                             var formattedComments = formatResults(response);
                         } else {
                             console.error(xmlHttp.statusText)
@@ -77,14 +78,13 @@ const PostWithComments = () => {
         var jsonResults = result;
         var formattedResults = [];
         var keys = []
-        var i = 0;
         Object.keys(jsonResults).forEach(function (key) {
             var curr = jsonResults[key]
             var id = curr["commentId"]
             var parentCommentId = curr["parentCommentId"]
             var comment = {id: id, userId: curr["userId"], username: curr["username"], lastVisitAt: curr["lastVisitedAt"], content: curr["content"],
                         parentUserId: curr["parentUserId"], parentUsername: curr["parentUsername"], parentCommentId: parentCommentId,
-                        likes: curr["likes"], liked: curr["isLiked"], postAt: curr["postedAt"], 
+                        likes: curr["likes"], liked: curr["isLiked"], postAt: curr["postedAt"], img: curr["big_image"]
                         }
             formattedResults.push({
                 value: comment,
@@ -97,12 +97,12 @@ const PostWithComments = () => {
                 var index = keys.indexOf(parentCommentId)
                 formattedResults[index].children.push(id)
             }
-            i++;
         })
         
         formattedResults.forEach(element => {
-            if(element === undefined) {return}
-            commentThread(formattedResults, keys, element.value.id, -10 )  } )
+            if(element !== undefined) {
+                commentThread(formattedResults, keys, element.value.id, -11 ) 
+            }})
           
         return formattedResults;
       }
@@ -117,8 +117,9 @@ const PostWithComments = () => {
         var comment = element.value
         var children = element.children
         var newComment = <Comment currentUser={currentUser.username} marginLeft={left} token={currentUser.token} id={comment.id} username={comment.username} content={comment.content} 
-                postAt={comment.postAt} postId={postId} likes={comment.likes} liked={comment.liked}/>
+                postAt={comment.postAt} postId={postId} likes={comment.likes} liked={comment.liked} img={comment.img}/>
         setComments(comments => [...comments, newComment])
+        console.log("Delete" + arr[index])
         delete arr[index]
         children.forEach(childId => commentThread(arr, keys, childId, leftMargin))
         /*

@@ -629,12 +629,13 @@ input:focus {
 }
 
 .photo-uploaded-container {
+  margin-top: 2vmin;
   display:block;
   position: relative;
   float: left;
   text-align: left;
-  padding-left: 0.5em;
   padding-bottom: 0.5em;
+  width: 30%
 }
 
 .photo-uploaded-container .no-outline-btn {
