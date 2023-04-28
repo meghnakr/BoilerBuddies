@@ -109,7 +109,7 @@ function App(location) {
             <Route path="/forum/:forumId" element={<ForumPage funcNav={setShowNav} />} />
             <Route path="/create-group" element={<CreateGroup funcNav={setShowNav} />} />
             {/* <Route path="/edit-group" element={<EditGroup funcNav={setShowNav} />} /> */}
-            <Route path="/edit-group" element={<EditGroup1 funcNav={setShowNav} />} />
+            <Route path="/edit-group" element={<EditGroup funcNav={setShowNav} />} />
             <Route path="/chat/:chatId/:directOrGroup" element={<ChatPage funcNav={setShowNav} />} />
             {/*<Route path="/group-chat/:groupId" element={<GroupChatPage funcNav={setShowNav} />} />*/}
           </Routes>

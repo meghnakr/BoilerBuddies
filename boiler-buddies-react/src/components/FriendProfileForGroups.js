@@ -46,7 +46,7 @@ export default class FriendProfileForGroups extends React.Component {
 
     console.log("OTHERID: ", otherIdvar);
 
-    const result = await axios.get("/addUserToGroupChat", {
+    const result = await axios.get("/addUserToGroupChat/", {
         params: {
           token: token,
           //groupId: "15c723b1-3f5f-46ca-9027-4217b4f3facf",   //test2

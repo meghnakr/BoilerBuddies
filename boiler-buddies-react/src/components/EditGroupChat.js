@@ -22,7 +22,8 @@ export default class EditGroupChat extends React.Component {
             name: this.props.name,
             description: this.props.description,
             base64Image: this.props.image,
-            isNew: this.props.isNew
+            isNew: this.props.isNew,
+            chatId: this.props.chatId
         };
     }
 
@@ -38,7 +39,7 @@ export default class EditGroupChat extends React.Component {
         params.append('name', this.state.name)
         params.append('description', this.state.description)
         params.append('bigImage', this.state.base64Image)
-
+        params.append('chatId', this.state.chatId)
         var requestURL = ""
         
         if (this.state.isNew) {
@@ -47,12 +48,14 @@ export default class EditGroupChat extends React.Component {
         }
         else {
             // call update group chat
+            requestURL = endpoint + "updateGroupChat/?" + params
+            console.log(requestURL)
         }
 
         axios.get(requestURL).then( (result)=>{ 
             console.log("Making request to create/edit group chat")
-            console.log(result.data)
-            this.props.navigation('/chat/' + result.data.groupId + '/G', {replace:true});
+            console.log("data: " + result.data)
+            this.props.navigation('/chat/' + this.state.chatId + '/G', {replace:true});
         } )
     }
 

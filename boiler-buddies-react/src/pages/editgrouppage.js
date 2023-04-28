@@ -55,23 +55,23 @@ export default function EditGroup(props) {
    async function setUpdates() {
 
     const token = await getusertoken();
-    // const result = await axios.get("/updateGroupChat/", {
-    //   params: {
-    //     token: token,
-    //     chatId: chatId,
-    //     name: name,
-    //     description: description,
-    //     bigImage: bigImage,
-    //   },
-    // });
+    const result = await axios.get("/updateGroupChat/", {
+      params: {
+        token: token,
+        chatId: chatId,
+        name: name,
+        description: description,
+        bigImage: bigImage,
+      },
+    });
 
 
-    let updateURL = "http://54.200.193.22:3000/updateGroupChat/?";
+    /*let updateURL = "http://54.200.193.22:3000/updateGroupChat/?";
     updateURL += "token=" + token + "&chatId=" + chatId + "&name=" + name + "&description=" + description + "&bigImage=" + bigImage;
     const xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", updateURL, false); // false for synchronous request
     xmlHttp.send(null);
-    const result = xmlHttp.responseText;
+    const result = xmlHttp.responseText;*/
 
     console.log(result)
     
@@ -95,6 +95,7 @@ export default function EditGroup(props) {
         name={name}
         description={description}
         image={bigImage}
+        chatId={chatId}
         isNew={false}
         navigation={navigate}
         onClick={setUpdates}
@@ -102,5 +103,3 @@ export default function EditGroup(props) {
     </div>
   );
 }
-
-
