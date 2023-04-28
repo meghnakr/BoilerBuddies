@@ -23,9 +23,7 @@ const Messages = () => {
                         if(xmlHttp.status === 200) {
                             try {
                                 var response = JSON.parse(xmlHttp.responseText);
-                                console.log(response)
                                 var formatChats = formatResults(response);
-                                console.log(formatChats)
                                 setChats(formatChats);
                             }
                             catch (e) {

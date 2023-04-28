@@ -112,7 +112,6 @@ const ForumPage = (props) => {
 
         return ( 
             <div className='page-container'>
-                {console.log("THE TOKEN IS " + currentuser.token)}
                 {currentuser.token && <NewPost tokenId={currentuser.token} handleCallback={getPostId} selectedForum={forumId} forums={formatForum}/>}
                 <div className='forum-picture'>
                 <div className='profile-photo-circle'>

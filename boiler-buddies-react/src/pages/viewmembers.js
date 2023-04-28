@@ -1,86 +1,74 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { endpoint } from "../global";
-import NotifBox from "../components/NotifBox";
-import FriendsTabProfile from "../components/FriendsTabProfile";
-import axios from "../utils/Axios";
-import { getusertoken } from "../utils/auth";
+import { useLocation } from "react-router";
+import useUser from "../hooks/useUser";
+import ProfileHeader from "../components/ProfileHeader";
 
 const ViewMembers = () => {
   const [friendProfs, setFriendProfs] = useState([]);
+  const location = useLocation();
+  var chatId = new URLSearchParams(location.search).get("chatId");
+  var chatType = new URLSearchParams(location.search).get("type")
+  const currentUser = useUser();
+  const [members, setMembers] = useState()
+
 
   useEffect(() => {
-    const fetchData = async () => {
-      const token = await getusertoken();
-      const result = await axios.get("/getFriends/", {
-        params: {
-          token: token,
-        },
-      });
-      //console.log("TOKEN A: ", getusertoken());
-      //console.log("Result data:", result.data);
-      /* Call getUserById */
-      const mappedUsers = await Promise.all(
-        Object.values(result.data).map(
-          // how to solve array of Promises
-          async (currentfriend, index) => {
-            const otherId = currentfriend.other_id;
-            //console.log("OtherId:", otherId);
-            const userObject = await axios.get("/getUserById/", {
-              // must be in an async function
-              params: {
-                user_id: otherId,
-              },
-            });
-            //          console.log(userObject.data);
-            return await userObject.data;
+    if(chatType === "G" || chatType === "g") {
+      var params = new URLSearchParams();
+      params.append('groupId', chatId)
+      var getGroupChatMembers = endpoint + "getGroupChatMembers/?" + params
+      console.log(getGroupChatMembers)
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open("GET", getGroupChatMembers, true); // false for synchronous request
+      xmlHttp.onload = (e) => { //handle async request
+          if(xmlHttp.readyState === 4) {
+              if(xmlHttp.status === 200) {
+                  try {
+                    var jsonResults = JSON.parse(xmlHttp.responseText)
+                    console.log(jsonResults)
+                    var formattedResults = [];
+                    Object.keys(jsonResults).forEach(function (key) {
+                      var curr = jsonResults[key]
+                      var user = (<ProfileHeader 
+                        token = {currentUser.token}
+                        currentUser={currentUser.username}
+                        displayName={curr["display_name"]}
+                        userId = {curr["userId"]}
+                        username = {curr["username"]}
+                        img = {curr["big_image"]}
+                        forChat = {true}
+                        chatId = {chatId}
+                        isAdmin={curr["is_admin"]}
+                      />)
+                    formattedResults.push(user)
+                    });
+                    setMembers(formattedResults)
+                  }
+                  catch (e) {
+                      if (e instanceof SyntaxError) {
+                          console.log(xmlHttp.responseText);
+                          window.location.reload()
+                      }
+                  }
+              } else { 
+                  console.error(xmlHttp.statusText)
+              }
           }
-        )
-      ); // closes map
-      console.log("Mapped users: ", mappedUsers);
-      setFriendProfs(mappedUsers);
-    };
-    fetchData();
+      }
+      xmlHttp.onerror = (e) => {
+          console.error(xmlHttp.statusText)
+      }
+      xmlHttp.send(null);
+    }
   }, []);
 
-  console.log("FRIEND PROFS: ", friendProfs);
-
-  function updateFriendsList(username) {
-    // pass friendProfs here
-    // loop through profiles
-    // delete the one with the matching username
-    console.log("FriendProfiles Before: ", friendProfs)
-    const newFriendProfs = friendProfs.filter((currentfriendprof) => {
-      if (currentfriendprof.username == username) {
-        return false;
-      }
-      return true;
-    });
-    console.log("FriendProfiles After: ", newFriendProfs)
-    setFriendProfs(newFriendProfs)
-  }
-
+  
   return (
     <div className="page-container">
-      <form className="notifs-content">
-        <span style={{ fontWeight: "bold", fontSize: 20 }}>Friends: </span>
-        {friendProfs.length > 0 ? (
-          friendProfs.map((currentfriend, index) => {
-            currentfriend.interests = currentfriend.interests.replaceAll("&&", " #")
-            return (
-              <FriendsTabProfile
-                username={currentfriend.username}
-                displayName={currentfriend.display_name}
-                interestTags={"#" + currentfriend.interests}
-                key={index}
-                updateFriendProfiles={updateFriendsList}
-              />
-            );
-          })
-        ) : (
-          <p>No friends</p>
-        )}
-      </form>
+      <h4 style={{fontWeight:'bold'}}>Members</h4>
+      <p>{members}</p>
     </div>
   );
 };

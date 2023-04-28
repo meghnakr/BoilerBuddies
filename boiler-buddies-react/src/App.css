@@ -812,7 +812,7 @@ input:focus {
   margin-top: 3vmin;
   display: flex;
   flex-flow:column;
-  height: 82vh;
+  height: 100vh;
 }
 
 .send-button {

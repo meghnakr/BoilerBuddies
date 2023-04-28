@@ -119,7 +119,6 @@ const PostWithComments = () => {
         var newComment = <Comment currentUser={currentUser.username} marginLeft={left} token={currentUser.token} id={comment.id} username={comment.username} content={comment.content} 
                 postAt={comment.postAt} postId={postId} likes={comment.likes} liked={comment.liked} img={comment.img}/>
         setComments(comments => [...comments, newComment])
-        console.log("Delete" + arr[index])
         delete arr[index]
         children.forEach(childId => commentThread(arr, keys, childId, leftMargin))
         /*
@@ -139,6 +138,7 @@ const PostWithComments = () => {
     return (
         <div className="page-container" id="comments">
                 <Post
+                    currentUser={currentUser.username}
                     disable={true}
                     token={currentUser.token}
                     content={location.state.content}

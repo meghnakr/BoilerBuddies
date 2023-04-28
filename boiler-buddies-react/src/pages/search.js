@@ -1,7 +1,7 @@
 import axios from "../utils/Axios";
 import React from "react";
 import { useState, useEffect } from "react";
-import FriendProfile from "../components/FriendProfile";
+import ProfileHeader from "../components/ProfileHeader";
 import { useNavigate } from "react-router-dom";
 import { endpoint } from "../global";
 import { getusertoken } from "../utils/auth";
@@ -147,13 +147,12 @@ const Searches = () => {
       interests = interests.trim().substring(0, interests.length).trim();
       interests = "#" + interests.replaceAll("&&", " #");
       formattedResults[i] = (
-        <FriendProfile
+        <ProfileHeader
           displayName={jsonResults[key]["display_name"]}
           userId={jsonResults[key]["user_id"]}
           username={jsonResults[key]["username"]}
           interestTags={interests}
           img={jsonResults[key]["big_image"]}
-          navigate={navigate}
         />
       );
       /*

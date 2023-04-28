@@ -7,6 +7,8 @@ import { display } from '@mui/system';
 import logo from "../assets/logo_vector.png";
 import { Navigate } from "react-router";
 import { Link, useNavigate } from "react-router-dom";
+import { Dialog, DialogTitle, DialogContent } from "@mui/material";
+import useUser from "../hooks/useUser";
 
 function formatMessages(response, currentUserId, directOrGroup) {
   console.log(response);
@@ -90,14 +92,14 @@ const ChatPage = (props) => {
   const handleClick = (event) => {
     navigate(event.target.value, { replace: true });
   };
-
+  const currentUser = useUser()
   const { chatId, directOrGroup } = useParams();
   const listRef = useRef(null);
   const [messageText, setMessageText] = useState("");
   const [messages, setMessages] = useState("");
   const [chatName, setChatName] = useState("");
   const [img, setImg] = useState("");
-
+  const [openViewMembers, setOpenViewMembers] = useState(false)
   const [token, setToken] = useState("");
 
   var loadMessageSignal = 1;
@@ -322,6 +324,54 @@ const ChatPage = (props) => {
   // function viewMembers() {
   //   navigate("/viewmembers");
   // }
+/*
+  function openViewMembersDialog() {
+    if(directOrGroup === "G" || directOrGroup === "g") {
+      var params = new URLSearchParams();
+      params.append('groupId', chatId)
+      var getGroupChatMembers = endpoint + "getGroupChatMembers/?" + params
+      console.log(getGroupChatMembers)
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open("GET", getGroupChatMembers, true); // false for synchronous request
+      xmlHttp.onload = (e) => { //handle async request
+          if(xmlHttp.readyState === 4) {
+              if(xmlHttp.status === 200) {
+                  try {
+                    var jsonResults = JSON.parse(xmlHttp.responseText)
+                    var formattedResults = [];
+                    Object.keys(jsonResults).forEach(function (key) {
+                      var curr = jsonResults[key]
+                      var user = (<ProfileHeader 
+                        currentUser={currentUser.username}
+                        displayName={curr["display_name"]}
+                        userId = {curr["userId"]}
+                        username = {curr["username"]}
+                        img = {curr["big_image"]}
+                      />)
+                    formattedResults.push(user)
+                    });
+                  }
+                  catch (e) {
+                      if (e instanceof SyntaxError) {
+                          console.log(xmlHttp.responseText);
+                          window.location.reload()
+                      }
+                  }
+              } else { 
+                  console.error(xmlHttp.statusText)
+              }
+          }
+      }
+      xmlHttp.onerror = (e) => {
+          console.error(xmlHttp.statusText)
+      }
+      xmlHttp.send(null);
+    }
+    
+       
+       
+        
+  }*/
 
   return (
     <div className="container">
@@ -363,7 +413,7 @@ const ChatPage = (props) => {
 
       <button
         className="default-btn"
-        value="/viewmembers"
+        value='/viewmembers'
         style={{
           fontWeight: "normal",
           textTransform: "capitalize",
@@ -371,7 +421,10 @@ const ChatPage = (props) => {
           width: "150px",
           height: "30px",
         }}
-        onClick={handleClick}
+        onClick={() => {
+          const url = `/viewmembers?chatId=${chatId}&type=${directOrGroup}`;
+          window.location.href = url;
+        }}
       >
         View Members
       </button>
