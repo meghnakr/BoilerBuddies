@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
+import { endpoint } from "../global";
 /* basically FriendProfile without the functionalities */
 export default class ProfileHeader extends React.Component {
     static propTypes = {

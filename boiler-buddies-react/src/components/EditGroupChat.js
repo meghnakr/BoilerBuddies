@@ -124,6 +124,7 @@ export default class EditGroupChat extends React.Component {
                             className="fa fa-upload"
                             style={{
                     marginRight: "4px"
+                    
                 }}/>
                             Upload photo</label>
                         <input

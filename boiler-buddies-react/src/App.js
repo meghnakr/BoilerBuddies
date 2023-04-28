@@ -35,6 +35,8 @@ import CreateForum from "./pages/createForum";
 import UserProfile from "./pages/userProfile";
 import CreateGroup from "./pages/createGroup";
 import EditGroupChat from "./components/EditGroupChat";
+import EditGroup from "./pages/editgrouppage";
+import EditGroup1 from "./pages/editgroupbackup";
 
 
 function App(location) {
@@ -106,7 +108,8 @@ function App(location) {
             <Route path="/create-forum" element={<CreateForum funcNav={setShowNav} />} />
             <Route path="/forum/:forumId" element={<ForumPage funcNav={setShowNav} />} />
             <Route path="/create-group" element={<CreateGroup funcNav={setShowNav} />} />
-            <Route path="/edit-group" element={<EditGroupChat funcNav={setShowNav} />} />
+            {/* <Route path="/edit-group" element={<EditGroup funcNav={setShowNav} />} /> */}
+            <Route path="/edit-group" element={<EditGroup1 funcNav={setShowNav} />} />
             <Route path="/chat/:chatId/:directOrGroup" element={<ChatPage funcNav={setShowNav} />} />
             {/*<Route path="/group-chat/:groupId" element={<GroupChatPage funcNav={setShowNav} />} />*/}
           </Routes>

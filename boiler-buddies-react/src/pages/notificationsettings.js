@@ -58,12 +58,6 @@ export default function NotificationSettings(props) {
         notifyOnFriendRequest: notifyOnFriendRequest,
       },
     });
-    console.log("notifyOnPostLike: ", notifyOnPostLike.value)
-    console.log("notifyOnCommentLike: ", notifyOnCommentLike.value)
-    console.log("notifyOnPostComment: ", notifyOnPostComment.value)
-    console.log("notifyOnCommentReply: ", notifyOnCommentReply.value)
-    console.log("notifyOnFriendAcceptance: ", notifyOnFriendAcceptance.value)
-    console.log("notifyOnFriendRequest: ", notifyOnFriendRequest.value)
     console.log("Notifications are updated");
   }
 

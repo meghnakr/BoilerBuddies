@@ -226,7 +226,7 @@ const ChatPage = (props) => {
 
         if (token !== "") {
             // get title of chat
-            var getNameURL = endpoint + "getChatNameAndPicture/?"
+            var getNameURL = endpoint + "getChatInfo/?"
             var titleParams = new URLSearchParams();
             titleParams.append('token', token);
             titleParams.append('chatId', chatId);
@@ -392,6 +392,30 @@ const ChatPage = (props) => {
                 }
                 </div>
                 </div>
+      <p> </p>
+
+      <button
+        className="default-btn"
+        value={"/edit-group"}
+        style={{
+          fontWeight: "normal",
+          textTransform: "capitalize",
+          border: "1px solid #88BBF6",
+          width: "150px",
+          height: "30px",
+          display: "block",
+          margin: "0 auto",
+        }}
+        onClick={() => {
+          const url = `/edit-group?chatId=${chatId}`;
+          window.location.href = url;
+        }}
+      >
+        Edit Chat
+      </button>
+
+
+
       <p className="chat-title">{chatName}</p>
       <button
         className="default-btn"
