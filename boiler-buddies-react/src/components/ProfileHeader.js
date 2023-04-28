@@ -37,6 +37,7 @@ export default class ProfileHeader extends React.Component {
         params.append("otherId", this.userId)
         params.append('groupChatId', this.chatId)
         var removeGroupChatUserRequest = endpoint + "removeGroupChatUser/?" + params
+        console.log(removeGroupChatUserRequest)
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open("POST", removeGroupChatUserRequest, true); // false for synchronous request
         xmlHttp.onerror = (e) => {
@@ -108,7 +109,7 @@ export default class ProfileHeader extends React.Component {
                     }}>
                     {
                         this.forChat
-                            ? (this.props.adminUsernames.includes(this.props.currentUser) & this.props.isAdmin)
+                            ? (this.props.adminUsernames.includes(this.props.currentUser) & !this.props.isAdmin)
                                 ? <div className="dropdown" style={{float:'right'}}>
                                     <button
                                         className="no-outline-btn" 

@@ -11,10 +11,13 @@ const ViewMembers = () => {
     var chatType = new URLSearchParams(location.search).get("type")
     const currentUser = useUser();
     const [members, setMembers] = useState()
+    const [admins, setAdmins] = useState()
 
     useEffect(() => {
+      if(currentUser.token !== null) {
+        let timer = setTimeout(() => {
         if (chatType === "G" || chatType === "g") {
-            console.log(currentUser.username)
+            console.log(currentUser.token)
             var params = new URLSearchParams();
             params.append('groupId', chatId)
             var getGroupChatMembers = endpoint + "getGroupChatMembers/?" + params
@@ -46,13 +49,16 @@ const ViewMembers = () => {
                 console.error(xmlHttp.statusText)
             }
             xmlHttp.send(null);
-        }
-    }, []);
+        }}, 1000)
+        return () => clearTimeout(timer)
+      }
+    }, [currentUser.token]);
 
     function formatResults(result) {
         var jsonResults = result
         var highest = (Object.keys(jsonResults).length - 1).toString();
         var adminUsernames = jsonResults[highest]["adminUsernames"]
+        setAdmins(adminUsernames)
         var formattedResults = [];
         Object
             .keys(jsonResults)
