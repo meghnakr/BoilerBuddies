@@ -373,6 +373,23 @@ const ChatPage = (props) => {
         
   }*/
 
+  const leave = async () => {
+    console.log(token)
+    console.log(chatId)
+    const {data:response} = await axios.get("/leaveGroupChat/", {
+      params: {
+        token: token,
+        groupChatId: chatId,
+      },
+    });
+    console.log(response)
+    if (response.success == "false") {
+      alert("To leave a group, you must promote at least one other member to admin!")
+    } else {
+      navigate(`/messages`)
+    }
+  };
+
   return (
     <div className="container">
         <div className='forum-picture'>
@@ -451,6 +468,21 @@ const ChatPage = (props) => {
         }}
       >
         View Members
+      </button>
+      <button
+        className="default-btn"
+        value='/leave'
+        style={{
+          fontWeight: "normal",
+          textTransform: "capitalize",
+          border: "1px solid #B53939",
+          backgroundColor: "#B53939",
+          width: "150px",
+          height: "30px",
+        }}
+        onClick={leave}
+      >
+        Leave Chat
       </button>
 
       <div className="message-container" ref={listRef}>
