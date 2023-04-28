@@ -79,6 +79,24 @@ export default function EditGroup(props) {
 
   console.log("result before return: ", name, description, bigImage);
 
+  const deleteChat = async () => {
+    const token = await getusertoken();
+    console.log(token)
+    console.log(chatId)
+    const {data:response} = await axios.get("/deleteChat/", {
+      params: {
+        token: token,
+        chatId: chatId,
+      },
+    });
+    console.log(response)
+    if (response.deletion == "failure") {
+      alert("You do not have permission to delete this chat!")
+    } else {
+      navigate(`/messages`)
+    }
+  };
+
   return (
     <div className="page-container">
       <h3
@@ -100,6 +118,10 @@ export default function EditGroup(props) {
         navigation={navigate}
         onClick={setUpdates}
       />
+      <button className="default-btn" style={{
+                        width: '48%',
+                        backgroundColor: "#B53939"
+                    }} onClick={deleteChat}> Delete Chat </button>
     </div>
   );
 }
