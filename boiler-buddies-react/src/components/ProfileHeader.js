@@ -21,8 +21,6 @@ export default class ProfileHeader extends React.Component {
         this.forChat = this.props.forChat;
         this.chatId = this.props.chatId
         this.state = {
-            sendRequest: this.props.sendRequest,
-            blockUser: this.props.blockUser,
             isAdmin: this.props.isAdmin,
             open: false
         };
@@ -33,32 +31,37 @@ export default class ProfileHeader extends React.Component {
       };
 
     removeMember = () => {
+        this.setState({open: false})
         var params = new URLSearchParams();
         params.append("token", this.token)
         params.append("otherId", this.userId)
         params.append('groupChatId', this.chatId)
         var removeGroupChatUserRequest = endpoint + "removeGroupChatUser/?" + params
+        console.log(removeGroupChatUserRequest)
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open("POST", removeGroupChatUserRequest, true); // false for synchronous request
         xmlHttp.onerror = (e) => {
             console.error(xmlHttp.statusText)
         }
         xmlHttp.send(null);
+        window.location.reload()
     }
 
     makeAdmin = () => {
+        this.setState({open: false})
         var params = new URLSearchParams();
         params.append("token", this.token)
         params.append("otherId", this.userId)
         params.append('groupChatId', this.chatId)
         var setGroupChatAdminRequest = endpoint + "setGroupChatAdmin/?" + params
+        console.log(setGroupChatAdminRequest)
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open("POST", setGroupChatAdminRequest, true); // false for synchronous request
         xmlHttp.onerror = (e) => {
             console.error(xmlHttp.statusText)
         }
         xmlHttp.send(null);
-
+        window.location.reload()
     }
 
     render() {
@@ -106,7 +109,8 @@ export default class ProfileHeader extends React.Component {
                     }}>
                     {
                         this.forChat
-                            ? <div className="dropdown" style={{float:'right'}}>
+                            ? (this.props.adminUsernames.includes(this.props.currentUser) & !this.props.isAdmin)
+                                ? <div className="dropdown" style={{float:'right'}}>
                                     <button
                                         className="no-outline-btn" 
                                         onClick={this.handleOpen}>
@@ -117,12 +121,12 @@ export default class ProfileHeader extends React.Component {
                                                 }}>
                                                     <ul>
                                                         <li> <button className="dropdown-link" style={{ paddingLeft: '2vmin', paddingRight: '2vmin'}}
-                                                                    onClick={() => { this.setState({open: false});}}>
+                                                                    onClick={this.removeMember}>
                                                                 Remove
                                                             </button>
                                                         </li>
                                                         <li> <button className="dropdown-link" style={{ paddingLeft: '2vmin', paddingRight: '2vmin', whiteSpace: 'nowrap'}}
-                                                                    onClick={() => { this.setState({open: false});}}>
+                                                                    onClick={this.makeAdmin}>
                                                                 Make Admin
                                                             </button>
                                                         </li>
@@ -133,6 +137,7 @@ export default class ProfileHeader extends React.Component {
                                             : null
                                     }
                                 </div>
+                                : <></>
                             : this.props.currentUser !== this.username
                                 ? (
                                     <button
